@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Second Line</span>
+        <span class="example-spacer"></span>
+
+        <form class="example-form">
+            <mat-form-field>
+                <input type="text"
+                       placeholder="Rechercher"
+                       aria-label="Number"
+                       matInput
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+                <button mat-button *ngIf="myControl.valueChanges" matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav mode="side" opened #sidenav>
+        <mat-nav-list>
+
+            <a mat-list-item [routerLink]="'/dashboard/overview'"> Vue Globale </a>
+            <a mat-list-item [routerLink]="'/dashboard/ads'"> Annonces </a>
+            <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
+            <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
+            <a mat-list-item [routerLink]="'/activities'"> Activities </a>
+            <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
+            <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="height: 88vh;">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
