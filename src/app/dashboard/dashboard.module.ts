@@ -5,6 +5,7 @@ import {DashboardComponent} from "./dashboard.component";
 import {CoreModule} from "../core/core.module";
 import { OverviewComponent } from './overview/overview.component';
 import { AdsComponent } from './ads/ads.component';
+import {DashboardService} from "./dashboard.service";
 
 
 @NgModule({
@@ -13,9 +14,12 @@ import { AdsComponent } from './ads/ads.component';
       CoreModule,
       DashboardRoutingModule,
   ],
-    exports: [
-        CoreModule,
-        OverviewComponent
-    ]
+  exports: [
+      CoreModule,
+      OverviewComponent
+  ],
+  providers: [
+      DashboardService
+  ]
 })
 export class DashboardModule { }

@@ -27,7 +27,6 @@
 <mat-sidenav-container>
     <mat-sidenav mode="side" opened #sidenav>
         <mat-nav-list>
-
             <a mat-list-item [routerLink]="'/dashboard/overview'"> Vue Globale </a>
             <a mat-list-item [routerLink]="'/dashboard/ads'"> Annonces </a>
             <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
@@ -35,7 +34,6 @@
             <a mat-list-item [routerLink]="'/activities'"> Activities </a>
             <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
             <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
-
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

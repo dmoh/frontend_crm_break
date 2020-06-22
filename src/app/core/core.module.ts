@@ -11,6 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from '@angular/material/card';
 import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {HttpClientModule} from "@angular/common/http";
 
 
 
@@ -20,6 +21,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from "@angular/material/dia
       ReactiveFormsModule,
       FormsModule,
       CommonModule,
+      HttpClientModule,
       MatToolbarModule,
       MatSidenavModule,
       MatListModule,
@@ -29,12 +31,14 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from "@angular/material/dia
       MatAutocompleteModule,
       MatInputModule,
       MatCardModule,
-      MatDialogModule
+      MatDialogModule,
+
   ],
   exports: [
       ReactiveFormsModule,
       FormsModule,
       CommonModule,
+      HttpClientModule,
       MatToolbarModule,
       MatSidenavModule,
       MatListModule,

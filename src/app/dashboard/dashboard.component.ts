@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {DashboardService} from "./dashboard.service";
 
 
 @Component({
@@ -14,10 +15,10 @@ export class DashboardComponent implements OnInit {
     myControl = new FormControl();
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
+    users: any[] = [];
 
 
-
-    constructor() { }
+    constructor(private dashboardService: DashboardService) { }
 
     ngOnInit(): void {
         this.filteredOptions = this.myControl.valueChanges
@@ -25,6 +26,14 @@ export class DashboardComponent implements OnInit {
                 startWith(''),
                 map(value => this._filter(value))
             );
+
+
+        this.dashboardService.getUsers().subscribe((user) => {
+            this.users = user;
+            console.warn(this.users);
+        });
+
+
     }
 
 
