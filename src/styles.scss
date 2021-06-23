@@ -2,3 +2,59 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
+.card  {
+  position: relative;
+  margin-bottom: 24px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  border-radius: 0;
+  border: none;
+}
+
+.card-heading {
+  position: relative;
+  padding: 20px 24px;
+}
+
+.card-heading h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.card-heading small {
+  display: block;
+  margin-top: 8px;
+  opacity: .5;
+}
+
+.mini-card {
+  margin-bottom: .8rem;
+  padding: 1rem;
+  position: relative;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  border-radius: 0;
+  border: none;
+  border-left: 2px solid #2abcf3;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #E9EBEB;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}

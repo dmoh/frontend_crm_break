@@ -6,17 +6,21 @@ import {CoreModule} from "../core/core.module";
 import { OverviewComponent } from './overview/overview.component';
 import { AdsComponent } from './ads/ads.component';
 import {DashboardService} from "./dashboard.service";
+import {ContactsComponent} from "@app/dashboard/contacts/contacts.component";
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, OverviewComponent, AdsComponent],
+  declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent],
   imports: [
       CoreModule,
       DashboardRoutingModule,
   ],
   exports: [
       CoreModule,
-      OverviewComponent
+      OverviewComponent,
+      ContactsComponent,
+      UsersComponent
   ],
   providers: [
       DashboardService

@@ -1,40 +1,182 @@
-<h1 mat-dialog-title>Ajouter une annonce</h1>
+<h1 mat-dialog-title>Ajouter ou modifier une annonce</h1>
 <div mat-dialog-content>
-    <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-            <mat-label>Titre de l'annonce</mat-label>
-            <input matInput formControlName="title">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Description</mat-label>
-            <textarea formControlName="comment" matInput></textarea>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Montant</mat-label>
-            <input formControlName="amount" matInput type="number" class="example-right-align">
-            <span matPrefix style="padding-right: 3px !important;">CHF</span>
-            <span matSuffix>.00</span>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Description</mat-label>
-            <textarea formControlName="tags" matInput></textarea>
-        </mat-form-field>
-        <!--<div formArrayName="tags">
-            <button (click)="add('tag')" mat-raised-button color="accent">Ajouter un tag</button>
-            <div *ngFor="let tag of tags.controls; let i=index">
-                <!-- The repeated alias template
-                <mat-form-field>
-                    <mat-label>Tag</mat-label>
-                    <input matInput [formControlName]="i">
-                </mat-form-field>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="globalForm">
+        <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
+          <ng-template matStepLabel>1er Partie</ng-template>
+          <mat-form-field class="mt-5" appearance="outline">
+              <mat-label>Titre de l'annonce</mat-label>
+              <input type="text"  autocomplete="off" matInput formControlName="title" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea formControlName="comment" matInput></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+              <mat-label>Montant</mat-label>
+              <input formControlName="amount" matInput type="number" class="example-right-align">
+              <span matPrefix style="">CHF</span>
+              <span matSuffix>
+                <mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle>
+              </span>
+          </mat-form-field>
+          <div class="wrapper-file-upload">
+            <label id="selector-files" for="input-file-id">
+              <span>Ajouter des fichiers </span>
+              <span style="" class="material-icons">
+                  attach_file
+              </span>
+            </label>
+            <input class="ng-hide" (change)="onUploadFile($event)" id="input-file-id" multiple type="file" />
+          </div>
+          <div *ngIf="files.length > 0" class="display-filename mt-2 mb-2">
+            <div style="display: flex; justify-content: space-between" *ngFor="let file of files">
+              <div>{{ file.fileUpload.name }}</div>
+              <div (click)="onDeleteFile(file)" style="color: red; cursor: pointer;" >
+                  <span class="material-icons">
+                    close
+                  </span>
+              </div>
             </div>
-        </div>--->
+          </div>
+          <!--<div formArrayName="tags">
+              <button (click)="add('tag')" mat-raised-button color="accent">Ajouter un tag</button>
+              <div *ngFor="let tag of tags.controls; let i=index">
+                  The repeated alias template
+                  <mat-form-field>
+                      <mat-label>Tag</mat-label>
+                      <input matInput [formControlName]="i">
+                  </mat-form-field>
+              </div>
+          </div>--->
+          <mat-form-field class="example-chip-list">
+          <mat-chip-list #tagList aria-label="Catégorie">
+            <mat-chip
+              *ngFor="let tag of tags"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(tag)"
+            >
+              {{tag}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Catégorie/Thème"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="tagList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                {{tag.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <!--<mat-form-field class="example-full-width">
+              <input type="text"
+                     placeholder="Pick one"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>-->
+          </mat-form-field>
+          <div style="width: 100%;display:flex; justify-content: space-around">
+            <div style="margin-bottom: 1rem">
+              <mat-slide-toggle formControlName="published">Publié</mat-slide-toggle>
+            </div>
+            <div style="margin-bottom: 1rem">
+              <mat-slide-toggle formControlName="sold">Vendu</mat-slide-toggle>
+            </div>
+          </div>
+          <hr>
+          <div>
+            <h5>Caractéristiques</h5>
+          </div>
+          <mat-form-field>
+            <mat-label>Nombre de piéces</mat-label>
+            <input autocomplete="off" formControlName="rooms" matInput type="number" class="example-right-align">
+            <span matSuffix>
+              </span>
+          </mat-form-field>
+          <div style="margin-bottom: 1rem">
+            <mat-slide-toggle formControlName="handicap_accessibility">Accès handicapé</mat-slide-toggle>
+          </div>
+        </form>
         <div>
-            <button type="submit" mat-raised-button color="primary" >Valider</button>
+          <button mat-raised-button matStepperNext>Suivant</button>
         </div>
-    </form>
+      </mat-step>
+      <mat-step [stepControl]="contactForm">
+        <form [formGroup]="contactForm">
+        <ng-template matStepLabel>Contacts</ng-template>
+          <!-- <mat-form-field>
+          <mat-label>Email(s)</mat-label>
+            <input
+              autocomplete="off"
+              matInput
+              required>
+           <mat-chip-list #chipList1 aria-label="Fruit selection">
+              <mat-chip
+                *ngFor="let email of emails"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(email.email, true)">
+                {{email.email}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="Nouveau mail de contact..."
+                #fruitInput
+                [formControl]="contactEmailCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList1"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addContactEmail($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let email of filteredContactEmail | async" [value]="email">
+                {{  email.email }}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>-->
+          <div class="info">
+            <h5 class="text-center">Envoyer cette annonce aux contacts suivants</h5>
+            <div class="text-center">
+              <small class="text-center" style="color: #ccc"><em>Il s'agit d'un nouveau contact ? il suffit d'insérer son adresse mail ci-dessous</em></small>
+            </div>
+          </div>
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipListContact aria-label="Fruit selection">
+              <mat-chip *ngFor="let contact of emails" [selectable]="selectable"
+                        [removable]="removable" (removed)="remove(contact.email, true)">
+                {{contact.email}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Nouveau emails"
+                     [matChipInputFor]="chipListContact"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event, 'new-contact')">
+            </mat-chip-list>
+          </mat-form-field>
+          <mat-selection-list style="margin-bottom: 2rem" #emailLists (selectionChange)="onGroupEmailChange(emailLists.selectedOptions.selected)">
+            <mat-list-option *ngFor="let email of emails" [value]="email" >
+              {{email.email}}
+            </mat-list-option>
+          </mat-selection-list>
+        <div>
+          <button style="margin-right: .4rem" mat-raised-button matStepperPrevious>Précédent</button>
+          <button type="button" (click)="onSubmit()" mat-raised-button color="primary" >Envoyer</button>
+        </div>
+        </form>
+      </mat-step>
+  </mat-horizontal-stepper>
 </div>
 <div mat-dialog-actions>
     <!--<button mat-button (click)="onNoClick()">No Thanks</button>

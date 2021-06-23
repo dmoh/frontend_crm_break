@@ -1,39 +1,56 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatButtonModule} from "@angular/material/button";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule} from "@angular/material/list";
-import {MatIconModule} from "@angular/material/icon";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from "@angular/material/input";
+import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {HttpClientModule} from "@angular/common/http";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {HttpClientModule} from '@angular/common/http';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTableModule} from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {CdkTableModule} from '@angular/cdk/table';
 
 
 
 @NgModule({
   declarations: [DialogModalComponent],
-  imports: [
-      ReactiveFormsModule,
-      FormsModule,
-      CommonModule,
-      HttpClientModule,
-      MatToolbarModule,
-      MatSidenavModule,
-      MatListModule,
-      MatButtonModule,
-      MatIconModule,
-      MatButtonModule,
-      MatAutocompleteModule,
-      MatInputModule,
-      MatCardModule,
-      MatDialogModule,
-
-  ],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        CommonModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatCardModule,
+        MatDialogModule,
+        MatChipsModule,
+        MatStepperModule,
+        MatSlideToggleModule,
+        MatProgressBarModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatPaginatorModule,
+        MatExpansionModule,
+        CdkTableModule
+    ],
   exports: [
       ReactiveFormsModule,
       FormsModule,
@@ -48,7 +65,13 @@ import {HttpClientModule} from "@angular/common/http";
       MatInputModule,
       MatCardModule,
       MatDialogModule,
-      DialogModalComponent
+      MatProgressBarModule,
+      MatTableModule,
+      DialogModalComponent,
+      MatFormFieldModule,
+      MatPaginatorModule,
+      MatExpansionModule,
+      CdkTableModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MatDialog]

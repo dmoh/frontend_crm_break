@@ -1,0 +1,43 @@
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-heading">
+          <h2 class="text-center">Collaborateurs</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-heading">
+          <ul>
+            <li *ngFor="let contact of contacts">
+              <div style="width: 100%; display: flex;margin-bottom: .9rem ">
+                <div style="width: 100%">
+                  <mat-accordion>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{ contact.name }}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div>
+                        <mat-selection-list #shoes>
+                          <mat-list-option>
+                            {{contact.email}}
+                          </mat-list-option>
+                        </mat-selection-list>
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

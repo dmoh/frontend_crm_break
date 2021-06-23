@@ -1,1 +1,32 @@
-<button (click)="goToDashboard()" mat-raised-button color="primary">Se connecter</button>
+<div  class="text-center mt-2" >
+  <h3>Formulaire de connexion</h3>
+</div>
+<section id="login" class="wrapper-login">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field style="width: 100%" appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input formControlName="email"
+          matInput placeholder="Placeholder">
+        <!--<mat-hint *ngIf="f.email.errors">
+          Email obligatoire
+        </mat-hint>-->
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field style="width: 100%" appearance="legacy">
+        <mat-label>Mot de passe</mat-label>
+        <input formControlName="password"
+               type="password"
+          matInput placeholder="Placeholder">
+        <!--<mat-hint *ngIf="f.email.errors.required">
+          Mot de passe obligatoire
+        </mat-hint>-->
+      </mat-form-field>
+    </div>
+    <div class="mt-3 mb-3">
+      <button type="submit" mat-raised-button color="primary">Se connecter</button>
+    </div>
+  </form>
+  <button (click)="goToDashboard()" mat-raised-button color="primary">Se connecter</button>
+</section>

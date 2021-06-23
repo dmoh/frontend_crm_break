@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../environment/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/index";
-import {Ad} from "./models/ad";
+import {environment} from '../environment/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/index';
+import {Ad} from './models/ad';
+import {Contact} from './models/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,7 @@ export class DashboardService {
       headers: new HttpHeaders(
           {
               'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              // 'X-App-Instance': 'reseaudelta',
-              //'Accept-Language': 'fr-FR',
-              // 'X-App-Version': '2019.01.01',
-              // X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNUFJfNTkiLCJhdWQiOiJST0xFX01FRElDQUxfVVNFUiIsImluc3RhbmNlIjoicmVzZWF1ZGVsdGEiLCJhdXRob3JpdHkiOiJST0xFX01FRElDQUxfVVNFUiIsImV4cCI6MTY3NjI5MDE4OCwiaWF0IjoxNTg5ODkwMTg4fQ.8mXSTGdtKJYaOsvIyuFPcCT1eCBOD-K1KSS76N2SIZM'
+              Accept: '*/*'
           }
       )
   };
@@ -29,16 +26,41 @@ export class DashboardService {
 
     getUsers(): Observable<any[]> {
         return this.http
-            .get<any[]>(`${this.urlBase}/users`, this.httpOptions)
+            .get<any[]>(`${this.urlBase}/user/list`, this.httpOptions);
     }
 
-    updateAd(ad: Ad): Observable<any> {
+    updateAd( fd: FormData): Observable<any> {
+      const headersA = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      });
       return this.http
-          .post(`${this.urlBase}/ad/update`, ad, this.httpOptions);
+          .post(`${this.urlBase}/ad/update`,  fd, {headers: headersA, responseType: 'blob' as 'json' });
+
     }
 
     getAds(): Observable<any[]> {
         return this.http
-            .get<any[]>(`${this.urlBase}/ads/list`, this.httpOptions)
+            .get<any[]>(`${this.urlBase}/ad/list`, this.httpOptions);
     }
+
+
+    getCategories(): Observable<any[]> {
+        return this.http
+            .get<any[]>(`${this.urlBase}/category/list`, this.httpOptions);
+    }
+
+
+    getContactList(): Observable<Contact[]> {
+      return this.http
+        .get<Contact[]>(`${this.urlBase}/contact/list`, this.httpOptions);
+    }
+
+    getAdsContacts() {
+      return this.http
+        .get<Contact[]>(`${this.urlBase}/ad/contact`, this.httpOptions);
+    }
+
+
+
 }

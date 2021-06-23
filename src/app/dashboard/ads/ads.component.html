@@ -1,32 +1,33 @@
-<section class="container">
+<section class="container-fluid">
     <div style="padding-top: 1rem; padding-bottom: 1rem">
         <button (click)="openDialog()" mat-raised-button color="primary">
             <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
             AJOUTER UNE ANNONCE
         </button>
     </div>
-
-
     <mat-divider style="" class="p-05"></mat-divider>
-
-    <div *ngIf="ads"  class="container-card">
-        <mat-card *ngFor="let ad of ads" class="example-card">
+    <div *ngIf="ads"  class="container-fluid">
+      <div class="row">
+        <div *ngFor="let ad of ads" class="col-md-6">
+          <mat-card  class="">
             <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title>{{ ad.title }}</mat-card-title>
-                <mat-card-subtitle>{{ ad.comment }}</mat-card-subtitle>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{ ad.title }}</mat-card-title>
+              <mat-card-subtitle>{{ ad.comment }}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
             <mat-card-content>
+              <div [class]="ad.description > 20 ? 'limit-character' : ''">
                 <p>
-                    {{ad.description}}
+                  {{ad.description}}
                 </p>
+              </div>
             </mat-card-content>
-            <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
+            <mat-card-actions style="text-align: right; position: absolute;bottom: 12px;right: 5px;">
+              <button (click)="onUpdateAd(ad)" mat-raised-button color="primary">Modifier</button>
+              <button mat-raised-button color="warn">Supprimer</button>
             </mat-card-actions>
-        </mat-card>
+          </mat-card>
+        </div>
+      </div>
     </div>
-
 </section>

@@ -1,1 +1,249 @@
-<p>overview works!</p>
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-heading">
+          <h2>Compte rendu</h2>
+          <small>l'ensemble des activiés sur le crm présent</small>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let ad of ads" class="row">
+            <div class="col-md-12">
+              <div class="mini-card">
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <div style="display: flex">
+                      <div style="align-self: center">
+                        <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+                      </div>
+                      <div style="align-self: center" class="pl-3">
+                        <span class="" style="font-size: small; font-weight: bold">{{ ad.title }}</span>
+                        <p style="font-size: x-small; margin-bottom: 0 !important;">{{ ad.comment }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="align-self: baseline" class="pull-right text-sm text-muted">
+                    <small>{{ ad.date_publication ? ad.date_publication  : '02 / 10 / 2020' }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mini-card">
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <div style="display: flex">
+                      <div style="align-self: center">
+                        <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+                      </div>
+                      <div style="align-self: center" class="pl-3">
+                        <span class="" style="font-weight: bold">TITLE DE L'ANNONCE</span>
+                        <p style="font-size: small; margin-bottom: 0 !important;">dfsfkéd sdéfkk sdfsdklf sédkfés dfsldf sédfksdé fkdfkésld fkséldfk léds</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="align-self: baseline" class="pull-right text-sm text-muted">
+                    <small>depuis lundi 6 mars</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mini-card">
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <div style="display: flex">
+                      <div style="align-self: center">
+                        <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+                      </div>
+                      <div style="align-self: center" class="pl-3">
+                        <span class="" style="font-weight: bold">TITLE DE L'ANNONCE</span>
+                        <p style="font-size: small; margin-bottom: 0 !important;">dfsfkéd sdéfkk sdfsdklf sédkfés dfsldf sédfksdé fkdfkésld fkséldfk léds</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="align-self: baseline" class="pull-right text-sm text-muted">
+                    <small>depuis lundi 6 mars</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mini-card">
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <div style="display: flex">
+                      <div style="align-self: center">
+                        <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+                      </div>
+                      <div style="align-self: center" class="pl-3">
+                        <span class="" style="font-weight: bold">TITLE DE L'ANNONCE</span>
+                        <p style="font-size: small; margin-bottom: 0 !important;">dfsfkéd sdéfkk sdfsdklf sédkfés dfsldf sédfksdé fkdfkésld fkséldfk léds</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="align-self: baseline" class="pull-right text-sm text-muted">
+                    <small>depuis lundi 6 mars</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mini-card">
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <div style="display: flex">
+                      <div style="align-self: center">
+                        <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+                      </div>
+                      <div style="align-self: center" class="pl-3">
+                        <span class="" style="font-weight: bold">TITLE DE L'ANNONCE</span>
+                        <p style="font-size: small; margin-bottom: 0 !important;">dfsfkéd sdéfkk sdfsdklf sédkfés dfsldf sédfksdé fkdfkésld fkséldfk léds</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="align-self: baseline" class="pull-right text-sm text-muted">
+                    <small>depuis lundi 6 mars</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 1rem" class="panel panel-default">
+        <div class="panel-default">
+          <span class="h4">
+            Taches
+          </span>
+          <span class="label text-right m-t-xs amber">
+            5 test
+          </span>
+        </div>
+        <hr>
+        <div  class="mb-3  panel-body">
+          <span>Contacter client potentiel @name</span>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div  class="mb-3  panel-body">
+          <span>Contacter client potentiel @name</span>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div  class="mb-3  panel-body">
+          <span>Contacter client potentiel @name</span>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div  class="mb-3  panel-body">
+          <span>Contacter client potentiel @name</span>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+      <div class="card">
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef> Weight </th>
+              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef> Symbol </th>
+              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <form action="">
+          <textarea style="width: 100%" class="form-controll no-border p-md" name="" id="" rows="1" placeholder="Un message aux membres.."></textarea>
+        </form>
+        <div class="text-right pb-3 pr-2">
+          <button mat-raised-button color="primary">Envoyer</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-heading">
+            <h2 class="font-thin">Collaborateurs</h2>
+            <small>dernières visites</small>
+        </div>
+        <hr>
+        <div style="display: flex; justify-content: space-evenly">
+          <div class="card-body">
+            <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+          </div>
+          <div class="card-body">
+            <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+          </div>
+          <div class="card-body">
+            <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+          </div>
+          <div class="card-body">
+            <img src="assets/images/bg_building.jpg" class="rounded" width="40px" height="40px" alt="bulding">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-heading">
+          <h2 class="font-thin">Activités</h2>
+          <small>Mise à jour il y a 4 min</small>
+        </div>
+        <div class="card-body">
+          <div class="sl-content">
+            <div class="text-muted small">A l'instant</div>
+            <p style="font-size: small">@Eric a édité l'annonce 20215</p>
+          </div>
+          <div class="sl-content">
+            <div class="text-muted small">A l'instant</div>
+            <p style="font-size: small">@Eric a édité l'annonce 20215</p>
+          </div>
+          <div class="sl-content">
+            <div class="text-muted small">A l'instant</div>
+            <p style="font-size: small">@Eric a édité l'annonce 20215</p>
+          </div>
+          <div class="sl-content">
+            <div class="text-muted small">A l'instant</div>
+            <p style="font-size: small">@Eric a édité l'annonce 20215</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-4">
+    </div>
+  </div>
+</section>
