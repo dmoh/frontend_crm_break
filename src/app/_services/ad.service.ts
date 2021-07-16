@@ -13,14 +13,12 @@ export class AdService {
     headers: new HttpHeaders(
       {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        //Authorization: `Bearer ${token}`
       }
     )
   };
-  constructor(private http: HttpClient) {
-
-  }
-
+  constructor(private http: HttpClient) {}
 
   getAdById(idAd: number): Observable<any> {
     return this.http

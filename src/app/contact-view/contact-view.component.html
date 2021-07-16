@@ -1,6 +1,6 @@
-<mat-toolbar style="background: #fff">
+<mat-toolbar style="background:#1d1d1d">
   <mat-toolbar-row>
-    <span style="color: #3b3e44; font-size: x-large">B R E C</span>
+    <span style="color: #fff; font-size: x-large">B R E C</span>
     <span class="example-spacer"></span>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -35,19 +35,46 @@
                     <span style="font-size: small" class="vertical-align-top material-icons">
                       location_on
                     </span>
-                    6 rue de la joie 1211 Petit-Lancy</span>
+                   {{ad.street}} 6 rue de la joie 1211 Petit-Lancy</span>
                 </h3>
                 <div class="price-area">
-                  <span class="badge badge-primary d-block">Achat</span>
-                  65.000.000 CHF</div>
+                  <span class="badge d-block" style="background-color: black; color: white;">Montant</span>
+                  {{ ad.amount }}</div>
               </div>
               <div class="property-categs mb-3">
               </div>
+
               <div style="height: 700px; overflow: hidden; position: relative" class="mt-3 mb-3 w-100">
-                <img src="assets/images/bg_header_ad.jpg" alt="" width="100%" height="auto">
+                <ngb-carousel
+                  [showNavigationArrows]='true'
+                  [showNavigationIndicators]="true"
+                  interval="12000"
+                  keyboard="true"
+                  [activeId]="'firstSlide'"
+                >
+                <ng-template ngbSlide id="firstSlide">
+                    <div class="picsum-img-wrapper">
+                      <img src="assets/images/bg_header_ad.jpg" alt="carous1" width="100%" height="auto">
+                    </div>
+                </ng-template>
+
+                <ng-template ngbSlide id="secondSlide">
+                  <div class="picsum-img-wrapper">
+                    <img src="assets/images/bg_building.jpg" alt="carous2" width="100%" height="auto">
+                  </div>
+                 </ng-template>
+                 <ng-template ngbSlide id="thirdSlide">
+                  <div class="picsum-img-wrapper">
+                    <img src="assets/images/bg_building_contact_view.jpg" alt="carous3" width="100%" height="auto">
+                  </div>
+                 </ng-template>
+
+                </ngb-carousel>
+                <!--<img src="assets/images/bg_header_ad.jpg" alt="" width="100%" height="auto">-->
                 <!--<p>
                   Whether you own a property, or you’re in search of one we want you to get the most out of your investment. Brec assist his clients in the process of representing and accompanying you in your approaches with the other professionals involved in transactions. Relying on our knowledge of the field, our network of contacts we identify a buyers suitability and meet all client expectations. In every transaction, we engage the utmost professionalism and responsibility to the seller, to the buyer or to both, when we represent both parties.
                 </p>-->
+
                 <div style="position: absolute; top: .5rem; right: .5rem; z-index: 500">
                   <span style="padding: .3rem;border: 1px solid;" class="color-grey vertical-align-top material-icons">
                     map
@@ -70,45 +97,64 @@
                           <span class="color-grey vertical-align-top material-icons">
                           square_foot
                           </span>
-                            <span class="pl-3 color-darkblue vertical-align-sub"><b>600 m<sup>2</sup></b></span>
+                            <span class="pl-3 color-darkblue vertical-align-sub"><b>{{ad.area}} 0<sup>m2</sup></b></span>
                           </li>
+                          <li>
+                            <span class="color-grey vertical-align-top material-icons">
+                            home
+                            </span>
+                              <span class="pl-3 color-darkblue vertical-align-sub"><b>{{ad.rooms}} pièces</b></span>
+                            </li>
                           <li>
                           <span class="color-grey vertical-align-top material-icons">
                             local_hotel
                           </span>
-                            <span class="pl-3 color-darkblue vertical-align-sub"><b>5 Chambres</b></span>
+                            <span class="pl-3 color-darkblue vertical-align-sub"><b>{{ad.bedrooms}} Chambres</b></span>
                           </li>
                           <li>
                           <span class="color-grey vertical-align-top material-icons">
                             bathtub
                           </span>
-                            <span class="pl-3 color-darkblue vertical-align-sub"><b>3 Salles de bains</b></span>
+                            <span class="pl-3 color-darkblue vertical-align-sub"><b> {{ad.bathroom}} Salles de bains</b></span>
                           </li>
                           <li>
-                          <span class="color-grey vertical-align-top material-icons">
-                            date_range
-                          </span>
-                            <span class="pl-3 color-darkblue vertical-align-sub"><b>Construction 2015</b></span>
-                          </li>
+                            <span class="color-grey vertical-align-top material-icons">wc</span>
+                            <span class="pl-3 color-darkblue vertical-align-sub"><b> {{ad.wc}} wc</b></span>
+
+                           </li>
+
+                            <li>
+                              <span class="color-grey vertical-align-top material-icons-outlined">accessible</span>
+                              <span class="pl-3 color-darkblue vertical-align-sub"><b>{{this.ad.handicap_accessibility}} accès</b></span>
+                            </li>
                         </ul>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12" style="padding-right: 0; padding-left: 0">
                     <div class="card mt-4">
-                      <h6>Description</h6>
+                      <h6>Description {{ad.comment}} </h6>
                       <p style="font-family: 'Roboto', sans-serif ;font-weight: 100;font-size: 13px;">Just steps away from QM2 express bus to Manhattan and local buses; only minutes from the LIRR. Walking distance to the Bay Terrace Shopping Center, Baybridge Commons Shopping Center, pool clubs, movie theaters and tennis courts. 1.5 blocks away from elementary school PS 169 and Bell Academy middle school in the award-winning District 25. Don’t miss this opportunity!</p>
                     </div>
                   </div>
                   <div class="col-md-12" style="padding-right: 0; padding-left: 0">
+                    <h5 style="text-align: center;">Vistitez le comme si vous y étiez</h5>
                     <div class="card mt-4">
-                      <h6>Détails</h6>
-                      <p style="font-family: 'Roboto', sans-serif ;font-weight: 300;font-size: 13px;">Just steps away from QM2 express bus to Manhattan and local buses; only minutes from the LIRR. Walking distance to the Bay Terrace Shopping Center, Baybridge Commons Shopping Center, pool clubs, movie theaters and tennis courts. 1.5 blocks away from elementary school PS 169 and Bell Academy middle school in the award-winning District 25. Don’t miss this opportunity!</p>
+                      <h6>Plan 3D</h6>
+                      <div class="col-md-12 mt-3">
+                        <iframe src="https://my.matterport.com/show/?m=JGPnGQ6hosj&play=1" width="100%" height="500px" frameborder="0"></iframe>
+                      </div>
                     </div>
                   </div>
+                   <!--<div class="col-md-12" style="padding-right: 0; padding-left: 0">
+                   <div class="card mt-4">
+                      <h6>Détails</h6>
+                      <p style="font-family: 'Roboto', sans-serif ;font-weight: 300;font-size: 13px;">Just steps away from QM2 express bus to Manhattan and local buses; only minutes from the LIRR. Walking distance to the Bay Terrace Shopping Center, Baybridge Commons Shopping Center, pool clubs, movie theaters and tennis courts. 1.5 blocks away from elementary school PS 169 and Bell Academy middle school in the award-winning District 25. Don’t miss this opportunity!</p>
+
+                  </div></div>-->
                   <div class="col-md-12" style="padding-right: 0; padding-left: 0">
                     <div class="card mt-4">
-                      <h6>Adresse</h6>
+                      <h6>Localisation</h6>
                       <div *ngIf="apiLoaded">
                         <google-map width="100%"
                                     [options]="options">
@@ -118,7 +164,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12" style="padding-right: 0; padding-left: 0">
+                  <!--<div class="col-md-12" style="padding-right: 0; padding-left: 0">
                     <div class="card mt-4">
                       <h6>Caractéristiques</h6>
                       <div class="col-md-12 mt-3">
@@ -144,15 +190,8 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-12" style="padding-right: 0; padding-left: 0">
-                    <div class="card mt-4">
-                      <h6>Plan 3D</h6>
-                      <div class="col-md-12 mt-3">
-                        <iframe src="https://my.matterport.com/show/?m=JGPnGQ6hosj&play=1" width="100%" height="500px" frameborder="0"></iframe>
-                      </div>
-                    </div>
-                  </div>
+                  </div>--->
+
                   <div class="col-md-12" style="padding-right: 0; padding-left: 0">
                     <div class="card mt-4">
                       <h6>Annexes</h6>
@@ -224,7 +263,7 @@
               </div>
               <div class="card">
                 <div class="card-body">
-                  <h5>Première.s impression.s sur ce bien :) ?</h5>
+                  <h5>Contactez nous</h5>
                   <mat-selection-list
                     (selectionChange)="onChange($event)"
                   >
@@ -246,7 +285,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card d-flex w-100 justify-content-between">
+              <!--<div class="card d-flex w-100 justify-content-between">
                 <div class="">
                   <div  class="w-100 wrapper-img">
                     <img src="assets/images/bg_header_ad.jpg"  alt="">
@@ -294,7 +333,7 @@
       </div>
     </div>
   </div>
-</section>
+</section>-->
 <!--<section style="width: 100%;position: relative; margin-top: 2rem; margin-bottom: 2rem">
   <div class="overlay"></div>
   <div style="padding: 1rem; padding-top: 2rem; padding-bottom: 2rem" class="container">
