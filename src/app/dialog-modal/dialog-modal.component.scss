@@ -1,3 +1,6 @@
+.mat-dialog-container {
+ background-color:  RGB(245, 245, 245);
+}
 .mat-form-field + .mat-form-field {
   /*margin-left: 8px;*/
 }
@@ -12,10 +15,12 @@
 
 
 .wrapper-file-upload {
-  cursor: pointer;
+  //cursor: pointer;
   padding: .5rem;
   border-bottom: 1px dashed #8c9497;
 }
-.selector-files {
+/*.selector-files {
   cursor: pointer;
-}
+}*/
+
+

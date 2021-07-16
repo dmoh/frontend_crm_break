@@ -1,16 +1,92 @@
 <section class="container-fluid">
     <div style="padding-top: 1rem; padding-bottom: 1rem">
-        <button (click)="openDialog()" mat-raised-button color="primary">
+        <button (click)="openDialog()" mat-raised-button style="background-color: RGB(255, 193, 7);">
             <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
             AJOUTER UNE ANNONCE
         </button>
     </div>
-    <mat-divider style="" class="p-05"></mat-divider>
+    <div class="container">
+      <mat-form-field>
+        <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
+      </mat-form-field>
+
+        <table class="w-100" mat-table [dataSource]="dataSource" >
+
+
+
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.id}} </td>
+
+          </ng-container>
+
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.title}} </td>
+          </ng-container>
+
+
+          <!--<ng-container matColumnDef="dsecription">
+            <th mat-header-cell *matHeaderCellDef> dsecription </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.comment}} </td>
+          </ng-container>-->
+
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.amount}} </td>
+          </ng-container>
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef> Image </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.image}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+
+
+
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+
+
+
+    <!--<mat-divider style="" class="p-05"></mat-divider>
     <div *ngIf="ads"  class="container-fluid">
       <div class="row">
-        <div *ngFor="let ad of ads" class="col-md-6">
-          <mat-card  class="">
-            <mat-card-header>
+
+        <div *ngFor="let ad of ads" class="col-md-6">-->
+          <!--<mat-card  class="">-->
+
+            <!--<mat-expansion-panel style="margin-bottom: 5px;">
+              <mat-expansion-panel-header>-->
+                <!--<div mat-card-avatar class="example-header-image"></div>-->
+                  <!--<mat-panel-title>{{ ad.title }}</mat-panel-title>
+
+                  </mat-expansion-panel-header>
+                <mat-panel-description>
+                  <div [class]="ad.comment > 20 ? 'limit-character' : ''">
+                    <p>{{ad.comment}}description</p>
+                    <p>{{ad.city}}Paris</p>
+                  </div>
+                </mat-panel-description>
+                <mat-action-row style="text-align: right; position: absolute;bottom: 12px;right: 5px;">
+                  <button (click)="onUpdateAd(ad)" mat-mini-fab color="blue"><span class="material-icons-outlined">
+                    edit
+                    </span></button>
+                  <button mat-mini-fab color="warn"><span class="material-icons-outlined">
+                    delete
+                    </span>
+                  </button>
+                </mat-action-row>
+            </mat-expansion-panel>-->
+
+            <!--<mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>{{ ad.title }}</mat-card-title>
               <mat-card-subtitle>{{ ad.comment }}</mat-card-subtitle>
@@ -26,8 +102,9 @@
               <button (click)="onUpdateAd(ad)" mat-raised-button color="primary">Modifier</button>
               <button mat-raised-button color="warn">Supprimer</button>
             </mat-card-actions>
-          </mat-card>
-        </div>
+          </mat-card>-->
+        <!--</div>
+
       </div>
-    </div>
+    </div>-->
 </section>

@@ -1,45 +1,80 @@
-<h1 mat-dialog-title>Ajouter ou modifier une annonce</h1>
+<!--<h1 mat-dialog-title>Ajouter ou modifier une annonce</h1>-->
 <div mat-dialog-content>
-  <mat-horizontal-stepper [linear]="true" #stepper>
-      <mat-step [stepControl]="globalForm">
-        <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
-          <ng-template matStepLabel>1er Partie</ng-template>
-          <mat-form-field class="mt-5" appearance="outline">
-              <mat-label>Titre de l'annonce</mat-label>
-              <input type="text"  autocomplete="off" matInput formControlName="title" required>
+  <mat-horizontal-stepper style="background-color: RGB(245, 245, 245);" [linear]="true" #stepper>
+    <mat-step [stepControl]="globalForm">
+      <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Description</ng-template>
+        <div class="form-group" style="padding-top: 35px;border-bottom: solid 9px white" formGroupName="description">
+        <h5>Descriptif</h5>
+          <mat-form-field appearance="outline"><mat-label>Titre de l'annonce</mat-label>
+            <input type="text" autocomplete="off" matInput formControlName="title" required/>
           </mat-form-field>
           <mat-form-field appearance="outline">
-              <mat-label>Description</mat-label>
-              <textarea formControlName="comment" matInput></textarea>
+            <mat-select placeholder="Type de vente" formControlName="type">
+              <mat-option value="Achat">Achat</mat-option>
+              <mat-option value="Location">Location</mat-option>
+              <mat-option value="Vacances">Vacances</mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline">
-              <mat-label>Montant</mat-label>
-              <input formControlName="amount" matInput type="number" class="example-right-align">
+          <mat-select placeholder="Categorie de bien" formControlName="category">
+              <mat-option value="Maison">Maison</mat-option>
+              <mat-option value="Appartement">Appartement</mat-option>
+              <mat-option value="Terrain">Terrain</mat-option>
+              <mat-option value="parking/garage">Parking/Garage</mat-option>
+              <mat-option value="Immeuble">Immeuble</mat-option>
+              <mat-option value="bureaux">Bureaux et locaux</mat-option>
+              <mat-option value="fond de commerce">Fond de commerce</mat-option>
+              <mat-option value="chalet">Chalet</mat-option>
+              <mat-option value="mobile home">Mobile home</mat-option>
+              <mat-option value="péniche">Péniche</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--<mat-form-field class="example-chip-list">
+            <mat-chip-list #tagList aria-label="Catégorie">
+              <mat-chip
+                *ngFor="let tag of tags"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(tag)"
+              >
+                {{ tag }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="Catégorie de bien"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="tagList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="selected($event)"
+            >
+              <mat-option
+                *ngFor="let tag of filteredTags | async"
+                [value]="tag"
+              >
+                {{ tag.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>-->
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="comment" matInput></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Montant</mat-label>
+            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="amount" required/>
               <span matPrefix style="">CHF</span>
-              <span matSuffix>
-                <mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle>
-              </span>
+              <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>
           </mat-form-field>
-          <div class="wrapper-file-upload">
-            <label id="selector-files" for="input-file-id">
-              <span>Ajouter des fichiers </span>
-              <span style="" class="material-icons">
-                  attach_file
-              </span>
-            </label>
-            <input class="ng-hide" (change)="onUploadFile($event)" id="input-file-id" multiple type="file" />
-          </div>
-          <div *ngIf="files.length > 0" class="display-filename mt-2 mb-2">
-            <div style="display: flex; justify-content: space-between" *ngFor="let file of files">
-              <div>{{ file.fileUpload.name }}</div>
-              <div (click)="onDeleteFile(file)" style="color: red; cursor: pointer;" >
-                  <span class="material-icons">
-                    close
-                  </span>
-              </div>
-            </div>
-          </div>
-          <!--<div formArrayName="tags">
+        </div>
+
+        <!--<div formArrayName="tags">
               <button (click)="add('tag')" mat-raised-button color="accent">Ajouter un tag</button>
               <div *ngFor="let tag of tags.controls; let i=index">
                   The repeated alias template
@@ -49,30 +84,8 @@
                   </mat-form-field>
               </div>
           </div>--->
-          <mat-form-field class="example-chip-list">
-          <mat-chip-list #tagList aria-label="Catégorie">
-            <mat-chip
-              *ngFor="let tag of tags"
-              [selectable]="selectable"
-              [removable]="removable"
-              (removed)="remove(tag)"
-            >
-              {{tag}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Catégorie/Thème"
-                   [matAutocomplete]="auto"
-                   [matChipInputFor]="tagList"
-                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                   [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="add($event)">
-          </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                {{tag.name}}
-              </mat-option>
-            </mat-autocomplete>
-            <!--<mat-form-field class="example-full-width">
+
+        <!--<mat-form-field class="example-full-width">
               <input type="text"
                      placeholder="Pick one"
                      aria-label="Number"
@@ -85,37 +98,133 @@
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>-->
-          </mat-form-field>
-          <div style="width: 100%;display:flex; justify-content: space-around">
+
+        <!---- <div style="width: 100%;display:flex; justify-content: space-around">
             <div style="margin-bottom: 1rem">
               <mat-slide-toggle formControlName="published">Publié</mat-slide-toggle>
             </div>
             <div style="margin-bottom: 1rem">
               <mat-slide-toggle formControlName="sold">Vendu</mat-slide-toggle>
             </div>
-          </div>
-          <hr>
-          <div>
-            <h5>Caractéristiques</h5>
-          </div>
+          </div>-->
+        <hr />
+        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="location">
+            <h5>Localisation du bien</h5>
+            <mat-form-field appearance="outline">
+              <mat-label>Pays</mat-label>
+              <input autocomplete="off" formControlName="country" matInput type="text"/>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label >Ville</mat-label>
+              <input autocomplete="off" formControlName="city" matInput type="text"/>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label >Code Postal</mat-label>
+              <input autocomplete="off" formControlName="zipcode" matInput type="number"/>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Adresse</mat-label>
+                <input autocomplete="off" formControlName="street" matInput type="text"/>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="characteristics">
+          <h5>Caractéristiques</h5>
+          <mat-form-field floatPlaceholder="always">
+            <mat-label>Superficie</mat-label>
+            <input autocomplete="off" formControlName="area" matInput type="number" class="example-right-align" value="{{ superficie }}"/>
+            <div>
+              <mat-slider [(ngModel)]="superficie" min="0" max="1000" step="10" thumbLabel="true" formControlName="area">
+              </mat-slider>
+            </div>
+          </mat-form-field>
           <mat-form-field>
-            <mat-label>Nombre de piéces</mat-label>
-            <input autocomplete="off" formControlName="rooms" matInput type="number" class="example-right-align">
-            <span matSuffix>
-              </span>
+            <mat-label>Pièces</mat-label>
+            <input autocomplete="off" formControlName="rooms" matInput type="number" class="example-right-align" value="{{ pieces }}"/>
+            <div>
+              <mat-slider [(ngModel)]="pieces" min="0" max="10" step="1" thumbLabel="true" formControlName="rooms"></mat-slider>
+            </div>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Chambres</mat-label>
+            <input autocomplete="off" formControlName="bedrooms" matInput type="number" class="example-right-align" value="{{ chambre }}"/>
+            <div>
+              <mat-slider [(ngModel)]="chambre" min="0" max="10" step="1" thumbLabel="true" formControlName="bedrooms"></mat-slider>
+            </div>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Salle de bains</mat-label>
+            <input autocomplete="off" formControlName="bathroom" matInput type="number" class="example-right-align" value="{{ bathroom }}"/>
+            <div>
+              <mat-slider [(ngModel)]="bathroom" min="0" max="10" step="1" thumbLabel="true" formControlName="bathroom"></mat-slider>
+            </div>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Toilettes</mat-label>
+              <input autocomplete="off" formControlName="wc" matInput type="number" class="example-right-align" value="{{ wc }}"/>
+            <div>
+              <mat-slider [(ngModel)]="wc" min="0" max="10" step="1" thumbLabel="true" formControlName="wc"></mat-slider>
+            </div>
           </mat-form-field>
           <div style="margin-bottom: 1rem">
             <mat-slide-toggle formControlName="handicap_accessibility">Accès handicapé</mat-slide-toggle>
           </div>
-        </form>
-        <div>
-          <button mat-raised-button matStepperNext>Suivant</button>
         </div>
-      </mat-step>
-      <mat-step [stepControl]="contactForm">
-        <form [formGroup]="contactForm">
-        <ng-template matStepLabel>Contacts</ng-template>
-          <!-- <mat-form-field>
+      </form>
+
+      <div style="margin-top: 40px; text-align: right">
+        <button [disabled]="globalForm.invalid" mat-raised-button color="primary" matStepperNext>Suivant</button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="docsForm">
+      <form [formGroup]="docsForm">
+        <ng-template matStepLabel>Ajout de photos</ng-template>
+        <div class="wrapper-file-upload">
+          <label id="selector-files" for="input-file-id">
+            <span>Ajouter des fichiers </span>
+            <span style="cursor: pointer" class="material-icons">
+              attach_file
+            </span>
+          </label>
+          <input
+            class="ng-hide"
+            (change)="onUploadFile($event)"
+            accept="image/*"
+            id="input-file-id"
+            multiple
+            type="file"
+            formControlName="image"
+          />
+        </div>
+        <div *ngIf="files.length > 0" class="display-filename mt-2 mb-2">
+          <div
+            style="display: flex; justify-content: space-between"
+            *ngFor="let file of files"
+          >
+            <div>{{ file.fileUpload.name }}</div>
+            <div
+              (click)="onDeleteFile(file)"
+              style="color: red; cursor: pointer"
+            >
+              <span class="material-icons"> close </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="btn"
+          style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <div>
+          <button mat-raised-button matStepperPrevious>Précédent</button>
+        </div>
+          <div><button [disabled]="docsForm.invalid" mat-raised-button color="primary" matStepperNext>Suivant</button></div>
+          <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+          </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="contactForm">
+      <form [formGroup]="contactForm">
+        <ng-template matStepLabel>Ajout de contacts</ng-template>
+        <!-- <mat-form-field>
           <mat-label>Email(s)</mat-label>
             <input
               autocomplete="off"
@@ -145,40 +254,73 @@
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>-->
-          <div class="info">
-            <h5 class="text-center">Envoyer cette annonce aux contacts suivants</h5>
-            <div class="text-center">
-              <small class="text-center" style="color: #ccc"><em>Il s'agit d'un nouveau contact ? il suffit d'insérer son adresse mail ci-dessous</em></small>
-            </div>
+        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="contacts">
+        <div class="info">
+          <h5 class="text-center">
+            Envoyer cette annonce aux contacts suivants
+          </h5>
+          <div class="text-center"><small class="text-center" style="color: #ccc">
+            <em>Il s'agit d'un nouveau contact ? Remplissez les champs ci dessous</em></small>
           </div>
-          <mat-form-field class="example-chip-list">
-            <mat-chip-list #chipListContact aria-label="Fruit selection">
-              <mat-chip *ngFor="let contact of emails" [selectable]="selectable"
-                        [removable]="removable" (removed)="remove(contact.email, true)">
-                {{contact.email}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-              </mat-chip>
-              <input placeholder="Nouveau emails"
-                     [matChipInputFor]="chipListContact"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event, 'new-contact')">
-            </mat-chip-list>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input autocomplete="off" formControlName="lastName" matInput type="text"/>
+        </mat-form-field>
+         <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+            <input autocomplete="off" formControlName="name" matInput type="text"/>
           </mat-form-field>
-          <mat-selection-list style="margin-bottom: 2rem" #emailLists (selectionChange)="onGroupEmailChange(emailLists.selectedOptions.selected)">
-            <mat-list-option *ngFor="let email of emails" [value]="email" >
-              {{email.email}}
+          <mat-form-field appearance="outline">
+            <mat-label>Tél</mat-label>
+            <input autocomplete="off" formControlName="phone_number" matInput type="number"/>
+          </mat-form-field>
+          <mat-form-field class="example-chip-list"  appearance="outline">
+          <mat-chip-list #chipListContact aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let contact of emails"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(contact.email, true)"
+            >
+              {{ contact.email }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Emails"
+              [matChipInputFor]="chipListContact"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event, 'new-contact')"
+              formControlName="emails"
+            />
+          </mat-chip-list>
+          </mat-form-field>
+          <mat-selection-list
+            style="margin-bottom: 2rem"
+            #emailLists
+            (selectionChange)="onGroupEmailChange(emailLists.selectedOptions.selected)">
+            <mat-list-option *ngFor="let email of emails" [value]="email">
+              {{ email.email }}
             </mat-list-option>
           </mat-selection-list>
-        <div>
-          <button style="margin-right: .4rem" mat-raised-button matStepperPrevious>Précédent</button>
-          <button type="button" (click)="onSubmit()" mat-raised-button color="primary" >Envoyer</button>
+
+        <div class="btn" style="margin-top: 40px; display: flex; justify-content: space-between;">
+          <div>
+            <button style="margin-right: 0.4rem" mat-raised-button matStepperPrevious>Précédent</button>
+          </div>
+            <div>
+              <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Suivant</button>
+            </div>
         </div>
-        </form>
-      </mat-step>
+        </div>
+      </form>
+    </mat-step>
   </mat-horizontal-stepper>
 </div>
-<div mat-dialog-actions>
-    <!--<button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
-</div>
+
+
+<!--<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div>-->

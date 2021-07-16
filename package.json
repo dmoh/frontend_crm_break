@@ -16,6 +16,7 @@
     "@angular/common": "~9.1.11",
     "@angular/compiler": "~9.1.11",
     "@angular/core": "~9.1.11",
+    "@angular/flex-layout": "^12.0.0-beta.34",
     "@angular/forms": "~9.1.11",
     "@angular/google-maps": "^10.2.5",
     "@angular/localize": "~9.1.11",
@@ -49,5 +50,17 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmoh/frontend_crm_break.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmoh/frontend_crm_break/issues"
+  },
+  "homepage": "https://github.com/dmoh/frontend_crm_break#readme"
 }

@@ -11,12 +11,14 @@ import { ContactViewComponent } from './contact-view/contact-view.component';
 import { FooterComponent } from './footer/footer.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ContactViewComponent,
-    FooterComponent
+    FooterComponent,
+
   ],
     imports: [
         BrowserModule,

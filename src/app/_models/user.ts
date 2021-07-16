@@ -3,15 +3,17 @@ export class User {
   username: string;
   email: string = '';
   password?: string = '';
-  firstname?: string = '';
-  lastname?: string = '';
   token?: string|number;
   position?: number = 0;
+   //firstname?: string = '';
+  //lastname?: string = '';
+  //roles: string = ['supAdmin', 'admin', 'manager', 'moderateur', 'secretaire'];
+
 
 }
 
 export const ELEMENT_DATA: User[] = [
-  {id: 1, username: 'Hydrogen', token: 1.0079, email: 'H'},
+  /*{id: 1, username: 'Hydrogen', token: 1.0079, email: 'H'},
   {id: 2, username: 'Helium', token: 4.0026, email: 'He'},
   {id: 3, username: 'Lithium', token: 6.941, email: 'Li'},
   {id: 4, username: 'Beryllium', token: 9.0122, email: 'Be'},
@@ -30,5 +32,5 @@ export const ELEMENT_DATA: User[] = [
   {id: 17, username: 'Chlorine', token: 35.453, email: 'Cl'},
   {id: 18, username: 'Argon', token: 39.948, email: 'Ar'},
   {id: 19, username: 'Potassium', token: 39.0983, email: 'K'},
-  {id: 20, username: 'Calcium', token: 40.078, email: 'Ca'},
+  {id: 20, username: 'Calcium', token: 40.078, email: 'Ca'},*/
 ];
