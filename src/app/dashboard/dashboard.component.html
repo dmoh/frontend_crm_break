@@ -1,16 +1,21 @@
 <mat-toolbar style="background: #1d1d1d !important;" color="primary">
     <mat-toolbar-row>
+        <span class="material-icons-outlined" (click)='opened=!opened' style="margin-right: 20px; cursor: pointer;">
+        menu
+        </span>
         <span style="">B R E C</span>
         <span class="example-spacer"></span>
+        <form class="example-form" style="margin-right: 25px;">
+            <mat-form-field style="font-size: small; margin-top: .25rem; ">
+              <input class="search"
 
-        <form class="example-form">
-            <mat-form-field style="font-size: small; margin-top: .25rem;">
-                <input type="text"
+                       type="search"
                        placeholder="Rechercher"
                        aria-label="Number"
                        matInput
                        [formControl]="myControl"
-                       [matAutocomplete]="auto">
+                       [matAutocomplete]="auto"
+                       color="black"/>
                 <button mat-button *ngIf="myControl.valueChanges" matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -20,12 +25,29 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
+
+
         </form>
-        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+        <!--<mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>-->
+        <div class="icons">
+          <span class="material-icons-outlined">
+          language
+          </span>
+          <span class="material-icons-outlined">
+          fullscreen_exit
+          </span>
+          <span matBadge="5" matBadgeColor="primary" class="material-icons-outlined">
+            email
+            </span>
+            <span class="material-icons-outlined">
+          logout
+          </span>
+          </div>
+
     </mat-toolbar-row>
 </mat-toolbar>
   <mat-sidenav-container>
-    <mat-sidenav style="width: 230px; text-align: center" mode="side" opened #sidenav>
+    <mat-sidenav style="width: 230px; text-align: center" mode="side" [(opened)]="opened">
       <div style="width: 100%; overflow: hidden; background: url(assets/images/bg_vector.jpg) top left no-repeat; background-size: cover; padding: 1rem">
         <div class="wrapper-img-top-left">
           <img src="assets/images/building_brec_header.jpg"  alt="building" height="100%">
@@ -45,95 +67,110 @@
         <a mat-list-item [routerLink]="'/dashboard/overview'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                visibility
+                </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Vue Globale</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
         <a mat-list-item [routerLink]="'/dashboard/ads'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons material-icons-outlined">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                note_add
+                </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Annonces</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
         <a mat-list-item [routerLink]="'/dashboard/contacts'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                support_agent
+                </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Collaborateurs</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
         <a mat-list-item [routerLink]="'/dashboard/users'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                groups
+                </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Membres</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
         <a mat-list-item [routerLink]="'/activities'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
+              <span class="material-icons-outlined">
+                bar_chart
               </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Activités</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
-        <a mat-list-item [routerLink]="'/contact'">
+        <a mat-list-item [routerLink]="'/dashboard/task'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                task
+                </span>
             </div>
-            <div class="" style="text-align: center; align-self: center">Contact membre</div>
+            <div class="" style="text-align: center; align-self: center">Gestion des tâches</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
-        <a mat-list-item [routerLink]="'/droits'">
+        <a mat-list-item [routerLink]="'/dashboard/members'">
           <div style="display: flex;width: 100%;justify-content: space-between;">
             <div class="">
-              <span class="material-icons">
-                assessment
-              </span>
+              <span class="material-icons-outlined">
+                rule
+                </span>
             </div>
             <div class="" style="text-align: center; align-self: center">Gestion des droits</div>
             <div style="align-self: center;">
-              <span style=" right: 0" class="badge badge-warning">4</span>
+
             </div>
           </div>
         </a>
-        <button mat-list-item (click)="sidenav.toggle()"  mat-list-item>Close</button>
+        <a mat-list-item [routerLink]="'/dashboard/billing'">
+          <div style="display: flex;width: 100%;justify-content: space-between;">
+            <div class="">
+              <span class="material-icons-outlined">
+                payment
+                </span>
+            </div>
+            <div class="" style="text-align: center; align-self: center">Facturation</div>
+            <div style="align-self: center;">
+
+            </div>
+          </div>
+        </a>
+        <!--<button  mat-list-item (click)="sidenav.toggle()"  mat-list-item><span class="material-icons-outlined" style="text-align: center;">
+          close
+          </span></button>-->
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

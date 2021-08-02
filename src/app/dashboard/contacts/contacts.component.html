@@ -1,4 +1,4 @@
-<section class="container-fluid">
+<!--<section class="container-fluid">-->
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!--<div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-heading">
@@ -40,4 +40,46 @@
       </div>
     </div>
   </div>
-</section>
+
+</section>-->
+<div class="container">
+  <mat-form-field>
+    <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
+  </mat-form-field>
+
+  <table class="w-100" mat-table [dataSource]="dataSource" >
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="prenom">
+      <th mat-header-cell *matHeaderCellDef> Prénom </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.lastname}} </td>
+    </ng-container>
+    <ng-container matColumnDef="adresse">
+      <th mat-header-cell *matHeaderCellDef> Adresse </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.adress}} </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Tel </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.phone_number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+
+
+
+
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

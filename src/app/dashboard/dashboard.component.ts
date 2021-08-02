@@ -13,6 +13,7 @@ import {DashboardService} from "./dashboard.service";
 })
 export class DashboardComponent implements OnInit {
 
+    opened = true;
     myControl = new FormControl();
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
