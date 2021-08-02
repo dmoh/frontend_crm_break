@@ -15,7 +15,6 @@ export class ContactsComponent implements OnInit {
   dataSource : MatTableDataSource<Contact> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
