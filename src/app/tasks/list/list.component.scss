@@ -1,0 +1,22 @@
+mat-drawer-container {
+  background-color: RGB(243, 243, 243);
+  height:100%;
+  width: 100%;
+}
+mat-drawer, mat-drawer-content {
+  padding: 8px;
+}
+mat-drawer {
+  background-color: RGB(243, 243, 243);
+  width: 550px;
+}
+mat-icon {
+  cursor: pointer;
+  //padding-bottom:"2px";
+}
+/*mat-list-item {
+  //border-top: solid 1px black;
+  border-bottom: solid 1px black;
+  //border: solid 1px black;
+
+}*/

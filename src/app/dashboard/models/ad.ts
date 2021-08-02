@@ -3,7 +3,7 @@ import {Contact} from './contact';
 export class Ad {
     id: number = 0;
     title: string = '';
-    type?: string = ''
+    type?: string = '';
     category: string;
     comment: string = '';
     amount: number = 0;

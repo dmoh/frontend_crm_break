@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import {DashboardComponent} from "./dashboard.component";
 import {CoreModule} from "../core/core.module";
@@ -8,10 +7,18 @@ import { AdsComponent } from './ads/ads.component';
 import {DashboardService} from "./dashboard.service";
 import {ContactsComponent} from "@app/dashboard/contacts/contacts.component";
 import { UsersComponent } from './users/users.component';
+import { ChartComponent } from './overview/chart/chart.component';
+import { ChartBarComponent } from './overview/chart-bar/chart-bar.component';
+import { DetailsComponent } from '@app/tasks/details/details.component';
+import { ListComponent } from '@app/tasks/list/list.component';
+import { MembersComponent } from './members/members.component';
+import { BillingComponent } from './billing/billing.component';
+import { TaskComponent } from '@app/tasks/task.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent],
+  declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
+    BillingComponent, TaskComponent,DetailsComponent, ListComponent],
   imports: [
       CoreModule,
       DashboardRoutingModule,
@@ -20,7 +27,12 @@ import { UsersComponent } from './users/users.component';
       CoreModule,
       OverviewComponent,
       ContactsComponent,
-      UsersComponent
+      MembersComponent,
+      BillingComponent,
+      TaskComponent,
+      UsersComponent,
+      ChartComponent,
+      ChartBarComponent,
   ],
   providers: [
       DashboardService

@@ -1,0 +1,61 @@
+<div class="container">
+  <div
+    style="display: flex; justify-content: space-between; margin-bottom: 20px"
+  >
+    <div>
+      <h5>Décrivez votre tâche</h5>
+    </div>
+    <div>
+      <mat-icon>more_vert</mat-icon>
+      <mat-icon>clear</mat-icon>
+    </div>
+  </div>
+  <mat-divider class="mt-6 mb-20"></mat-divider>
+  <form [formGroup]="taskForm">
+    <div style="margin-top: 35px">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Titre</mat-label>
+        <input type="text" matInput formControlName="title" />
+      </mat-form-field>
+
+      <div style="display: flex">
+        <mat-form-field appearance="outline" style="margin-right: 15px">
+          <mat-label>Tags</mat-label>
+          <mat-select placeholder="type" formControlName="tags">
+            <mat-option value="Maison">Maison</mat-option>
+            <mat-option value="Appartement">Appartement</mat-option>
+            <mat-option value="Terrain">Terrain</mat-option>
+            <mat-option value="parking/garage">Parking/Garage</mat-option>
+            <mat-option value="Immeuble">Immeuble</mat-option>
+            <mat-option value="bureaux">Bureaux et locaux</mat-option>
+            <mat-option value="fond de commerce">Fond de commerce</mat-option>
+            <mat-option value="chalet">Chalet</mat-option>
+            <mat-option value="mobile home">Mobile home</mat-option>
+            <mat-option value="péniche">Péniche</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-select placeholder="Priority" formControlName="priority">
+            <mat-option value="Low">Low</mat-option>
+            <mat-option value="Normal">Normal</mat-option>
+            <mat-option value="Hight">Hight</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Choisissez une date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Notes</mat-label>
+        <textarea formControlName="notes" matInput></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+  <div style="text-align: right; margin-bottom: 20px;">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Ajouter</button>
+  </div>
+</div>
