@@ -10,6 +10,7 @@ import { BillingComponent } from './billing/billing.component';
 import { ListComponent } from '@app/tasks/list/list.component';
 import { DetailsComponent } from '@app/tasks/details/details.component';
 import { GantComponent } from './gant/gant.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -51,6 +52,10 @@ const routes: Routes = [{
         {
           path: 'gant',
           component: GantComponent,
+        },
+        {
+          path: 'calendar',
+          component: CalendarComponent,
         },
       ]
 },

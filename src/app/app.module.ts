@@ -14,6 +14,19 @@ import { GantComponent } from './dashboard/gant/gant.component';
 import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } from 'angular-google-charts';
 import { ReplaySubject } from 'rxjs';
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
+//import { FullCalendarModule } from '@fullcalendar/angular';
+//import dayGridPlugin from '@fullcalendar/daygrid';
+//import { CalendarComponent } from './dashboard/calendar/calendar.component';
+//import timeGridPlugin from '@fullcalendar/timegrid';
+//import listPlugin from '@fullcalendar/list';
+//import interactionPlugin from '@fullcalendar/interaction';
+
+/*FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin
+])*/
 
 @NgModule({
   declarations: [
@@ -22,6 +35,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     ContactViewComponent,
     FooterComponent,
     GantComponent,
+    //CalendarComponent,
 
   ],
     imports: [
@@ -32,6 +46,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         NgbModule,
         GoogleMapsModule,
         GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
+        //FullCalendarModule,
     ],
   providers: [
     TaskService,
