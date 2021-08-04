@@ -90,6 +90,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       MatMenuModule,
       MatDatepickerModule,
       MatNativeDateModule,
+      MatCheckboxModule,
       CdkTableModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

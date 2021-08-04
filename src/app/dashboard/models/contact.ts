@@ -3,9 +3,9 @@ export class Contact {
   name: string = '';
   lastName: string = '';
   adress: string = '';
-  phone_number: number;
+  phone_number: string;
   email: string = '';
-  detail: any;
+  //detail: any;
 }
 
   //description: string = '';

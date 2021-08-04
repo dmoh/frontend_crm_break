@@ -27,7 +27,7 @@ export class OverviewComponent implements  OnInit {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    /*this.dataSource.paginator = this.paginator;
     this.dashboardService.getAds().subscribe(
       (ads: Ad[]) => {
         this.ads = ads;
@@ -35,7 +35,7 @@ export class OverviewComponent implements  OnInit {
         console.log(ads)
       }, (error) => {
         console.log(error);
-      });
+      });*/
 
 
     }
