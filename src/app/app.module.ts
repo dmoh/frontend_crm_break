@@ -10,12 +10,23 @@ import { ContactViewComponent } from './contact-view/contact-view.component';
 import { FooterComponent } from './footer/footer.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { TaskService } from './_services/task.service';
+import { GantComponent } from './dashboard/gant/gant.component';
+import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } from 'angular-google-charts';
+import { ReplaySubject } from 'rxjs';
+export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
+//import { FullCalendarModule } from '@fullcalendar/angular';
+//import dayGridPlugin from '@fullcalendar/daygrid';
+//import { CalendarComponent } from './dashboard/calendar/calendar.component';
+//import timeGridPlugin from '@fullcalendar/timegrid';
+//import listPlugin from '@fullcalendar/list';
+//import interactionPlugin from '@fullcalendar/interaction';
 
-//import { MembersComponent } from './dashboard/members/members.component';
-//import { BillingComponent } from './dashboard/billing/billing.component';
-//import { TaskComponent } from './tasks/task.component';
-//import { ListComponent } from './tasks/list/list.component';
-//import { DetailsComponent } from './tasks/details/details.component';
+/*FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin
+])*/
 
 @NgModule({
   declarations: [
@@ -23,11 +34,9 @@ import { TaskService } from './_services/task.service';
     LoginComponent,
     ContactViewComponent,
     FooterComponent,
-    //MembersComponent,
-    //BillingComponent,
-    //TaskComponent,
-    //ListComponent,
-    //DetailsComponent,
+    GantComponent,
+    //CalendarComponent,
+
   ],
     imports: [
         BrowserModule,
@@ -35,9 +44,16 @@ import { TaskService } from './_services/task.service';
         BrowserAnimationsModule,
         CoreModule,
         NgbModule,
-        GoogleMapsModule
+        GoogleMapsModule,
+        GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
+        //FullCalendarModule,
     ],
-  providers: [TaskService],
+  providers: [
+    TaskService,
+    {provide: GOOGLE_CHARTS_LAZY_CONFIG, useValue: googleChartsConfigSubject.asObservable()}
+
+
+  ],
   bootstrap: [AppComponent],
   exports: [CoreModule, LoginComponent, ContactViewComponent, FooterComponent]
 })

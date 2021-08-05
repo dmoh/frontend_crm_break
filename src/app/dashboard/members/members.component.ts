@@ -8,8 +8,8 @@ import { Members } from '../models/members';
 })
 export class MembersComponent implements OnInit {
 
-  members: Members[];
-  displayedColumns: string[] = ['taches', 'admin', 'manager', 'moderateur', 'secretaire'];
+  /*members: Members[];
+  displayedColumns: string[] = ['taches', 'admin', 'manager', 'moderateur', 'secretaire'];*/
 
   constructor() { }
 

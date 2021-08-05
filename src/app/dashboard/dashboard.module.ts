@@ -14,14 +14,29 @@ import { ListComponent } from '@app/tasks/list/list.component';
 import { MembersComponent } from './members/members.component';
 import { BillingComponent } from './billing/billing.component';
 import { TaskComponent } from '@app/tasks/task.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarComponent } from './calendar/calendar.component';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  timeGridPlugin,
+  listPlugin,
+  interactionPlugin
+])
+
 
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent, TaskComponent,DetailsComponent, ListComponent],
+    BillingComponent, TaskComponent,DetailsComponent, ListComponent, CalendarComponent],
   imports: [
       CoreModule,
       DashboardRoutingModule,
+      FullCalendarModule,
   ],
   exports: [
       CoreModule,
@@ -33,6 +48,7 @@ import { TaskComponent } from '@app/tasks/task.component';
       UsersComponent,
       ChartComponent,
       ChartBarComponent,
+      CalendarComponent,
   ],
   providers: [
       DashboardService
