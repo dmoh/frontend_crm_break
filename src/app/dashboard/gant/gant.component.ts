@@ -1,14 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AddProjectComponent } from '@app/add-project/add-project.component';
+import { Task } from '@app/tasks/task';
+import { ProjectsService } from '@app/_services/projects.service';
+import { TaskService } from '@app/_services/task.service';
+import { Subscription } from 'rxjs';
+import { Project } from '../models/project';
 
 @Component({
   selector: 'app-gant',
   templateUrl: './gant.component.html',
-  styleUrls: ['./gant.component.scss']
+  styleUrls: ['./gant.component.scss'],
+  providers: [MatSnackBar]
 })
 export class GantComponent implements OnInit {
-  constructor() { }
+
+  projects: Project[]=[];
+  tasks: Task[]=[];
+  projectsSubscription: Subscription;
+  tasksSubscription: Subscription;
+
+  constructor( private dialog: MatDialog, private snackBar: MatSnackBar, private projectService: ProjectsService, private taskService: TaskService) { }
 
   ngOnInit(): void {
+
+    this.projectsSubscription = this.projectService.projectsSub.subscribe(
+      (projectsRecup: Project[]) => {
+        this.projects = projectsRecup;
+        console.log('projectRecup dans le gant', this.projects)
+      }
+    );
+    this.projectService.emitProjects();
+
+    this.tasksSubscription = this.taskService.taskSubject.subscribe(
+      (tasksRecup: Task[]) => {
+        this.tasks = tasksRecup;
+        console.log('taskRecup dans le gant', this.tasks)
+      }
+    );
+    this.taskService.emitTodo();
 
     google.charts.load('current', {'packages':['gantt']});
     google.charts.setOnLoadCallback(drawChart);
@@ -61,4 +92,17 @@ export class GantComponent implements OnInit {
       chart.draw(data, options);
     }
   }
-}
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddProjectComponent, { // todo globaliser modal
+        width: '80%',
+        data: new Project,
+    });
+      dialogRef.afterClosed().subscribe(result=> {
+
+        if (result) {
+            this.snackBar.open( 'Projet Ajouté', 'Annulé',{duration: 3000});
+        }
+        console.log(result, 'result');
+      });
+    }
+ }

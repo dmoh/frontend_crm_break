@@ -21,6 +21,7 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './calendar/calendar.component';
 
+
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   timeGridPlugin,
@@ -49,6 +50,7 @@ FullCalendarModule.registerPlugins([
       ChartComponent,
       ChartBarComponent,
       CalendarComponent,
+
   ],
   providers: [
       DashboardService

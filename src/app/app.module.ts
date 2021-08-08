@@ -13,6 +13,7 @@ import { TaskService } from './_services/task.service';
 import { GantComponent } from './dashboard/gant/gant.component';
 import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } from 'angular-google-charts';
 import { ReplaySubject } from 'rxjs';
+//import { AddProjectComponent } from './add-project/add-project.component';
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 //import { FullCalendarModule } from '@fullcalendar/angular';
 //import dayGridPlugin from '@fullcalendar/daygrid';
@@ -35,6 +36,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     ContactViewComponent,
     FooterComponent,
     GantComponent,
+    //AddProjectComponent,
     //CalendarComponent,
 
   ],
