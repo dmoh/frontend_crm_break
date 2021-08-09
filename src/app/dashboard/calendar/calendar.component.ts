@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Task } from '@app/tasks/task';
+import { TaskService } from '@app/_services/task.service';
 //import { CalendarOptions } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
+import { Subscription } from 'rxjs';
 import { INITIAL_EVENTS, createEventId } from './event.utils';
 
 
@@ -11,9 +14,10 @@ import { INITIAL_EVENTS, createEventId } from './event.utils';
 })
 export class CalendarComponent implements OnInit {
 
-
-
+  tasks: Task[]=[];
+  tasksSubscription: Subscription;
   calendarVisible = true;
+
   calendarOptions: CalendarOptions = {
     headerToolbar: {
       left: 'prev,next today',
@@ -76,10 +80,17 @@ export class CalendarComponent implements OnInit {
 
 
 
-  constructor() { }
+  constructor(private taskService: TaskService) { }
 
 
   ngOnInit(): void {
+    this.tasksSubscription = this.taskService.taskSubject.subscribe(
+      (tasksRecup: Task[]) => {
+        this.tasks = tasksRecup;
+        console.log('taskRecup dans le calendrier', this.tasks)
+      }
+    );
+    this.taskService.emitTodo();
 
   }
 

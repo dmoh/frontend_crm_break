@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddProjectComponent } from '@app/add-project/add-project.component';
-import { Task } from '@app/tasks/task';
 import { ProjectsService } from '@app/_services/projects.service';
-import { TaskService } from '@app/_services/task.service';
 import { Subscription } from 'rxjs';
 import { Project } from '../models/project';
+//import { TaskService } from '@app/_services/task.service';
+//import { Task } from '@app/tasks/task';
 
 @Component({
   selector: 'app-gant',
@@ -16,12 +16,13 @@ import { Project } from '../models/project';
 })
 export class GantComponent implements OnInit {
 
+  //tasks: Task[]=[];
+  //tasksSubscription: Subscription;
   projects: Project[]=[];
-  tasks: Task[]=[];
   projectsSubscription: Subscription;
-  tasksSubscription: Subscription;
 
-  constructor( private dialog: MatDialog, private snackBar: MatSnackBar, private projectService: ProjectsService, private taskService: TaskService) { }
+
+  constructor( private dialog: MatDialog, private snackBar: MatSnackBar, private projectService: ProjectsService) { }
 
   ngOnInit(): void {
 
@@ -33,13 +34,13 @@ export class GantComponent implements OnInit {
     );
     this.projectService.emitProjects();
 
-    this.tasksSubscription = this.taskService.taskSubject.subscribe(
+    /*this.tasksSubscription = this.taskService.taskSubject.subscribe(
       (tasksRecup: Task[]) => {
         this.tasks = tasksRecup;
         console.log('taskRecup dans le gant', this.tasks)
       }
     );
-    this.taskService.emitTodo();
+    this.taskService.emitTodo();*/
 
     google.charts.load('current', {'packages':['gantt']});
     google.charts.setOnLoadCallback(drawChart);

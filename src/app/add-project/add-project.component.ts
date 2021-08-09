@@ -24,6 +24,7 @@ export class AddProjectComponent implements OnInit {
       title: [this.project.title],
       priority: [this.project.priority],
       memberName: [this.project.memberName],
+      state: [this.project.state],
       date: [this.project.date],
       dateStart: [this.project.dateStart],
       dateEnd: [this.project.dateEnd],

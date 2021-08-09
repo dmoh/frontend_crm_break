@@ -29,6 +29,12 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
+
+      <mat-form-field appearance="fill">
+        <mat-label>Etat en pourcentage</mat-label>
+        <input type="number"  placeholder="Saisissez uniquement des chiffres" matInput formControlName="state" />
+      </mat-form-field>
+
       <!--<mat-form-field>
         <mat-date-range-input [formGroup]="projectForm" [rangePicker]="picker">
           <input matStartDate formControlName="dateStart">
