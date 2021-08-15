@@ -6,8 +6,8 @@
 
 export class Task
     {
-      id: number;
-      //type: 'task' | 'section';
+      id: any;
+      type: 'task' | 'work';
       title: string;
       notes: string;
       completed: boolean;

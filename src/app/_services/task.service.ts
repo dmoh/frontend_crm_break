@@ -19,7 +19,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'normal',
-          date:"01/08/2021"
+          date:'2021-08-15',
+          type: 'work'
         },
         { id: 2,
           title: 'Move dependency system to Yarn for easier package management',
@@ -28,7 +29,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'normal',
-          date:"01/08/2021"
+          date:'2021-08-08',
+          type: 'work'
 
         },
         { id: 3,
@@ -38,7 +40,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'low',
-          date:"01/08/2021"
+          date:'2021-08-19',
+          type: 'work'
         },
         { id: 4,
           title: 'Start Twitter promotions using the company Twitter account',
@@ -47,7 +50,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'hight',
-          date:"01/08/2021"
+          date:'2021-08-25',
+          type: 'task'
         },
         { id: 5,
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
@@ -56,7 +60,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'normal',
-          date:"01/08/2021"
+          date:'2021-08-03',
+          type: 'task'
         },
         { id: 6,
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
@@ -65,7 +70,8 @@ export class TaskService {
           edit: false,
           tags:'maison',
           priority:'normal',
-          date:"01/08/2021"
+          date:'2021-08-07',
+          type: 'task'
         },
 
       ];

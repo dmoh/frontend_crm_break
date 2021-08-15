@@ -6,10 +6,9 @@ import {ContactViewComponent} from "@app/contact-view/contact-view.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
-    { path: 'login', component: LoginComponent },
-    {path: 'contact-view', component: ContactViewComponent
-    },
-    { path: 'dashboard',
+    {path: 'login', component: LoginComponent },
+    {path: 'contact-view', component: ContactViewComponent},
+    {path: 'dashboard',
       loadChildren: () => import('./dashboard/dashboard.module').then(mod => mod.DashboardModule)
     }
 ];

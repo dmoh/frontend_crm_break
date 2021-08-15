@@ -31,14 +31,11 @@ export class AddProjectComponent implements OnInit {
     })
 
   }
-  onSubmit(){
+  onSubmit() {
     //this.dialogRef.close(this.dataProject)
     const dataProject  = this.projectForm.value;
-
     this.projectService.addProject(dataProject);
-    console.log('data project', dataProject)
     this.dialogRef.close(dataProject)
-    console.log('data project close', dataProject)
+    console.log('data project', dataProject)
   }
-
 }

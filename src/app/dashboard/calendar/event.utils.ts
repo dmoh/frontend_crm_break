@@ -1,7 +1,15 @@
 import { EventInput } from '@fullcalendar/angular';
+import { TaskService } from '@app/_services/task.service';
+
+let taskService: TaskService;
+//taskService.constructor()
+
+
 
 let eventGuid = 0;
 const TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
+
+
 
 export const INITIAL_EVENTS: EventInput[] = [
   {

@@ -10,24 +10,17 @@ import { ContactViewComponent } from './contact-view/contact-view.component';
 import { FooterComponent } from './footer/footer.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { TaskService } from './_services/task.service';
-import { GantComponent } from './dashboard/gant/gant.component';
+//import { GantComponent } from './dashboard/gant/gant.component';
 import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } from 'angular-google-charts';
 import { ReplaySubject } from 'rxjs';
-//import { AddProjectComponent } from './add-project/add-project.component';
-export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
-//import { FullCalendarModule } from '@fullcalendar/angular';
-//import dayGridPlugin from '@fullcalendar/daygrid';
-//import { CalendarComponent } from './dashboard/calendar/calendar.component';
-//import timeGridPlugin from '@fullcalendar/timegrid';
-//import listPlugin from '@fullcalendar/list';
-//import interactionPlugin from '@fullcalendar/interaction';
+import { HttpClientModule } from '@angular/common/http';
+import { GanttComponent } from './gantt/gantt.component';
+//import { GanttComponent } from './gantt/gantt.component';
+//import { HttpClient } from '@angular/common/http';
+//import { GanttComponent } from './gantt/gantt.component';
 
-/*FullCalendarModule.registerPlugins([
-  dayGridPlugin,
-  timeGridPlugin,
-  listPlugin,
-  interactionPlugin
-])*/
+export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
+
 
 @NgModule({
   declarations: [
@@ -35,9 +28,9 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     LoginComponent,
     ContactViewComponent,
     FooterComponent,
-    GantComponent,
-    //AddProjectComponent,
-    //CalendarComponent,
+    //GantComponent,
+    GanttComponent,
+
 
   ],
     imports: [
@@ -48,6 +41,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         NgbModule,
         GoogleMapsModule,
         GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
+        HttpClientModule,
         //FullCalendarModule,
     ],
   providers: [
@@ -57,6 +51,6 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
 
   ],
   bootstrap: [AppComponent],
-  exports: [CoreModule, LoginComponent, ContactViewComponent, FooterComponent]
+  exports: [CoreModule, LoginComponent, ContactViewComponent, FooterComponent,]
 })
 export class AppModule { }

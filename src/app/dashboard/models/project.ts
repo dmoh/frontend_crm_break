@@ -5,7 +5,7 @@ export class Project {
   state: number;
   memberName: string;
   date: string;
-  dateStart: string | number;
-  dateEnd: string | number;
+  dateStart: any;
+  dateEnd: any;
 
 }
