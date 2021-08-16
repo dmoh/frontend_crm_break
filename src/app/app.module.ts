@@ -15,6 +15,9 @@ import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } fro
 import { ReplaySubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import { SchedulerComponent } from './scheduler/scheduler.component';
 //import { GanttComponent } from './gantt/gantt.component';
 //import { HttpClient } from '@angular/common/http';
 //import { GanttComponent } from './gantt/gantt.component';
@@ -30,6 +33,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     FooterComponent,
     //GantComponent,
     GanttComponent,
+    //SchedulerComponent,
 
 
   ],
@@ -42,7 +46,8 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         GoogleMapsModule,
         GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
         HttpClientModule,
-        //FullCalendarModule,
+        //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
+        FullCalendarModule,
     ],
   providers: [
     TaskService,

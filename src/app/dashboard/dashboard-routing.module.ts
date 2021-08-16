@@ -12,6 +12,7 @@ import { DetailsComponent } from '@app/tasks/details/details.component';
 //import { GantComponent } from './gant/gant.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GanttComponent } from '@app/gantt/gantt.component';
+//import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
 
 
@@ -58,6 +59,7 @@ const routes: Routes = [{
         {
           path: 'calendar',
           component: CalendarComponent,
+
         },
       ]
 },

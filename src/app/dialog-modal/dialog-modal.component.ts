@@ -165,9 +165,9 @@ export class DialogModalComponent implements OnInit {
             }),
             characteristics: this.fb.group({
               area: [this.ad.area], //Validators.required],
-              rooms: [this.ad.rooms, Validators.required],
+              rooms: [this.ad.rooms], //Validators.required],
               bedrooms: [this.ad.bedrooms],
-              bathroom: [this.ad.bathroom, Validators.required],
+              bathroom: [this.ad.bathroom], //Validators.required],
               wc: [this.ad.wc],
               //location : [this.ad.location],
               handicap_accessibility: [this.ad.handicap_accessibility],
