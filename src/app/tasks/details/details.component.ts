@@ -33,10 +33,7 @@ export class DetailsComponent implements OnInit {
       //order    : [0]
       //})
   });
-
-
-  }
-
+}
   onSubmit(): void {
     const dataTodo  = this.taskForm.value;
     console.log('data', dataTodo)

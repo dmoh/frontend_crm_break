@@ -28,7 +28,7 @@
           <button
               class="ml-3"
               mat-stroked-button
-              [color]="'primary'"
+              [color]="'accent'"
               (click)='opened=!opened'
               matTooltip="'Shortcut: Ctrl + /'">
               <mat-icon>add</mat-icon>
@@ -54,13 +54,12 @@
           <mat-panel-title>
             {{task.title}}
           </mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description style="display: flex; justify-content: space-around;">
+            <p style="color: #3F51B5;"> {{task.date}} </p>
+            <p style="color: #EF5350;"> Priority : {{task.priority}} </p>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p> {{task.notes}} </p>
-        <p>Priorité : {{task.priority}} </p>
-        <p> {{task.date}} </p>
-
 
         <mat-action-row>
           <button class="pr-4 pl-3.5" mat-stroked-button (click)='onChangeStatus(i)' *ngIf="!task.completed">
