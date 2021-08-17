@@ -7,7 +7,7 @@
         <div class="form-group" style="padding-top: 35px;border-bottom: solid 9px white" formGroupName="description">
         <h5>Descriptif</h5>
           <mat-form-field appearance="outline"><mat-label>Titre de l'annonce</mat-label>
-            <input type="text" autocomplete="off" matInput formControlName="title" required/>
+            <input type="text" autocomplete="off" matInput formControlName="title"/>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-select placeholder="Type de vente" formControlName="type">
@@ -68,7 +68,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Montant</mat-label>
-            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="amount" required/>
+            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="amount"/>
               <span matPrefix style="">CHF</span>
               <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>
           </mat-form-field>

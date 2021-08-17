@@ -60,7 +60,4 @@ export class DashboardService {
       return this.http
         .get<Contact[]>(`${this.urlBase}/ad/contact`, this.httpOptions);
     }
-
-
-
 }

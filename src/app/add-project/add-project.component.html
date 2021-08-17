@@ -1,0 +1,51 @@
+<div>
+    <div style="margin-bottom: 40px; text-align: center;">
+      <h5>Décrivez votre projet</h5>
+    </div>
+  <form [formGroup]="projectForm">
+    <div style="display: flex; flex-direction: column;">
+      <mat-form-field appearance="fill">
+        <mat-label>Nom du collaborateur</mat-label>
+        <input type="text" matInput formControlName="memberName"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Titre</mat-label>
+        <input type="text" matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-select placeholder="Priority" formControlName="priority">
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="Normal">Normal</mat-option>
+          <mat-option value="Hight">Hight</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Choisissez une date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Etat en pourcentage</mat-label>
+        <input type="number"  placeholder="Saisissez uniquement des chiffres" matInput formControlName="state" />
+      </mat-form-field>
+
+      <!--<mat-form-field>
+        <mat-date-range-input [formGroup]="projectForm" [rangePicker]="picker">
+          <input matStartDate formControlName="dateStart">
+          <input matEndDate formControlName="dateEnd">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>-->
+    </div>
+  </form>
+  <div style="text-align: right; margin-top: 40px;">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Ajouter</button>
+  </div>
+</div>

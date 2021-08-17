@@ -29,10 +29,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule }from '@angular/material/menu';
 import { MatDatepickerModule }from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AddProjectComponent } from '@app/add-project/add-project.component';
 
 
 @NgModule({
-  declarations: [DialogModalComponent],
+  declarations: [DialogModalComponent, AddProjectComponent],
     imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -63,6 +64,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatTooltipModule,
         MatMenuModule,
         MatDatepickerModule,
+        MatNativeDateModule,
+
         CdkTableModule
     ],
   exports: [
@@ -94,7 +97,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       CdkTableModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [MatDialog]
+  providers: [MatDialog, ]
 
 })
 export class CoreModule { }

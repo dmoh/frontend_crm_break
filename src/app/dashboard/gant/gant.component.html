@@ -4,8 +4,18 @@
         <h2 class="text-center">Gestion de projets</h2>
       </div>
     </div>
+
+    <div style="padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 30px;">
+      <button  (click)="openDialog()" mat-stroked-button color="primary">
+          <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
+          AJOUTER UN PROJET
+      </button>
+    </div>
+    <!--<div  style="text-align: center;" *ngIf="affichage">
+      <h6>Pas de projets a afficher</h6>
+    </div>-->
     <div style="display: flex; justify-content: center;">
-      <div style="width: 700px;" id="chart_div"></div>
+      <div style="width: 100%;" id="chart_div"></div>
     </div>
 </div>
 

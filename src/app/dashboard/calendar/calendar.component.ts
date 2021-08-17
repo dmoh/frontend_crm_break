@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Task } from '@app/tasks/task';
+import { TaskService } from '@app/_services/task.service';
 //import { CalendarOptions } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
+import { Subscription } from 'rxjs';
 import { INITIAL_EVENTS, createEventId } from './event.utils';
 
 
@@ -11,9 +14,10 @@ import { INITIAL_EVENTS, createEventId } from './event.utils';
 })
 export class CalendarComponent implements OnInit {
 
-
-
+  tasks: Task[]=[];
+  tasksSubscription: Subscription;
   calendarVisible = true;
+  workVisible = false;
   calendarOptions: CalendarOptions = {
     headerToolbar: {
       left: 'prev,next today',
@@ -29,7 +33,9 @@ export class CalendarComponent implements OnInit {
     dayMaxEvents: true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventsSet: this.handleEvents.bind(this),
+    //eventColor: 'red'
+
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -38,9 +44,46 @@ export class CalendarComponent implements OnInit {
   };
   currentEvents: EventApi[] = [];
 
+  constructor(private taskService: TaskService) { }
+
+  ngOnInit(): void {
+    this.tasksSubscription = this.taskService.taskSubject.subscribe(
+      (tasksRecup: Task[]) => {
+        this.tasks = tasksRecup;
+        console.log('taskRecup dans le calendrier', this.tasks)
+      }
+    );
+    this.taskService.emitTodo();
+    this.tasks.map((task: any) => {
+
+    //const events =  {title : task.title, date: task.date};
+    this.calendarOptions.events =  this.tasks;
+    console.log(this.tasks, 'events')
+  })
+}
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
   }
+  /*handleWorkToggle() {
+    this.workVisible = !this.workVisible;
+    console.log('work', this.workVisible)
+    //console.log('work', this.tasks)
+    let allTask ;
+      switch (allTask) {
+        case 'work':
+          //console.log('Oranges are $0.59 a pound.');
+          break;
+        case 'personal':
+          //console.log('Oranges are $0.59 a pound.');
+        case 'appointment':
+          //console.log('Mangoes and papayas are $2.79 a pound.');
+
+          break;
+        default:
+          //console.log(`Sorry, we are out of ${expr}.`);
+      }
+
+  }*/
 
   handleWeekendsToggle() {
     const { calendarOptions } = this;
@@ -72,15 +115,6 @@ export class CalendarComponent implements OnInit {
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
+    console.log('currentEvent', this.currentEvents)
   }
-
-
-
-  constructor() { }
-
-
-  ngOnInit(): void {
-
-  }
-
 }

@@ -20,6 +20,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './calendar/calendar.component';
+//import { SchedulerComponent } from '@app/scheduler/scheduler.component';
+//import { GanttComponent } from '@app/gantt/gantt.component';
+//import { GanttComponent } from '@app/gantt/gantt.component';
+
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -49,6 +53,9 @@ FullCalendarModule.registerPlugins([
       ChartComponent,
       ChartBarComponent,
       CalendarComponent,
+      //SchedulerComponent
+      //GanttComponent,
+
   ],
   providers: [
       DashboardService

@@ -57,7 +57,7 @@ export class AdsComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.warn(result, 'result');
         if (result.success) {
-            this.snackBar.open(result.success, 'opération réussie', {duration: 3000});
+            this.snackBar.open(result.success, 'Annonce ajoutée', {duration: 3000});
         }
       });
   }

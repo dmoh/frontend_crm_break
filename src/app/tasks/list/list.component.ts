@@ -3,8 +3,6 @@ import { TaskService } from '@app/_services/task.service';
 import { Subscription } from 'rxjs';
 import { Task } from '../task';
 
-
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -36,21 +34,21 @@ export class ListComponent implements OnInit, OnDestroy {
 
     this.taskService.emitTodo();
 
-  }
-  ngOnDestroy(): void {
-    this.taskSub.unsubscribe();
-  }
-  onChangeStatus(i: number) {
-    this.taskService.onChangeStatus(i);
-  }
-  onChangeIsModif(i: number) {
-    this.taskService.onChangeIsModif(i);
-  }
-  deleteTask(id: number) {
-    this.taskService.deleteTask(id)
-  }
-  emitTodo (){
-    this.taskService.emitTodo()
-  }
+    }
+    ngOnDestroy(): void {
+      this.taskSub.unsubscribe();
+    }
+    onChangeStatus(i: number) {
+      this.taskService.onChangeStatus(i);
+    }
+    onChangeIsModif(i: number) {
+      this.taskService.onChangeIsModif(i);
+    }
+    deleteTask(id: number) {
+      this.taskService.deleteTask(id)
+    }
+    emitTodo (){
+      this.taskService.emitTodo()
+    }
 }
 
