@@ -7,6 +7,10 @@ import { Subject } from 'rxjs';
 export class TaskService {
   task: Task[];
   taskSubject = new Subject<any[]>();
+  /*taskSubject: BehaviorSubject<Task[]> = new BehaviorSubject({})
+  public selectedTask: BehaviorSubject<Task> = new BehaviorSubject(
+    this.taskSubject.value[0];
+  )*/
 
   constructor() {
     //this.getTodosFromServer();
@@ -16,62 +20,62 @@ export class TaskService {
           title: 'Create the landing/marketing page and host it on the beta channel',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'normal',
           date:'2021-08-15',
-          type: 'work'
+          //type: 'work'
         },
         { id: 2,
           title: 'Move dependency system to Yarn for easier package management',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'normal',
           date:'2021-08-08',
-          type: 'work'
+          //type: 'work'
 
         },
         { id: 3,
           title: 'Fix permission issues that the 0.0.7-alpha.2 has introduced',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'low',
           date:'2021-08-19',
-          type: 'work'
+          //type: 'work'
         },
         { id: 4,
           title: 'Start Twitter promotions using the company Twitter account',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'hight',
           date:'2021-08-25',
-          type: 'task'
+          //type: 'task'
         },
         { id: 5,
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'normal',
           date:'2021-08-03',
-          type: 'task'
+          //type: 'task'
         },
         { id: 6,
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
-          edit: false,
+          //edit: false,
           tags:'maison',
           priority:'normal',
           date:'2021-08-07',
-          type: 'task'
+          //type: 'task'
         },
 
       ];
@@ -79,21 +83,24 @@ export class TaskService {
 
   }
 
+
+
   onChangeStatus(i: number) {
     this.task[i].completed = !this.task[i].completed;
     console.log('status', this.task[i].completed)
     this.emitTodo();
 
   }
-  onChangeIsModif(i: number) {
+  /*onChangeIsModif(i: number) {
     this.task[i].edit = !this.task[i].edit;
-  }
+  }*/
 
   getTodo(index: number) {
     if (this.task[index]) {
-      return this.task[index];
-    }
-    return false;
+    return this.task[index];
+  }
+    //this.emitTodo()
+    //return false;
   }
   emitTodo() {
     this.taskSubject.next(this.task);

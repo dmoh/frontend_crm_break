@@ -46,11 +46,19 @@ const routes: Routes = [{
         {
           path: 'task',
           component: ListComponent,
+          children : [
+            { path: ":id", component: DetailsComponent },
+            { path: "", redirectTo: "1", pathMatch: "full" },
+            { path: "new", component: DetailsComponent },
+           // { path: ":id/edit", component: DetailsComponent },
+
+            ],
         },
-        {
+        /*{
           path: 'details',
           component: DetailsComponent,
-        },
+
+        },*/
         {
           path: 'gant',
           //component: GantComponent,

@@ -6,12 +6,12 @@
 
 export class Task
     {
-      id: any;
-      type: 'task' | 'work';
+      id: number;
+      //type: 'task' | 'work';
       title: string;
       notes: string;
       completed: boolean;
-      edit: boolean;
+      //edit: boolean;
       tags: string ;
       priority: string;
       date: string;

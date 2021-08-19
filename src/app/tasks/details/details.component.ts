@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from "@angular/router";
 import { TaskService } from '@app/_services/task.service';
 import { Task } from '../task';
 
@@ -10,30 +11,43 @@ import { Task } from '../task';
 })
 export class DetailsComponent implements OnInit {
 
-  task = new Task;
-  //todo = new Task;
-  //tag: Tag[];
+  task : Task;
   taskForm: FormGroup;
+  id:string;
 
-  constructor(private taskService: TaskService, private formBuilder: FormBuilder) { }
+  constructor(private taskService: TaskService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
+
+   }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+     const index = paramMap.get('id');
+      console.log("index", index)
+        if (index !== null) {
+          this.task = this.taskService.getTodo(+index);
+        }
+        this.initForm(this.task)
+        console.log("task", this.task)
+    });
+    //this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      //this.id = paramMap.get("id");
 
+
+  }
+  initForm (todo: Task = {id:null, tags:'', title:'', notes:'', completed: false, date:'', priority:''}){
     this.taskForm = this.formBuilder.group({
       //description: this.formBuilder.group({
 
-      id       : [this.task.id],
-      tags     : [this.task.tags],
-      title    : [this.task.title],
-      notes    : [this.task.notes],
-      completed: [false],
-      date  : [this.task.notes],
-      priority : [this.task.priority],
-
-      //order    : [0]
-      //})
-  });
+      id       : [todo.id],
+      tags     : [todo.tags],
+      title    : [todo.title],
+      notes    : [todo.notes],
+      completed: [todo.completed],
+      date  :    [todo.date],
+      priority : [todo.priority],
+  })
 }
+
   onSubmit(): void {
     const dataTodo  = this.taskForm.value;
     console.log('data', dataTodo)
