@@ -51,10 +51,16 @@ export class DetailsComponent implements OnInit {
   onSubmit(): void {
     const dataTodo  = this.taskForm.value;
     console.log('data', dataTodo)
-    this.taskService.addTodo(dataTodo);
-    this.taskForm.reset();
+    //if(dataTodo.modif = true){
+      //this.taskService.editTask(dataTodo);
+      //this.taskForm.reset();
+    //}else{
+      this.taskService.addTodo(dataTodo);
+      this.taskForm.reset();
+    }
+
     //this.router.navigate(["todos"]);
 
   }
 
-}
+

@@ -6,7 +6,7 @@
 
 export class Task
     {
-      id: number;
+      id: string;
       //type: 'task' | 'work';
       title: string;
       notes: string;
@@ -15,6 +15,7 @@ export class Task
       tags: string ;
       priority: string;
       date: string;
+      //modif: false = false;
       //dueDate: string | null;
       //priority: 0 | 1 | 2;
       //tags: string[];

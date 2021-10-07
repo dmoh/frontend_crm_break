@@ -16,6 +16,7 @@ export class ListComponent implements OnInit, OnDestroy {
   opened = false;
   taskOverdue;
   private index: string;
+  modif: boolean = false;
 
   constructor(private taskService: TaskService, private activatedRoute: ActivatedRoute) { }
 
@@ -75,6 +76,7 @@ export class ListComponent implements OnInit, OnDestroy {
       this.taskService.getTodo(id)
       this.opened = true;
       console.log("id", id)
+      this.modif = true;
     }
 }
 

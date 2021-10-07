@@ -16,7 +16,7 @@ export class TaskService {
     //this.getTodosFromServer();
     //setTimeout(() => {
       this.task = [
-        { id: 1,
+        { id: "1",
           title: 'Create the landing/marketing page and host it on the beta channel',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -24,9 +24,10 @@ export class TaskService {
           tags:'maison',
           priority:'normal',
           date:'2021-08-15',
+          //modif: false,
           //type: 'work'
         },
-        { id: 2,
+        { id: "2",
           title: 'Move dependency system to Yarn for easier package management',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -37,7 +38,7 @@ export class TaskService {
           //type: 'work'
 
         },
-        { id: 3,
+        { id: "3",
           title: 'Fix permission issues that the 0.0.7-alpha.2 has introduced',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -47,7 +48,7 @@ export class TaskService {
           date:'2021-08-19',
           //type: 'work'
         },
-        { id: 4,
+        { id: "4",
           title: 'Start Twitter promotions using the company Twitter account',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -57,7 +58,7 @@ export class TaskService {
           date:'2021-08-25',
           //type: 'task'
         },
-        { id: 5,
+        { id: "5",
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -67,7 +68,7 @@ export class TaskService {
           date:'2021-08-03',
           //type: 'task'
         },
-        { id: 6,
+        { id: "6",
           title: 'Add more error pages - 401, 301, 303, 500 etc.',
           notes: 'Et in lorem qui ipsum deserunt duis exercitation lorem elit qui qui ipsum tempor nulla velit aliquip enim consequat incididunt pariatur duis excepteur elit irure nulla ipsum dolor dolore est.Aute deserunt nostrud id non ipsum do adipisicing laboris in minim officia magna elit minim mollit elit velit veniam lorem pariatur veniam sit excepteur irure commodo excepteur duis quis in',
           completed: false,
@@ -82,9 +83,6 @@ export class TaskService {
       //this.emitTodo();
 
   }
-
-
-
   onChangeStatus(i: number) {
     this.task[i].completed = !this.task[i].completed;
     console.log('status', this.task[i].completed)
@@ -109,10 +107,17 @@ export class TaskService {
     this.task.push(todo);
     this.emitTodo();
   }
-   deleteTask(id: number) {
+   deleteTask(id) {
    this.task = this.task.filter(todo=> todo.id != id);
    this.emitTodo();
   }
+  /*editTask (task:Task){
+    if(task.modif){
+      return task
+    }
+
+    this.emitTodo();
+  }*/
   get todos(): Task[] {
     return this.task.filter(todo=> todo.completed);
   }

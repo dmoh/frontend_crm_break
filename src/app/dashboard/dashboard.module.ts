@@ -20,6 +20,11 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { AreaChartComponent } from '@app/area-chart/area-chart.component';
+import { BasicChartComponent } from '@app/basic-chart/basic-chart.component';
+//import { NgApexchartsModule } from 'ng-apexcharts';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
@@ -36,11 +41,12 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent, TaskComponent,DetailsComponent, ListComponent, CalendarComponent],
+    BillingComponent, TaskComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent],
   imports: [
       CoreModule,
       DashboardRoutingModule,
       FullCalendarModule,
+      NgApexchartsModule,
   ],
   exports: [
       CoreModule,
@@ -53,6 +59,9 @@ FullCalendarModule.registerPlugins([
       ChartComponent,
       ChartBarComponent,
       CalendarComponent,
+      AreaChartComponent,
+      ApexChartComponent,
+      BasicChartComponent
       //SchedulerComponent
       //GanttComponent,
 

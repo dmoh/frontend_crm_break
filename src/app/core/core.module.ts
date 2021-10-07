@@ -30,10 +30,11 @@ import { MatMenuModule }from '@angular/material/menu';
 import { MatDatepickerModule }from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AddProjectComponent } from '@app/add-project/add-project.component';
+import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal/add-member-modal.component';
 
 
 @NgModule({
-  declarations: [DialogModalComponent, AddProjectComponent],
+  declarations: [DialogModalComponent, AddProjectComponent, AddMemberModalComponent],
     imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -85,6 +86,7 @@ import { AddProjectComponent } from '@app/add-project/add-project.component';
       MatProgressBarModule,
       MatTableModule,
       DialogModalComponent,
+      AddMemberModalComponent,
       MatFormFieldModule,
       MatPaginatorModule,
       MatExpansionModule,

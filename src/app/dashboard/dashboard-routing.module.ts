@@ -12,6 +12,8 @@ import { DetailsComponent } from '@app/tasks/details/details.component';
 //import { GantComponent } from './gant/gant.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GanttComponent } from '@app/gantt/gantt.component';
+import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
+import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
 
@@ -42,7 +44,12 @@ const routes: Routes = [{
         {
           path: 'billing',
           component: BillingComponent,
-        },
+      },
+      {
+        path: 'chart',
+        component: AreaChartComponent,
+
+      },
         {
           path: 'task',
           component: ListComponent,
@@ -68,7 +75,8 @@ const routes: Routes = [{
           path: 'calendar',
           component: CalendarComponent,
 
-        },
+      },
+
       ]
 },
 
