@@ -13,7 +13,8 @@ export class DetailsComponent implements OnInit {
 
   task : Task;
   taskForm: FormGroup;
-  id:string;
+  id: string;
+  index;
 
   constructor(private taskService: TaskService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
 
@@ -21,13 +22,14 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-     const index = paramMap.get('id');
-      console.log("index", index)
-        if (index !== null) {
-          this.task = this.taskService.getTodo(+index);
+     this.index = paramMap.get('id');
+      console.log("index", this.index)
+        if (this.index !== null) {
+          this.task = this.taskService.getTodo(+this.index);
+          console.log('thistask', this.task)
         }
         this.initForm(this.task)
-        console.log("task", this.task)
+        console.log("montask", this.task)
     });
     //this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       //this.id = paramMap.get("id");
@@ -50,17 +52,16 @@ export class DetailsComponent implements OnInit {
 
   onSubmit(): void {
     const dataTodo  = this.taskForm.value;
-    console.log('data', dataTodo)
-    //if(dataTodo.modif = true){
-      //this.taskService.editTask(dataTodo);
-      //this.taskForm.reset();
-    //}else{
-      this.taskService.addTodo(dataTodo);
-      this.taskForm.reset();
-    }
-
-    //this.router.navigate(["todos"]);
-
+    if (this.index) {
+      this.taskService.EditTask(dataTodo);
+      //console.log('je suis un task')
+      } else {
+        console.log('data', dataTodo)
+        this.taskService.addTodo(dataTodo);
+        this.taskForm.reset();
+      }
   }
+  //this.router.navigate(["todos"]);
+}
 
 

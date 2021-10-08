@@ -59,11 +59,11 @@ export class BasicChartComponent implements OnInit {
       },
 
       title: {
-        text: "Fundamental Analysis of Stocks",
+        text: "Evolution du Chiffre d'affaires",
         align: "left"
       },
       subtitle: {
-        text: "Price Movements",
+        text: "CA Movements",
         align: "left"
       },
       labels: series.monthDataSeries1.dates,

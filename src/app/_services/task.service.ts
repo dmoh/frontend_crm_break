@@ -1,6 +1,8 @@
+import { TagPlaceholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { Task } from '@app/tasks/task';
 import { Subject } from 'rxjs';
+//import { map } from 'rxjs/operators';
 
 @Injectable()
 
@@ -82,6 +84,7 @@ export class TaskService {
       ];
       //this.emitTodo();
 
+
   }
   onChangeStatus(i: number) {
     this.task[i].completed = !this.task[i].completed;
@@ -106,6 +109,21 @@ export class TaskService {
   addTodo(todo: Task) {
     this.task.push(todo);
     this.emitTodo();
+  }
+  EditTask(todo: Task) {
+    this.taskSubject.next(
+      this.task.map((tache) => {
+        if (todo.id === tache.id) {
+          return todo
+        } else {
+          return tache;
+        }
+
+      })
+
+    )
+    //console.log('tasks', tasks);
+
   }
    deleteTask(id) {
    this.task = this.task.filter(todo=> todo.id != id);
