@@ -13,7 +13,6 @@ import { DetailsComponent } from '@app/tasks/details/details.component';
 import { ListComponent } from '@app/tasks/list/list.component';
 import { MembersComponent } from './members/members.component';
 import { BillingComponent } from './billing/billing.component';
-import { TaskComponent } from '@app/tasks/task.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -24,6 +23,7 @@ import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 import { BasicChartComponent } from '@app/basic-chart/basic-chart.component';
+import { ColortaskDirective } from '@app/tasks/colortask.directive';
 //import { NgApexchartsModule } from 'ng-apexcharts';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
@@ -41,7 +41,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent, TaskComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent],
+    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective],
   imports: [
       CoreModule,
       DashboardRoutingModule,
@@ -54,7 +54,7 @@ FullCalendarModule.registerPlugins([
       ContactsComponent,
       MembersComponent,
       BillingComponent,
-      TaskComponent,
+
       UsersComponent,
       ChartComponent,
       ChartBarComponent,

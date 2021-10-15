@@ -47,13 +47,13 @@ export class CalendarComponent implements OnInit {
   constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.tasksSubscription = this.taskService.taskSubject.subscribe(
+    this.tasksSubscription = this.taskService.task$.subscribe(
       (tasksRecup: Task[]) => {
         this.tasks = tasksRecup;
         console.log('taskRecup dans le calendrier', this.tasks)
       }
     );
-    this.taskService.emitTodo();
+    //this.taskService.emitTodo();
     this.tasks.map((task: any) => {
 
     //const events =  {title : task.title, date: task.date};

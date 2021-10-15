@@ -14,6 +14,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { GanttComponent } from '@app/gantt/gantt.component';
 import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
+//import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
 
@@ -50,33 +51,31 @@ const routes: Routes = [{
         component: AreaChartComponent,
 
       },
+      {
+        path: 'gant',
+        //component: GantComponent,
+        component: GanttComponent,
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent,
+
+      },
+      /*{
+      path: 'details',
+      component: DetailsComponent,
+
+      },*/
+
         {
           path: 'task',
           component: ListComponent,
-          children : [
-            { path: ":id", component: DetailsComponent },
-            { path: "", redirectTo: "1", pathMatch: "full" },
+          children: [
+            { path: ":index", component: DetailsComponent },
+            { path: "", redirectTo: "0", pathMatch: "full" },
             { path: "new", component: DetailsComponent },
-           // { path: ":id/edit", component: DetailsComponent },
-
-            ],
+          ],
         },
-        /*{
-          path: 'details',
-          component: DetailsComponent,
-
-        },*/
-        {
-          path: 'gant',
-          //component: GantComponent,
-          component: GanttComponent,
-        },
-        {
-          path: 'calendar',
-          component: CalendarComponent,
-
-      },
-
       ]
 },
 

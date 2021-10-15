@@ -13,8 +13,10 @@ export class Task
       completed: boolean;
       //edit: boolean;
       tags: string ;
-      priority: string;
+      //priority: any = {color: '', name:''};
       date: string;
+      priorityName: string;
+      priorityColor: string;
       //modif: false = false;
       //dueDate: string | null;
       //priority: 0 | 1 | 2;

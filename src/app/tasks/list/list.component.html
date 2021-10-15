@@ -5,7 +5,7 @@
         mode="drawerMode"
         [position]="'end'"
         [disableClose]="false">
-      <!--<app-details></app-details>-->
+
       <router-outlet></router-outlet>
     </mat-drawer>
 
@@ -13,7 +13,7 @@
       <div style="display: flex; justify-content: space-between;border-bottom: solid 1px black;">
         <div>
           <h1>Tasks</h1>
-          <p> Vous avez 6 taches restante(s)</p>
+         <p> Vous avez {{nbTaskSub.length}} restante(s)</p>
         </div>
         <div class="mt-4 mr-10 sm:mt-0">
           <!-- Add section button -->
@@ -27,7 +27,7 @@
           </button>-->
           <!-- Add task button -->
           <button
-              routerLink="new"
+              routerLink='new'
               class="ml-3"
               mat-raised-button
               [color]="'accent'"
@@ -50,35 +50,46 @@
 
     </div>-->
     <div class="container" style="width: 100%; margin-top: 50px; border-top: solid 1 px black; margin-bottom: 15px;" >
-      <mat-expansion-panel *ngFor="let task of tasks, let i = index" style="margin-bottom: 5px;">
+      <mat-expansion-panel  *ngFor="let task of tasks, let index = index" style="margin-bottom: 5px;">
         <mat-expansion-panel-header>
 
           <mat-panel-title>
             {{task.title}}
           </mat-panel-title>
           <mat-panel-description style="display: flex; justify-content: space-around;">
-            <p style="color: #3F51B5;"> {{task.date}} </p>
-            <p style="color: #EF5350;"> Priority : {{task.priority}} </p>
+          <p style="color: #3F51B5;"> {{task.date | date}}</p>
+          <!--<p [ngStyle]="{color: task.priorityColor}">{{task.priorityName}} </p>-->
+          <p color = {{task.priorityColor}} appColor> {{task.priorityName}}</p>
+          <!--<p color = {{task.priorityColor}} appColor> {{task.priorityName}}</p>-->
+
+
+
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p> {{task.notes}} </p>
 
         <mat-action-row>
-          <button class="pr-4 pl-3.5" mat-stroked-button (click)='onChangeStatus(i)' *ngIf="!task.completed">
+          <button class="pr-4 pl-3.5" mat-stroked-button (click)='onChangeStatus(index)' *ngIf="!task.completed">
 
               <mat-icon color="hint">check_circle_outline</mat-icon>
               <span class="ml-2 font-semibold">MARK AS INCOMPLETE</span>
 
           </button>
-          <button class="pr-4 pl-3.5" mat-stroked-button color='primary' (click)='onChangeStatus(i)' *ngIf="task.completed">
+          <button class="pr-4 pl-3.5" mat-stroked-button color='primary' (click)='onChangeStatus(index)' *ngIf="task.completed">
 
-              <mat-icon (click)='onChangeStatus(i)' *ngIf="task.completed"
+              <mat-icon (click)='onChangeStatus(index)' *ngIf="task.completed"
               class="text-primary">check_circle_outline</mat-icon>
               <span class="ml-2 font-semibold">MARK AS COMPLETE</span>
 
           </button>
-          <button [routerLink]="[i]" mat-raised-button style="margin-right: 7px;" (click)='getTodo(task.id)'>Edit</button>
-          <button mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask(task.id)'>delete</button>
+          <button
+          [routerLink]='[index]'
+          mat-raised-button style="margin-right: 7px;"
+          (click)='opened=!opened'
+          > Edit
+          </button>
+          <button
+              mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask(task.id)'>delete</button>
 
         </mat-action-row>
         </mat-expansion-panel>
