@@ -16,6 +16,7 @@ import { ReplaySubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+//import { ContactFormComponent } from './contact-form/contact-form.component';
 //import { BasicChartComponent } from './basic-chart/basic-chart.component';
 //import { AreaChartComponent } from './area-chart/area-chart.component';
 //import { ApexChartComponent } from './apex-chart/apex-chart.component';
@@ -40,6 +41,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     FooterComponent,
     //GantComponent,
     GanttComponent,
+    //ContactFormComponent,
     //BasicChartComponent,
     //AreaChartComponent,
     //ApexChartComponent,

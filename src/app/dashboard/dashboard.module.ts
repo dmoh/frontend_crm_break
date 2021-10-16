@@ -24,6 +24,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 import { BasicChartComponent } from '@app/basic-chart/basic-chart.component';
 import { ColortaskDirective } from '@app/tasks/colortask.directive';
+import { ContactFormComponent } from '@app/dashboard/contacts/contact-form/contact-form.component';
 //import { NgApexchartsModule } from 'ng-apexcharts';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
@@ -41,7 +42,7 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective],
+    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactFormComponent],
   imports: [
       CoreModule,
       DashboardRoutingModule,

@@ -24,10 +24,8 @@ export class AdService {
     return this.http
       .get<any>(`${this.urlBase}/ad/${idAd}`, this.httpOptions);
   }
-
   opinionCustomerAboutAd(adId: number,data: string): Observable<any> {
     return this.http
       .post<any>(`${this.urlBase}/ad/${adId}/opinion/customer`, data,this.httpOptions);
   }
-
 }

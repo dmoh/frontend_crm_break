@@ -22,7 +22,7 @@ export class TaskService {
         color: 'green'
       },*/
       priorityName: 'hight',
-      priorityColor: 'red',
+      priorityColor: '#ef4444',
       date:'2021-08-15',
       //modif: false,
       //type: 'work'
@@ -34,7 +34,7 @@ export class TaskService {
       //edit: false,
       tags: 'maison',
       priorityName: 'low',
-      priorityColor: 'green',
+      priorityColor: '#22c55e',
       /*priority: {
         name: 'hight',
         color: 'red'
@@ -49,7 +49,7 @@ export class TaskService {
           //edit: false,
           tags:'maison',
           priorityName: 'normal',
-          priorityColor: 'blue',
+          priorityColor: '#3b82f6',
           date:'2021-08-19',
           //type: 'work'
         },
@@ -60,7 +60,7 @@ export class TaskService {
           //edit: false,
           tags:'maison',
           priorityName: 'low',
-          priorityColor: 'green',
+          priorityColor: '#22c55e',
           date:'2021-08-25',
           //type: 'task'
         },
@@ -71,7 +71,7 @@ export class TaskService {
           //edit: false,
           tags:'maison',
           priorityName: 'hight',
-          priorityColor: 'red',
+          priorityColor: '#ef4444',
           date:'2021-08-03',
           //type: 'task'
         },
@@ -82,7 +82,7 @@ export class TaskService {
           //edit: false,
           tags:'maison',
           priorityName: 'normal',
-          priorityColor: 'blue',
+          priorityColor: '#3b82f6',
           date:'2021-08-07',
           //type: 'task'
         },

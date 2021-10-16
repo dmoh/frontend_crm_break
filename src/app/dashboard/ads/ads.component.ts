@@ -11,12 +11,6 @@ const ELEMENT_DATA: Ad[] = [
   {id: 1, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
   {id: 2, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
   {id: 3, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 4, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 5, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 6, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 7, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 8, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 9, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
 
 ];
 

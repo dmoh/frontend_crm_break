@@ -1,10 +1,12 @@
 export class Contact {
-  public readonly id: number;
+  id: number;
   name: string = '';
   lastName: string = '';
   adress: string = '';
   phone_number: string;
   email: string = '';
+  fonction: string;
+  description: string;
   //detail: any;
 }
 
