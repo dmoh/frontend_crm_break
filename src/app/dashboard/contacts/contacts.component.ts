@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
 import { Subscription } from 'rxjs';
@@ -22,45 +23,85 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit, OnDestroy {
+  newContact: boolean;
+  detail: boolean;
   contacts: Contact[] = [];
+  contact: Contact;
   opened = false;
   contactSub: Subscription = new Subscription;
   nbContact;
-  //displayedColumns: string[] = ['id', 'nom', 'prenom', 'adresse','email', 'phone'];
-  //dataSource = ELEMENT_DATA;
-  //dataSource : MatTableDataSource<Contact> = new MatTableDataSource();
-  //@ViewChild(MatPaginator) paginator: MatPaginator;
+  tab3;
+  tabLettres;
+  lettres;
 
-  constructor(private contactService:ContactService) { }
+  constructor(
+    private contactService: ContactService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    /*this.dashboardService.getContactList().subscribe(
-      (contacts) => {
-        this.dataSource.data = contacts;
-        this.dataSource.paginator = this.paginator;
-        //this.contacts = contactList;
-        //this.dashboardService
-        console.log(this.contacts);
-      }, (error) => {
-        console.log(error);
-      }
-    );*/
-    this.contactSub.add(
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const index = paramMap.get('index');
+      console.log("index", index)
+      this.contact = this.contactService.getContact(paramMap.get('index'));
+    })
+      this.contactSub.add(
       this.contactService.contact$.subscribe(
-        (value: Contact[]) => {
+        (value: any[]) => {
           this.contacts = value;
-        }
-      )
-    )
-    this.contactSub.add(
-      this.contactService.contact$.subscribe(
-        (value: Contact[]) => {
-          this.nbContact = value.length;
-        }
+          console.log(this.contacts, 'contacts');
+
+          const tabLettre = this.contacts.sort((a, b) => {
+
+            if (a.name.charAt(0) < b.name.charAt(0)) {
+            return -1
+            } else {
+              return 1
+            }
+
+          })
+          /*for (let i=0; i < tabLettre.length; i++){
+              if(tabLettre[i])
+          }*/
+          console.log(tabLettre, 'noms')
+          const tab = this.contacts.sort((a, b) => {
+            if (a.name < b.name) {
+              return -1
+              } else {
+                return 1
+              }
+         })
+          const tab2 = tabLettre.map((lettre) => {
+             return lettre.name.charAt(0)
+          })
+          console.log(tab2, 'lettres')
+          this.tab3 = tab2.filter((item, index) => tab2.indexOf(item) === index)
+          console.log(this.tab3, "tabLtrié")
+        }))
+
+        this.contactSub.add(
+          this.contactService.contact$.subscribe(
+            (value: Contact[]) => {
+              this.nbContact = value.length;
+            }
         )
       )
+  }
+  affiche() {
+    this.newContact = true;
+    this.detail = false;
+    this.opened = !this.opened;
+    console.log('detail', this.detail)
+  }
+  afficheAutre() {
+    this.detail = true;
+    this.newContact = false;
+    this.opened = !this.opened;
+
+    console.log('detail', this.detail)
   }
   ngOnDestroy() {
     this.contactSub.unsubscribe();
   }
 }
+

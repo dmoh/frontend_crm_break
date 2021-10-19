@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
 
@@ -9,13 +10,24 @@ import { ContactService } from '@app/_services/contact.service';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
+  @Input() public newContact:boolean;
+  @Input() public detail: boolean;
+  @Input() public contacts:Contact[];
   contactForm: FormGroup;
-  contacts: Contact[];
   contact: Contact;
-  constructor(private contactService: ContactService, private formBuilder: FormBuilder) { }
+  //contacts: Contact[];
+
+  constructor(private contactService: ContactService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const index = paramMap.get('index');
+      console.log("index", index)
+      if (index !== null) {
+        this.contact = this.contactService.getContact(index);
+      }
+      this.initForm(this.contact);
+    })
   }
   initForm(
     contact: Contact = { id: null, name: '', lastName: '', adress: '', phone_number: "", email: '', fonction: '', description: '' }
@@ -33,9 +45,6 @@ export class ContactFormComponent implements OnInit {
       description: [contact.description],
 
       //priority: [todo.priority.name],
-
     })
-
   }
-
 }

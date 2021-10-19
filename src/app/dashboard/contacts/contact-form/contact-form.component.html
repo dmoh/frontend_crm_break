@@ -1,54 +1,61 @@
-<div class="container">
-  <div>
-    <h5>Nouveau contact</h5>
+<div>
+    <div class="container">
+      <div>
+        <h5>Nouveau contact</h5>
+      </div>
+      <div>
+        <mat-icon>more_vert</mat-icon>
+        <mat-icon>clear</mat-icon>
+      </div>
+    </div>
+    <mat-divider class="mt-6 mb-20"></mat-divider>
+
+    <form [formGroup]="contactForm">
+      <div style="margin-top: 35px; display: flex; flex-direction: column;">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input type="text" matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input type="text" matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fonction</mat-label>
+          <input type="text" matInput formControlName="fonction" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numéro</mat-label>
+          <input type="text" matInput formControlName="phone_number" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <textarea formControlName="adress" matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea formControlName="description" matInput></textarea>
+        </mat-form-field>
+        </div>
+      </form>
+    <div style="text-align: right; margin-bottom: 20px;">
+      <button mat-raised-button color="primary">Ajouter</button>
+      <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
+    </div>
   </div>
-  <div>
-    <mat-icon>more_vert</mat-icon>
-    <mat-icon>clear</mat-icon>
-  </div>
-</div>
-<mat-divider class="mt-6 mb-20"></mat-divider>
 
-<form [formGroup]="contactForm">
-  <div style="margin-top: 35px; display: flex; flex-direction: column;">
+  <!--<div *ngIf="detail">
+    <h5>Mon contact</h5>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nom</mat-label>
-      <input type="text" matInput formControlName="name" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Prénom</mat-label>
-      <input type="text" matInput formControlName="lastName" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Fonction</mat-label>
-      <input type="text" matInput formControlName="fonction" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Numéro</mat-label>
-      <input type="text" matInput formControlName="phone_number" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput formControlName="email" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Adresse</mat-label>
-      <textarea formControlName="adress" matInput></textarea>
-     </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea formControlName="description" matInput></textarea>
-     </mat-form-field>
-     </div>
-   </form>
-<div style="text-align: right; margin-bottom: 20px;">
-  <button mat-raised-button color="primary">Ajouter</button>
-  <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
-</div>
+  </div>-->

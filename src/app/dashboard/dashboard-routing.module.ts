@@ -14,6 +14,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { GanttComponent } from '@app/gantt/gantt.component';
 import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
+import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
@@ -33,6 +34,11 @@ const routes: Routes = [{
         {
             path: 'contacts',
             component: ContactsComponent,
+            children: [
+              { path: ":index", component: ContactFormComponent },
+              { path: "", redirectTo: "0", pathMatch: "full" },
+              { path: "new", component: ContactFormComponent },
+            ],
         },
         {
             path: 'users',

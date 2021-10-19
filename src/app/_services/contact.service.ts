@@ -10,7 +10,19 @@ export class ContactService {
   contacts: Contact[];
   public contact$: BehaviorSubject<Contact[]> = new BehaviorSubject([
     {
+      id: 6,
+      //letter: "",
+      name: "Catryn",
+      lastName: 'Snider',
+      adress: '400 Holt Court, Thomasville, Alaska, PO2867',
+      phone_number: "000 000 000",
+      email:'sniderg@mail.us',
+      fonction: "prospect",
+      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
+    },
+    {
       id: 1,
+      //letter: "",
       name: "Alice",
       lastName: 'Harding',
       adress: '387 Holt Court, Thomasville, Alaska, PO2867',
@@ -21,6 +33,7 @@ export class ContactService {
     },
     {
       id: 2,
+      //letter: "",
       name: "Alissa",
       lastName: 'Neslson',
       adress: '390 Holt Court, Thomasville, Alaska, PO2867',
@@ -30,7 +43,19 @@ export class ContactService {
       description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
     },
     {
+      id: 5,
+    //  letter: "",
+      name: "Candice",
+      lastName: 'Munoz',
+      adress: '389 Holt Court, Thomasville, Alaska, PO2867',
+      phone_number: "000 000 000",
+      email:'candice@mail.us',
+      fonction: "prospect",
+      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
+    },
+    {
       id: 3,
+      //letter: "",
       name: "Barber",
       lastName: 'Jonhson',
       adress: '395 Holt Court, Thomasville, Alaska, PO2867',
@@ -41,6 +66,7 @@ export class ContactService {
     },
     {
       id: 4,
+     // letter: "",
       name: "Bernard",
       lastName: 'Langley',
       adress: '380 Holt Court, Thomasville, Alaska, PO2867',
@@ -49,26 +75,12 @@ export class ContactService {
       fonction: "prospect",
       description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
     },
-    {
-      id: 5,
-      name: "Candice",
-      lastName: 'Munoz',
-      adress: '389 Holt Court, Thomasville, Alaska, PO2867',
-      phone_number: "000 000 000",
-      email:'candice@mail.us',
-      fonction: "prospect",
-      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
-    },
-    {
-      id: 6,
-      name: "Catryn",
-      lastName: 'Snider',
-      adress: '400 Holt Court, Thomasville, Alaska, PO2867',
-      phone_number: "000 000 000",
-      email:'sniderg@mail.us',
-      fonction: "prospect",
-      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
-    },
   ])
   constructor() { }
+
+  getContact(index: string) {
+    const contacts = this.contact$.value;
+    return contacts[index];
+  }
+
 }

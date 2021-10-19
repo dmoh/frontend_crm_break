@@ -24,20 +24,21 @@ mat-drawer {
   display: flex;
   width: 60%;
   background: white;
-  border: solid 1px RGB(234, 238, 243);
+
   height: 40px;
   border-radius: 40px;
   padding: 5px;
   //margin-right: 10px;
 }
 .search-txt {
+
   border: none;
   background: none;
   outline: none;
   padding: 0;
   line-height: 30px;
   margin-left: 10px;
-  color: #94a3b8;
+
 }
 .material-icons-outlined{
   color: #94a3b8;
