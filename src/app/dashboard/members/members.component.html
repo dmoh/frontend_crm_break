@@ -5,7 +5,7 @@
   </div>
 </div>
 <div style="margin-bottom: 15px;">
-  <button mat-raised-button color="accent" (click)="openDialog()">
+  <button mat-raised-button color="primary" (click)="openDialog()">
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">
       add
     </mat-icon>
@@ -13,7 +13,7 @@
   </button>
 </div>
 
-<table mat-table [dataSource]="dataSource">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> id </th>
     <td mat-cell *matCellDef="let member"> {{member.id}}</td>

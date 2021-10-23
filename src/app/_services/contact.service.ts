@@ -75,6 +75,28 @@ export class ContactService {
       fonction: "prospect",
       description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
     },
+    {
+      id: 7,
+     // letter: "",
+      name: "David",
+      lastName: 'Langley',
+      adress: '580 Holt Court, Thomasville, Alaska, PO2867',
+      phone_number: "000 000 000",
+      email:'david@mail.us',
+      fonction: "prospect",
+      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
+    },
+    {
+      id: 8,
+     // letter: "",
+      name: "Damien",
+      lastName: 'Langley',
+      adress: '480 Holt Court, Thomasville, Alaska, PO2867',
+      phone_number: "000 000 000",
+      email:'damien@mail.us',
+      fonction: "prospect",
+      description: "Adipisicing exercitation dolor nisi ipsum nostrud anim dolore sint veniam ",
+    },
   ])
   constructor() { }
 

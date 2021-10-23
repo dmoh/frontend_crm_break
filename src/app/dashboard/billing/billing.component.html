@@ -6,11 +6,11 @@
 </div>
 
 <div style="padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 30px;">
-  <button mat-raised-button color="accent" (click)="generatePdf()">
+  <button mat-raised-button color="primary" (click)="generatePdf()">
     Facture PDF
   </button>
 </div>
-<app-area-chart></app-area-chart>
+ <mat-card><app-area-chart></app-area-chart></mat-card>
 <div style="padding-bottom: 30px;">
     <mat-form-field>
       <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>

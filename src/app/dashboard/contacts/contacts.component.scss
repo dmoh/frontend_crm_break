@@ -3,7 +3,7 @@
   height: 100%;
 }
 mat-drawer-container {
-  background-color: RGB(243, 243, 243);
+  background-color: #F5F5F5;
   height:100%;
   width: 100%;
 }
@@ -11,7 +11,7 @@ mat-drawer, mat-drawer-content {
   padding: 8px;
 }
 mat-drawer {
-  background-color: RGB(243, 243, 243);
+  background-color: #F5F5F5;
   width: 550px;
 }
 .search{
@@ -47,4 +47,11 @@ mat-drawer {
 }
 .contacts {
   margin-top: 35px;
+}
+.mat-list-base ng-star-inserted{
+
+  :hover {
+    background: #E9EBEB;
+
+}
 }

@@ -1,4 +1,4 @@
-<mat-toolbar style="background: #1d1d1d !important;" color="primary">
+<mat-toolbar style="background: #212121 !important;color: white;">
     <mat-toolbar-row>
         <span class="material-icons-outlined" (click)='opened=!opened' style="margin-right: 20px; cursor: pointer;">
         menu
@@ -46,9 +46,10 @@
 
     </mat-toolbar-row>
 </mat-toolbar>
-  <mat-sidenav-container>
-    <mat-sidenav style="width: 290px; text-align: center" mode="side" [(opened)]="opened">
-      <div style="width: 100%; overflow: hidden; background: url(assets/images/bg_vector.jpg) top left no-repeat; background-size: cover; padding: 1rem">
+<mat-divider></mat-divider>
+  <mat-sidenav-container style="background-color: #F5F5F5;">
+    <mat-sidenav style="width: 290px; text-align: center;" mode="side" [(opened)]="opened">
+      <div style="width: 100%; overflow: hidden; background:url(assets/images/bg_vector.jpg) top left no-repeat; background-size: cover; padding: 1rem">
         <div class="wrapper-img-top-left">
           <img src="assets/images/building_brec_header.jpg"  alt="building" height="100%">
           <div class="cover-bg-opaque">
@@ -187,7 +188,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div style="height: 88vh; padding: 1.5rem; background: #f3f3f3">
+      <div style="height: 88vh; padding: 1.5rem;">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

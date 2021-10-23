@@ -30,7 +30,7 @@
               routerLink='new'
               class="ml-3"
               mat-raised-button
-              [color]="'accent'"
+              [color]="'primary'"
               (click)='opened=!opened'
               matTooltip="'Shortcut: Ctrl + /'">
               <mat-icon>add</mat-icon>
@@ -57,7 +57,7 @@
             {{task.title}}
           </mat-panel-title>
           <mat-panel-description style="display: flex; justify-content: space-around;">
-          <p style="color: #3F51B5;"> {{task.date | date}}</p>
+          <p style="color: #3F51B5;"> {{task.date | date: "dd/MM/yy"}}</p>
           <!--<p [ngStyle]="{color: task.priorityColor}">{{task.priorityName}} </p>-->
           <p color = {{task.priorityColor}} appColor> {{task.priorityName}}</p>
           <!--<p color = {{task.priorityColor}} appColor> {{task.priorityName}}</p>-->

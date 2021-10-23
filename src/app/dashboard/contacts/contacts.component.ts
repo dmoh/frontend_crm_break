@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
 import { Subscription } from 'rxjs';
+import { FilterPipe } from '../filter.pipe';
 
 /*const ELEMENT_DATA: Contact[] = [
   {id: 1, name: "Mohamed", lastName: "Litib", adress: "35 avenue charle de gaules Paris", phone_number: "06 30 31 00 00", email:"m.litib@gmail.com", },
@@ -33,6 +34,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
   tab3;
   tabLettres;
   lettres;
+  filter: FilterPipe;
+  search = '';
 
   constructor(
     private contactService: ContactService,

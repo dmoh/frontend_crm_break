@@ -1,11 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+/*@import "~@angular/material/theming";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat-core();
+
+$mytheme-primary: mat-palette($mat-blue);
+$mytheme-accent: mat-palette($mat-purple);
+$mytheme-warn: mat-palette($mat-red);
+
+$mytheme-theme: mat-light-theme(
+  (
+    color: (
+      primary: $mytheme-primary,
+      accent: $mytheme-accent,
+      warn: $mytheme-warn
+    )
+  )
+);
+
+@include angular-material-theme($mytheme-theme);*/
 
 /* Importing Bootstrap SCSS file. */
+
 @import '~bootstrap/scss/bootstrap';
 
+html, body { height: 100%; }
+body { margin: 0; }
 
 .card  {
   position: relative;

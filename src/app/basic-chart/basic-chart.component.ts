@@ -60,11 +60,11 @@ export class BasicChartComponent implements OnInit {
 
       title: {
         text: "Evolution du Chiffre d'affaires",
-        align: "left"
+        align: "center"
       },
       subtitle: {
         text: "CA Movements",
-        align: "left"
+        align: "center"
       },
       labels: series.monthDataSeries1.dates,
       xaxis: {
