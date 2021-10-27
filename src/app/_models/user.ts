@@ -3,11 +3,14 @@ export class User {
   username: string;
   email: string = '';
   password?: string = '';
+  role: string;
   token?: string|number;
   position?: number = 0;
+
+  //roles? = ['supAdmin', 'admin', 'manager', 'moderateur', 'secretaire'];
    //firstname?: string = '';
   //lastname?: string = '';
-  //roles: string = ['supAdmin', 'admin', 'manager', 'moderateur', 'secretaire'];
+  //
 
 
 }

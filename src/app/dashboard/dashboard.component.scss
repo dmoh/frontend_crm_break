@@ -6,7 +6,7 @@
 
 //@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-@font-face {
+/*@font-face {
   font-family: 'Poppins-Bold';
   src: url('../../assets/fontsPopins/Poppins-Bold.ttf');
 }
@@ -30,10 +30,10 @@
 
 mat-sidenav div  {
 
-  font-family: 'Inter-Roman';
-  font-size:medium;
+  //font-family: 'Inter-Roman';
+  font-size:small;
   color: #212121;
-  font-weight:600;
+  font-weight:400;
 }
 .icons span{
   cursor: pointer;

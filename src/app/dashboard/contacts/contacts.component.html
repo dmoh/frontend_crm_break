@@ -84,7 +84,14 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>-->
 <div class="container">
+  <div class="card">
+    <div class="card-heading">
+      <h2 class="text-center">Collaborateurs</h2>
+    </div>
+  </div>
+
   <mat-drawer-container>
+
     <mat-drawer
         [(opened)]="opened"
         mode="drawerMode"
@@ -96,28 +103,32 @@
     </mat-drawer>
 
   <mat-drawer-content>
-    <div class="header" style="margin-bottom: 10px;">
-      <h1 style="color: #1e293b;">Contacts</h1>
-      <p style="color: #8794a5;">Vous avez {{nbContact}} contact(s)</p>
+    <div class="header" style="margin-bottom: 15px; border-bottom: solid 1px black;">
+
+      <h5 style="color: #1e293b;">Vous avez {{nbContact}} contact(s)</h5>
     </div>
-    <div class="search" style="margin-top:40px ;">
-      <div class="search-box">
+
+     <!-- <div class="search-box">
         <span class="material-icons-outlined">search</span>
         <input type="text" class="search-txt" placeholder="Search contacts" [(ngModel)]="search"/>
-      </div>
-      <div>
-        <button
-          (click)="affiche()"
-          routerLink='new'
-          class="ml-3"
-          mat-raised-button
-          [color]="'primary'"
-          ><mat-icon>add</mat-icon>
-          <span class="ml-2 mr-1">Add</span>
-        </button>
-      </div>
-    </div>
-    <mat-divider style="margin-top: 80px;"></mat-divider>
+      </div>-->
+      <div style="margin-top: 40px;">
+        <mat-form-field style="margin-right: 18px;">
+          <input matInput placeholder="Rechercher" type="text"/>
+        </mat-form-field>
+          <button
+            (click)="affiche()"
+            routerLink='new'
+            class="ml-3"
+            mat-raised-button
+            [color]="'primary'"
+            ><mat-icon>add</mat-icon>
+            <span class="ml-2 mr-1">Add</span>
+          </button>
+        </div>
+
+
+    <mat-divider style="margin-top: 50px;"></mat-divider>
     <!--<div style="margin-top: 40px;">
       <mat-divider>A</mat-divider>
     </div>-->

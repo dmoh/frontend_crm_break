@@ -1,4 +1,9 @@
 <div style="width: 100%; height: 100%;">
+  <div class="card">
+    <div class="card-heading">
+      <h2 class="text-center">Tâches</h2>
+    </div>
+  </div>
   <mat-drawer-container>
     <mat-drawer
         [(opened)]="opened"
@@ -11,11 +16,30 @@
 
     <mat-drawer-content>
       <div style="display: flex; justify-content: space-between;border-bottom: solid 1px black;">
-        <div>
-          <h1 style="color: #1e293b;">Tasks</h1>
-         <p style="color:#8794a5"> Vous avez {{nbTaskSub.length}} restante(s)</p>
+
+          <!--<h1 style="color: #1e293b;">Tasks</h1>-->
+            <div>
+              <h5
+                style="color:#1e293b"> Vous avez {{nbTaskSub.length}} restante(s)
+                <button
+                routerLink='new'
+                class="ml-3"
+                mat-raised-button
+                [color]="'primary'"
+                (click)='opened=!opened'
+                matTooltip="'Shortcut: Ctrl + /'">
+                <mat-icon>add</mat-icon>
+                <span class="ml-2 mr-1">Add Task</span>
+              </button>
+              </h5>
+            </div>
+
+
+
+
+
         </div>
-        <div class="mt-4 mr-10 sm:mt-0">
+
           <!-- Add section button -->
           <!--<button
               mat-flat-button
@@ -26,19 +50,9 @@
               <span class="ml-2 mr-1">Add Section</span>
           </button>-->
           <!-- Add task button -->
-          <button
-              routerLink='new'
-              class="ml-3"
-              mat-raised-button
-              [color]="'primary'"
-              (click)='opened=!opened'
-              matTooltip="'Shortcut: Ctrl + /'">
-              <mat-icon>add</mat-icon>
-              <span class="ml-2 mr-1">Add Task</span>
-          </button>
-        </div>
 
-      </div>
+
+
 
     <!--<div style="width: 100%; margin-top: 50px;">
 
