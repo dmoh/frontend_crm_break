@@ -5,18 +5,71 @@
       <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
         <ng-template matStepLabel>Description</ng-template>
         <div class="form-group" style="padding-top: 35px;border-bottom: solid 9px white" formGroupName="description">
-        <h5>Descriptif</h5>
+        <h5>Annonce</h5>
           <mat-form-field appearance="outline"><mat-label>Titre de l'annonce</mat-label>
             <input type="text" autocomplete="off" matInput formControlName="title"/>
           </mat-form-field>
+
+          <mat-form-field  appearance="outline">
+            <mat-select placeholder='Typologie immeuble' formControlName="type">
+              <mat-option value='logements'>Logements</mat-option>
+              <mat-option value='bureaux'>Bureaux</mat-option>
+              <mat-option value='commerces'>Commerces/Centres commerciaux</mat-option>
+              <mat-option value='industriel'>Industriel/Logistique/Artisanal</mat-option>
+              <mat-option value='hotel'>Hôtel/ApartHotel</mat-option>
+              <mat-option value='centres médicaux'>Cliniques/EMS/Hôpital</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--<h5>Informations contact</h5>
+
+            <mat-form-field appearance="outline">
+            <mat-label>Nom de société</mat-label>
+            <input type="text" matInput formControlName="contactSocity" />
+          </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input type="text" matInput formControlName="contactLastName" />
+          </mat-form-field>
+
           <mat-form-field appearance="outline">
+            <mat-label>Prénom</mat-label>
+            <input type="text" matInput formControlName="contactName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Numéro</mat-label>
+            <input type="text" matInput formControlName="contactNumber" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="contactMail" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Adresse</mat-label>
+            <input type='text' matInput formControlName="contactAdress" matInput/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ville</mat-label>
+            <input type='text' matInput formControlName="contactCity" matInput/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Pays</mat-label>
+            <input type='text' matInput formControlName="contactCountry" matInput/>
+          </mat-form-field>-->
+          <!----<mat-form-field appearance="outline">
             <mat-select placeholder="Type de vente" formControlName="type">
               <mat-option value="Achat">Achat</mat-option>
               <mat-option value="Location">Location</mat-option>
               <mat-option value="Vacances">Vacances</mat-option>
             </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
+          </mat-form-field>-->
+
+          <!--<mat-form-field appearance="outline">
           <mat-select placeholder="Categorie de bien" formControlName="category">
               <mat-option value="Maison">Maison</mat-option>
               <mat-option value="Appartement">Appartement</mat-option>
@@ -29,7 +82,7 @@
               <mat-option value="mobile home">Mobile home</mat-option>
               <mat-option value="péniche">Péniche</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field>-->
           <!--<mat-form-field class="example-chip-list">
             <mat-chip-list #tagList aria-label="Catégorie">
               <mat-chip
@@ -62,17 +115,58 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>-->
-          <mat-form-field appearance="outline">
+          <!--<mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
             <textarea formControlName="comment" matInput></textarea>
-          </mat-form-field>
+          </mat-form-field>-->
+          <h5>Spécificités du bien</h5>
           <mat-form-field appearance="outline">
-            <mat-label>Montant</mat-label>
-            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="amount"/>
+            <mat-label>Prix de vente</mat-label>
+            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="sellingPrice"/>
+              <!--<span matPrefix style="">CHF</span>
+              <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>-->
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Etat locatif</mat-label>
+            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="rentalStatus"/>
               <span matPrefix style="">CHF</span>
               <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>
           </mat-form-field>
+
+          <mat-form-field appearance="outline" >
+            <mat-label>Rendement en %</mat-label>
+            <input type='number' matInput formControlName="yield" matInput/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Observations</mat-label>
+            <textarea formControlName="comment" matInput></textarea>
+          </mat-form-field>
+
+          <h5>Localisation du bien</h5>
+
+          <mat-form-field appearance="outline" >
+            <mat-label>adresse</mat-label>
+            <input type='text' matInput formControlName="street" matInput/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" >
+            <mat-label>Ville</mat-label>
+            <input type='text' matInput formControlName="city" matInput/>
+          </mat-form-field>
+          <mat-form-field appearance="outline" >
+            <mat-label>Code postal</mat-label>
+            <input type='number' matInput formControlName="zipcode" matInput/>
+          </mat-form-field>
+          <mat-form-field appearance="outline" >
+            <mat-label>Pays</mat-label>
+            <input type='text' matInput formControlName="country" matInput/>
+          </mat-form-field>
+
+
         </div>
+
 
         <!--<div formArrayName="tags">
               <button (click)="add('tag')" mat-raised-button color="accent">Ajouter un tag</button>
@@ -107,25 +201,27 @@
               <mat-slide-toggle formControlName="sold">Vendu</mat-slide-toggle>
             </div>
           </div>-->
-        <hr />
-        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="location">
+
+
+       <!---- <div class="form-group" style="border-bottom: solid 9px white" formGroupName="location">
             <h5>Localisation du bien</h5>
             <mat-form-field appearance="outline">
-              <mat-label>Pays</mat-label>
-              <input autocomplete="off" formControlName="country" matInput type="text"/>
+              <mat-label>Adresse</mat-label>
+                <input autocomplete="off" formControlName="street" matInput type="text"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label >Ville</mat-label>
               <input autocomplete="off" formControlName="city" matInput type="text"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
+              <mat-label>Pays</mat-label>
+              <input autocomplete="off" formControlName="country" matInput type="text"/>
+            </mat-form-field>
+           <mat-form-field appearance="outline">
               <mat-label >Code Postal</mat-label>
               <input autocomplete="off" formControlName="zipcode" matInput type="number"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Adresse</mat-label>
-                <input autocomplete="off" formControlName="street" matInput type="text"/>
-            </mat-form-field>
+
         </div>
 
         <div class="form-group" style="border-bottom: solid 9px white" formGroupName="characteristics">
@@ -169,12 +265,12 @@
           <div style="margin-bottom: 1rem">
             <mat-slide-toggle formControlName="handicap_accessibility">Accès handicapé</mat-slide-toggle>
           </div>
-        </div>
-      </form>
+        </div>-->
 
-      <div style="margin-top: 40px; text-align: right">
-        <button [disabled]="globalForm.invalid" mat-raised-button color="primary" matStepperNext>Suivant</button>
-      </div>
+      </form>
+        <div style="margin-top: 40px; text-align: right">
+          <button [disabled]="globalForm.invalid" mat-raised-button color="primary"  matStepperNext>Suivant</button>
+        </div>
     </mat-step>
     <mat-step [stepControl]="docsForm">
       <form [formGroup]="docsForm">
@@ -216,7 +312,7 @@
         <div>
           <button mat-raised-button matStepperPrevious>Précédent</button>
         </div>
-          <div><button [disabled]="docsForm.invalid" mat-raised-button color="primary" matStepperNext>Suivant</button></div>
+          <div><button [disabled]="docsForm.invalid" mat-raised-button color="primary" matStepperNext (click)="contactSort()" >Suivant</button></div>
           <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
           </div>
       </form>
@@ -254,12 +350,93 @@
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>-->
-        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="contacts">
+        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="contacts" >
         <div class="info">
           <h5 class="text-center">
             Envoyer cette annonce aux contacts suivants
           </h5>
-          <div class="text-center"><small class="text-center" style="color: #ccc">
+          <mat-form-field>
+            <mat-label>Emails</mat-label>
+            <mat-chip-list #chipList aria-label="Contact selection">
+              <mat-chip *ngFor='let contact of contactEmails'
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(contact)">
+                {{contact.email}}
+
+                  <mat-icon matChipRemove>cancel</mat-icon>
+
+              </mat-chip>
+
+              <input matInput
+                type="text" [(ngModel)]="search"
+
+                placeholder="new email..."
+                #contactInput
+                [formControl]="contactCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)"
+
+
+              />
+
+                  <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="selected($event)">
+                  <!--<mat-option *ngFor="let option of filteredOption | async" [value]="option">-->
+                  <mat-option *ngFor="let contact of contactss | filter: search let index = index"  [value]="contact">
+
+                    {{contact.email}}
+
+                  </mat-option>
+
+
+                </mat-autocomplete>
+            </mat-chip-list>
+          </mat-form-field>
+          <div>
+
+            <mat-form-field appearance="fill" >
+              <mat-label>Rechercher</mat-label>
+              <input type='text' (keyup)="updateFilter($event.target.value)" matInput/>
+            </mat-form-field>
+
+
+            <table matSort style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="fullname">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom Prénom </th>
+                <td mat-cell *matCellDef="let contact"> {{contact.lastName}} {{contact.name}}</td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="criteres">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Critères</th>
+                <td mat-cell *matCellDef="let contact" style="color:yellowgreen;">{{contact.criteriasBind}} </td>
+              </ng-container>
+              <ng-container matColumnDef="localisation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Localisation</th>
+                <td mat-cell *matCellDef="let contact"> {{contact.country}} {{contact.city}} </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef >Actions</th>
+                <td mat-cell *matCellDef="let contact">
+                  <button mat-icon-button ><mat-icon>edit_outline</mat-icon></button>
+                  <button mat-icon-button color="warn" ><mat-icon>delete_outline</mat-icon></button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+
+         <!---- <div class="text-center"><small class="text-center" style="color: #ccc">
             <em>Il s'agit d'un nouveau contact ? Remplissez les champs ci dessous</em></small>
           </div>
         </div>
@@ -273,7 +450,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Tél</mat-label>
-            <input autocomplete="off" formControlName="phone_number" matInput type="number"/>
+            <input autocomplete="off" formControlName="phone_Number" matInput type="number"/>
           </mat-form-field>
           <mat-form-field class="example-chip-list"  appearance="outline">
           <mat-chip-list #chipListContact aria-label="Fruit selection">
@@ -303,18 +480,24 @@
             <mat-list-option *ngFor="let email of emails" [value]="email">
               {{ email.email }}
             </mat-list-option>
-          </mat-selection-list>
+          </mat-selection-list>-->
 
-        <div class="btn" style="margin-top: 40px; display: flex; justify-content: space-between;">
-          <div>
-            <button style="margin-right: 0.4rem" mat-raised-button matStepperPrevious>Précédent</button>
-          </div>
+          <div class="btn" style="margin-top: 40px; display: flex; justify-content: space-between;">
             <div>
-              <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Suivant</button>
+              <button style="margin-right: 0.4rem" mat-raised-button matStepperPrevious>Précédent</button>
             </div>
+            <div>
+              <button (click)="openDialog()" mat-raised-button color="primary" style="margin-right: 15px;">
+                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
+                  contact
+            </button>
+              <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Envoyer</button>
+            </div>
+          </div>
         </div>
         </div>
       </form>
+
     </mat-step>
   </mat-horizontal-stepper>
 </div>

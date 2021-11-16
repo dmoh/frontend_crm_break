@@ -195,7 +195,7 @@ export class TaskService {
         todoEdited.priorityColor = 'red';
       } else if (todoEdited.priorityName === 'low') {
         todoEdited.priorityColor = 'green';
-      }else if (todoEdited.priorityName === 'normal') {
+      } else if (todoEdited.priorityName === 'normal') {
         todoEdited.priorityColor = 'blue';
       }
       //return editedCoktail

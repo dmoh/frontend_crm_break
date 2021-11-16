@@ -15,6 +15,7 @@ import { GanttComponent } from '@app/gantt/gantt.component';
 import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
+import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
@@ -73,16 +74,20 @@ const routes: Routes = [{
 
       },*/
 
-        {
-          path: 'task',
-          component: ListComponent,
-          children: [
-            { path: ":index", component: DetailsComponent },
-            { path: "", redirectTo: "0", pathMatch: "full" },
-            { path: "new", component: DetailsComponent },
-          ],
-        },
-      ]
+      {
+        path: 'task',
+        component: ListComponent,
+        children: [
+          { path: ":index", component: DetailsComponent },
+          { path: "", redirectTo: "0", pathMatch: "full" },
+          { path: "new", component: DetailsComponent },
+        ],
+      },
+      {
+        path: 'sales',
+        component: PipeDriveComponent,
+      },
+    ]
 },
 
 

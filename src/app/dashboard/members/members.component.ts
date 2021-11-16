@@ -34,7 +34,6 @@ export class MembersComponent implements OnInit {
       })
       this.userService.emitMembers();
     }
-
     openDialog(): void {
       const dialogRef = this.dialog.open(AddMemberModalComponent, {
           width: '100%',
@@ -43,11 +42,10 @@ export class MembersComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result=> {
         if (result) {
               this.snackBar.open( 'Utilisateur Ajouté', 'Annulé',{duration: 3000});
-            }
-          })
+        }
+      })
     }
     deleteMember(id){
       this.userService.deleteMember(id)
-    }
-
+  }
 }

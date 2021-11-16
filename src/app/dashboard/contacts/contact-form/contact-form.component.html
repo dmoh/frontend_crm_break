@@ -1,4 +1,4 @@
-<div>
+<div mat-dialog-content>
     <div class="container">
       <div>
         <h5>Nouveau contact</h5>
@@ -14,6 +14,18 @@
       <div style="margin-top: 35px; display: flex; flex-direction: column;">
 
         <mat-form-field appearance="outline">
+          <mat-select placeholder="Type" formControlName="typeClient">
+            <mat-option>Privé</mat-option>
+            <mat-option>Institutionnel</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nom de société</mat-label>
+          <input type="text" matInput formControlName="categoryClient" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
           <input type="text" matInput formControlName="name" />
         </mat-form-field>
@@ -21,11 +33,6 @@
         <mat-form-field appearance="outline">
           <mat-label>Prénom</mat-label>
           <input type="text" matInput formControlName="lastName" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Fonction</mat-label>
-          <input type="text" matInput formControlName="fonction" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -39,18 +46,61 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Adresse</mat-label>
-          <textarea formControlName="adress" matInput></textarea>
+          <mat-label>Pays</mat-label>
+          <input type='text' matInput formControlName="country" matInput/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea formControlName="description" matInput></textarea>
+          <mat-label>Ville</mat-label>
+          <input type='text' matInput formControlName="city" matInput/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input type='text' matInput formControlName="adress" matInput/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Budget</mat-label>
+          <input type='number' matInput formControlName="budget" matInput/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Secteur géographique</mat-label>
+          <input type='text' matInput formControlName="geographicSector" matInput/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-select placeholder="Type d'immeuble" formControlName="buildings">
+            <mat-option>Logements</mat-option>
+            <mat-option>Bureaux</mat-option>
+            <mat-option>Commerces/Centres commerciaux</mat-option>
+            <mat-option>Industriel/Logistique/Artisanal</mat-option>
+            <mat-option>Hôtel/ApartHotel</mat-option>
+            <mat-option>Cliniques/EMS/Hôpital</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-select placeholder="Régime de l'immeuble" formControlName="buildingRegime">
+            <mat-option>Société(share deal)</mat-option>
+            <mat-option>Nom(asset deal)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" >
+          <mat-label>Rendement en %</mat-label>
+          <input type='text' matInput formControlName="yield" matInput/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Observations</mat-label>
+          <textarea formControlName="comments" matInput></textarea>
         </mat-form-field>
         </div>
       </form>
     <div style="text-align: right; margin-bottom: 20px;">
-      <button mat-raised-button color="primary">Ajouter</button>
+      <button mat-raised-button color="primary" (click)='onSubmit()' >Ajouter</button>
       <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
     </div>
   </div>

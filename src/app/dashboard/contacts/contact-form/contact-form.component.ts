@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
@@ -14,10 +15,15 @@ export class ContactFormComponent implements OnInit {
   @Input() public detail: boolean;
   @Input() public contacts:Contact[];
   contactForm: FormGroup;
-  contact: Contact;
+  //contact: Contact;
   //contacts: Contact[];
-
-  constructor(private contactService: ContactService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private contactService: ContactService,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public contact: Contact,
+    public dialogRef: MatDialogRef<ContactFormComponent>,
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
@@ -30,21 +36,33 @@ export class ContactFormComponent implements OnInit {
     })
   }
   initForm(
-    contact: Contact = { id: null, name: '', lastName: '', adress: '', phone_number: "", email: '', fonction: '', description: '' }
+    contact: Contact = { id: null, typeClient:'', categoryClient:'', kind:'',  name: '', lastName: '', country:'', city:'', adress: '', phone_number: "", email: '', budget: null, geographicSector:'', buildings:'', buildingRegime:'', yield:null, comments:''}
     ) {
     this.contactForm = this.formBuilder.group({
       //description: this.formBuilder.group({
-
-      id       : [contact.id],
-      name     : [contact.name],
-      lastName   : [contact.lastName],
-      adress    : [contact.adress],
+      id: [contact.id],
+      typeClient: [contact.typeClient],
+      categoryClient: [contact.categoryClient],
+      kind: [contact.kind],
+      name: [contact.name],
+      lastName: [contact.lastName],
+      country: [contact.country],
+      city: [contact.city],
+      adress: [contact.adress],
       phone_number: [contact.phone_number],
-      email:      [contact.email],
-      fonction: [contact.fonction],
-      description: [contact.description],
-
-      //priority: [todo.priority.name],
+      email: [contact.email],
+      budget: [contact.budget],
+      geographicSector: [contact.geographicSector],
+      buildings: [contact.buildings],
+      buildingRegime: [contact.buildingRegime],
+      yield: [contact.yield],
+      comments: [contact.comments]
     })
+  }
+  onSubmit(): void {
+    const newContact = this.contactForm.value;
+     this.contactService.addContact(newContact);
+     console.log('contact', newContact)
+     this.dialogRef.close(newContact)
   }
 }

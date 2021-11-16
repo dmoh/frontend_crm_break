@@ -32,6 +32,7 @@ export class ListComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       console.log("index", index)
@@ -53,7 +54,7 @@ export class ListComponent implements OnInit, OnDestroy {
       this.taskService.task$.subscribe(
       (value: any[]) => {
           this.tasks = value;
-          console.log(this.tache, 'lautre tache')
+          console.log(this.tache, "l'autre tache")
         },
       )
     );
@@ -65,7 +66,6 @@ export class ListComponent implements OnInit, OnDestroy {
         },
       )
     );
-
     //this.taskService.emitTodo()
   }
     ngOnDestroy(): void {
@@ -79,7 +79,6 @@ export class ListComponent implements OnInit, OnDestroy {
     }*/
     deleteTask(id:string) {
       this.taskService.deleteTask(id);
-
     }
     /*emitTodo (){
       //this.taskService.emitTodo()

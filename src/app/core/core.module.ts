@@ -10,7 +10,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {HttpClientModule} from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -31,10 +32,11 @@ import { MatDatepickerModule }from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AddProjectComponent } from '@app/add-project/add-project.component';
 import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal/add-member-modal.component';
-
+import { FilterPipe } from '@app/dashboard/filter.pipe';
 
 @NgModule({
-  declarations: [DialogModalComponent, AddProjectComponent, AddMemberModalComponent],
+  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe
+  ],
     imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -49,7 +51,7 @@ import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal
         MatAutocompleteModule,
         MatInputModule,
         MatCardModule,
-        MatDialogModule,
+      MatDialogModule,
         MatChipsModule,
         MatStepperModule,
         MatSlideToggleModule,
@@ -96,7 +98,9 @@ import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal
       MatDatepickerModule,
       MatNativeDateModule,
       MatCheckboxModule,
-      CdkTableModule
+      CdkTableModule,
+
+      FilterPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MatDialog, ]

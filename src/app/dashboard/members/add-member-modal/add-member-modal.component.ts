@@ -66,5 +66,4 @@ export class AddMemberModalComponent implements OnInit {
      console.log('user', newUser)
      this.dialogRef.close(newUser)
   }
-
 }
