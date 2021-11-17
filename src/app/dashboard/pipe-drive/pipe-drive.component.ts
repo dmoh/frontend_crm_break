@@ -1,59 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { List } from '../models/list';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Offer } from '../models/offer';
+import { OfferModalComponent } from './offer-modal/offer-modal.component';
 
 @Component({
   selector: 'app-pipe-drive',
   templateUrl: './pipe-drive.component.html',
-  styleUrls: ['./pipe-drive.component.scss']
+  styleUrls: ['./pipe-drive.component.scss'],
+  providers: [MatSnackBar]
 })
 export class PipeDriveComponent implements OnInit {
   listLabel = "";
   itemContent: string;
-  lists: List[] = [{
-    label: 'Prospect Identifié',
-    totalAmount: 3000,
-    totalOffer: 2,
-    items: [
-      { content: "Villa" },
-      { content: "Jean Edouard" },
-      {content: "2000"},
+  offers: Offer[] = [];
 
-      /*{
-        offer: "Villa",
-        name: "Jean",
-        lastName: "Edouard",
-        amount: 2000,
-        content: ""
-      }*/
-    ]
 
-  }];
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
-  constructor() { }
-
+  openDialog(): void {
+    //let tab;
+    const dialogRef = this.dialog.open(OfferModalComponent, {
+      width: '50%',
+      data: new Offer,
+    });
+    dialogRef.afterClosed().subscribe(offers => {
+      if (offers) {
+        this.offers.push(offers)
+        this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
+      }
+      console.log('offers', this.offers)
+    })
+  }
   ngOnInit(): void {
   }
-  addList(): void {
-    if (this.listLabel) {
-      this.lists.push({
-        label: this.listLabel,
-        totalAmount:0,
-          totalOffer:0,
-        items: []
-      });
-      this.listLabel = "";
-    }
-  }
-  addItem(list:List): void {
-    if (this.itemContent) {
-      list.items.push({
-        /*offer: "Villa",
-        name: "Jean",
-        lastName: "Edouard",
-        amount: 2000,*/
-        content: this.itemContent,
-      });
-      this.itemContent = "";
-    }
-  }
+
 }

@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component';
+import { OfferModalComponent } from './dashboard/pipe-drive/offer-modal/offer-modal.component';
 //import { FilterPipe } from './dashboard/filter.pipe';
 //import { ContactFormComponent } from './contact-form/contact-form.component';
 //import { BasicChartComponent } from './basic-chart/basic-chart.component';
@@ -44,6 +45,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     //GantComponent,
     GanttComponent,
     PipeDriveComponent,
+    OfferModalComponent,
     //FilterPipe,
     //ContactFormComponent,
     //BasicChartComponent,

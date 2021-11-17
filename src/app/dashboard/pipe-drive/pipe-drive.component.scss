@@ -1,9 +1,38 @@
 mat-card {
-  width: 300px;
+  width: 190px;
+}
+mat-card-content {
+  margin-top: 5px;
+}
+ul {
+  padding-left: 0px;
+
+  list-style: none;
+}
+#offer{
+  font-size: 12;
+  font-weight: bold;
 }
 li {
-  padding: 15px;
-}
-.odd{
+  //padding: 5px;
+  font-size: 12px;
+  list-style: none;
   background-color: aliceblue;
+}
+.columns{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.footer {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+
+  div {
+    border: dotted #ccc 2px;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
 }
