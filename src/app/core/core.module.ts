@@ -10,7 +10,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
+
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {HttpClientModule} from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -30,10 +31,12 @@ import { MatMenuModule }from '@angular/material/menu';
 import { MatDatepickerModule }from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AddProjectComponent } from '@app/add-project/add-project.component';
-
+import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal/add-member-modal.component';
+import { FilterPipe } from '@app/dashboard/filter.pipe';
 
 @NgModule({
-  declarations: [DialogModalComponent, AddProjectComponent],
+  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe
+  ],
     imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -48,7 +51,7 @@ import { AddProjectComponent } from '@app/add-project/add-project.component';
         MatAutocompleteModule,
         MatInputModule,
         MatCardModule,
-        MatDialogModule,
+      MatDialogModule,
         MatChipsModule,
         MatStepperModule,
         MatSlideToggleModule,
@@ -85,6 +88,7 @@ import { AddProjectComponent } from '@app/add-project/add-project.component';
       MatProgressBarModule,
       MatTableModule,
       DialogModalComponent,
+      AddMemberModalComponent,
       MatFormFieldModule,
       MatPaginatorModule,
       MatExpansionModule,
@@ -94,7 +98,9 @@ import { AddProjectComponent } from '@app/add-project/add-project.component';
       MatDatepickerModule,
       MatNativeDateModule,
       MatCheckboxModule,
-      CdkTableModule
+      CdkTableModule,
+
+      FilterPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MatDialog, ]

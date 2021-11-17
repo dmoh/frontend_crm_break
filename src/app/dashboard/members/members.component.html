@@ -4,34 +4,43 @@
     <!--<h3 >{{ 'name'  | translate  }}</h3>-->
   </div>
 </div>
+<div style="margin-bottom: 15px;">
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">
+      add
+    </mat-icon>
+    New user
+  </button>
+</div>
 
-<!--<table class="w-100" mat-table [dataSource]="members" >
-  <ng-container matColumnDef="tache">
-    <th mat-header-cell *matHeaderCellDef> Tâches </th>
-    <td mat-cell> </td>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> id </th>
+    <td mat-cell *matCellDef="let member"> {{member.id}}</td>
   </ng-container>
-  <ng-container matColumnDef="nom">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Nom </th>
-    <td mat-cell *matCellDef="let contact"> {{contact.name}} </td>
+    <td mat-cell *matCellDef="let member"> {{member.lastName}} </td>
   </ng-container>
-
-  <ng-container matColumnDef="prenom">
+  <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef> Prénom </th>
-    <td mat-cell *matCellDef="let contact"> {{contact.lastname}} </td>
-  </ng-container>
-  <ng-container matColumnDef="adresse">
-    <th mat-header-cell *matHeaderCellDef> Adresse </th>
-    <td mat-cell *matCellDef="let contact"> {{contact.adress}} </td>
+    <td mat-cell *matCellDef="let member"> {{member.name}} </td>
   </ng-container>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef> Email </th>
-    <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
+    <td mat-cell *matCellDef="let member"> {{member.email}} </td>
   </ng-container>
-  <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef> Tel </th>
-    <td mat-cell *matCellDef="let contact"> {{contact.phone_number}} </td>
+  <ng-container matColumnDef="rules">
+    <th mat-header-cell *matHeaderCellDef> Rôle </th>
+    <td mat-cell *matCellDef="let member"> {{member.rules}} </td>
   </ng-container>
-
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let member">
+      <button mat-icon-button ><mat-icon>edit_outline</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="deleteMember(member.id)"><mat-icon>delete_outline</mat-icon></button>
+    </td>
+  </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-</table>-->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

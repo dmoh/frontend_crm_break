@@ -13,13 +13,24 @@ import { DetailsComponent } from '@app/tasks/details/details.component';
 import { ListComponent } from '@app/tasks/list/list.component';
 import { MembersComponent } from './members/members.component';
 import { BillingComponent } from './billing/billing.component';
-import { TaskComponent } from '@app/tasks/task.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { AreaChartComponent } from '@app/area-chart/area-chart.component';
+import { BasicChartComponent } from '@app/basic-chart/basic-chart.component';
+import { ColortaskDirective } from '@app/tasks/colortask.directive';
+//import { ContactFormComponent } from '@app/dashboard/contacts/contact-form/contact-form.component';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+//import { DialogModalComponent } from '@app/dialog-modal/dialog-modal.component';
+import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
+
+//import { FilterPipe } from './filter.pipe';
+//import { NgApexchartsModule } from 'ng-apexcharts';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
@@ -36,11 +47,13 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent, TaskComponent,DetailsComponent, ListComponent, CalendarComponent],
+    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactsComponent, ContactFormComponent],//FilterPipe],
   imports: [
       CoreModule,
       DashboardRoutingModule,
       FullCalendarModule,
+    NgApexchartsModule,
+      MatDialogModule
   ],
   exports: [
       CoreModule,
@@ -48,17 +61,23 @@ FullCalendarModule.registerPlugins([
       ContactsComponent,
       MembersComponent,
       BillingComponent,
-      TaskComponent,
+
       UsersComponent,
       ChartComponent,
       ChartBarComponent,
       CalendarComponent,
+      AreaChartComponent,
+      ApexChartComponent,
+      BasicChartComponent,
+
       //SchedulerComponent
       //GanttComponent,
 
   ],
   providers: [
-      DashboardService
+    DashboardService,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ]
 })
 export class DashboardModule { }

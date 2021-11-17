@@ -5,18 +5,13 @@ import {DashboardService} from '../dashboard.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Ad } from './models/ad';
+//import { Ad } from '../models/ad';
+import { Ad } from '../models/ad';
 
 const ELEMENT_DATA: Ad[] = [
-  {id: 1, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 2, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 3, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 4, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 5, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 6, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 7, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 8, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 9, title: "Villa sur Paris", amount: "€350 000", description: "35 avenue charle de gaules Paris", showAmount: false, published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 1, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 2, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 3, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
 
 ];
 
@@ -50,7 +45,7 @@ export class AdsComponent implements OnInit {
 
   openDialog(): void {
       const dialogRef = this.dialog.open(DialogModalComponent, { // todo globaliser modal
-          width: '80%',
+          width: '100%',
           data: new Ad(),
       });
 

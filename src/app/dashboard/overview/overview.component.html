@@ -1,48 +1,61 @@
-<section class="container-fluid" style="background-color: #f3f3f3" >
+<section class="container-fluid" style="background-color: #F5F5F5">
   <div class="row">
     <div class="col-md-12">
       <div class="card" style="text-align: center;">
 
         <div class="card-heading" style="text-align: center;height: 85px;">
           <h2>Compte rendu</h2>
-          <small>l'ensemble des activiés sur le crm présent</small>
+          <small>l'ensemble des activités sur le crm présent</small>
         </div>
       </div>
 
-        <div  style="display: flex; justify-content: space-evenly;">
-        <div class="carte" style="width: 250px;">
-          <mat-card style="border-radius: 40px;">
+        <div class="container-card">
+        <div class="cards">
+          <mat-card style="border-radius: 5px;">
             <mat-card-header>
               <mat-card-title>Summary</mat-card-title>
             </mat-card-header>
             <mat-card-content style="text-align: center;">
-              <p style="font-size: 50px; font-weight: bold; color: blue;">21</p>
-              <p style="color: blue; font-size: large;">Due Tasks</p>
+              <p style="font-size: 50px; font-weight: bold; color:RGB(59, 130, 246);">21</p>
+              <p style="color: RGB(59, 130, 246); font-size: large;">Due Tasks</p>
             </mat-card-content>
             <p style="text-align: center;">Completed: 13</p>
           </mat-card>
         </div>
 
-          <div class="carte" style="width: 250px;">
-            <mat-card style="border-radius: 40px;">
+        <div class="cards">
+          <mat-card style="border-radius: 5px;">
+            <mat-card-header>
+              <mat-card-title>Issues</mat-card-title>
+            </mat-card-header>
+            <mat-card-content style="text-align: center;">
+              <p style="font-size: 50px; font-weight: bold; color:#f59e0b;">21</p>
+              <p style="color:#f59e0b; font-size: large;">Open</p>
+            </mat-card-content>
+            <p style="text-align: center;">Closed today: 13</p>
+          </mat-card>
+        </div>
+
+          <div class="cards">
+            <mat-card>
               <mat-card-header>
                 <mat-card-title>Overdue</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: red;">17</p>
-                <p style="color: red; font-size: large;">Tasks</p>
+                <p style="font-size: 50px; font-weight: bold; color: RGB(239, 68, 68);">17</p>
+                <p style="color: RGB(239, 68, 68); font-size: large;">Tasks</p>
               </mat-card-content>
               <p style="text-align: center;">From yesterday</p>
             </mat-card>
           </div>
-          <div class="carte" style="width: 250px;">
-            <mat-card style="border-radius: 40px;">
+          <div class="cards">
+            <mat-card>
               <mat-card-header>
                 <mat-card-title>Sales</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: green;">3</p>
-              <p style="color: green; font-size: large;">Contracts</p>
+                <p style="font-size: 50px; font-weight: bold; color: RGB(34, 197, 94);">3</p>
+              <p style="color: RGB(34, 197, 94); font-size: large;">Contracts</p>
               </mat-card-content>
               <p style="text-align: center;">From yesterday</p>
             </mat-card>
@@ -50,14 +63,16 @@
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: row; margin-top: 50px; justify-content: center;">
+        <div style="display: flex; margin-top: 50px; justify-content: center;">
           <!--<app-chart style="display: block; text-align: center;"></app-chart>-->
-          <app-chart-bar style="width: 70%;"></app-chart-bar>
+          <!--<app-chart-bar style="width: 70%;"></app-chart-bar>-->
+          <mat-card style="width: 100%;"><app-basic-chart ></app-basic-chart></mat-card>
+
         </div>
 
         <div style="height: 450px; margin-top: 50px;">
           <h5 style="text-align: center;margin-bottom: 50px;">Dernières annonces ajoutées</h5>
-          <div style="display: flex;justify-content: space-around;">
+          <div class="container-card">
 
           <!--<div *ngFor="let ad of ads" class="row" style="width: 320px; height: 300px;">-->
             <!--<div class="col-md-12">-->

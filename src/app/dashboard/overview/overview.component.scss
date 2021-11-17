@@ -1,4 +1,14 @@
-
+.container-card{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.cards{
+  width: 200px;
+}
+mat-card{
+  border-radius: 5px;
+}
 .rounded {
   border-radius: 100px !important;
 }

@@ -6,15 +6,18 @@
 
 export class Task
     {
-      id: any;
-      type: 'task' | 'work';
+      id: string;
+      //type: 'task' | 'work';
       title: string;
       notes: string;
       completed: boolean;
-      edit: boolean;
+      //edit: boolean;
       tags: string ;
-      priority: string;
+      //priority: any = {color: '', name:''};
       date: string;
+      priorityName: string;
+      priorityColor: string;
+      //modif: false = false;
       //dueDate: string | null;
       //priority: 0 | 1 | 2;
       //tags: string[];

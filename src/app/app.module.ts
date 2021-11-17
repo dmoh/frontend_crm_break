@@ -16,6 +16,16 @@ import { ReplaySubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component';
+//import { FilterPipe } from './dashboard/filter.pipe';
+//import { ContactFormComponent } from './contact-form/contact-form.component';
+//import { BasicChartComponent } from './basic-chart/basic-chart.component';
+//import { AreaChartComponent } from './area-chart/area-chart.component';
+//import { ApexChartComponent } from './apex-chart/apex-chart.component';
+//import { ApexChartComponent } from './apex-chart/apex-chart.component';
+//import { NgApexchartsModule } from 'ng-apexcharts';
+//import { AddMemberModalComponent } from './dashboard/members/add-member-modal/add-member-modal.component';
+
 //import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 //import { SchedulerComponent } from './scheduler/scheduler.component';
 //import { GanttComponent } from './gantt/gantt.component';
@@ -33,6 +43,14 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     FooterComponent,
     //GantComponent,
     GanttComponent,
+    PipeDriveComponent,
+    //FilterPipe,
+    //ContactFormComponent,
+    //BasicChartComponent,
+    //AreaChartComponent,
+    //ApexChartComponent,
+    //AddMemberModalComponent,
+
     //SchedulerComponent,
 
 
@@ -47,7 +65,8 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
         HttpClientModule,
         //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
-        FullCalendarModule,
+      FullCalendarModule,
+      //NgApexchartsModule,
     ],
   providers: [
     TaskService,
