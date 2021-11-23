@@ -1,5 +1,5 @@
 mat-card {
-  width: 190px;
+  width: 180px;
 }
 mat-card-content {
   margin-top: 5px;
@@ -17,22 +17,65 @@ li {
   //padding: 5px;
   font-size: 12px;
   list-style: none;
-  background-color: aliceblue;
-}
+ }
 .columns{
   display: flex;
   justify-content: center;
   gap: 5px;
+
 }
+.column{
+  border: solid 2px blue;
+}
+.over {
+  background-color: blueviolet;
+
+}
+.cdk-drag-preview {
+  background-color: indianred;
+}
+.cdk-drop-list-dragging {
+  background-color: greenyellow;
+}
+.cdk-drop-list-receiving{
+ //background-color: blueviolet;
+}
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
 .footer {
   display: flex;
   gap: 10px;
   justify-content: center;
   margin-top: 20px;
+  border: solid 2px blue;
+  //height: 250px;
+  /*&:hover {
+    background: red;
+  }*/
+  .cdk-drop-list-receiving {
+    background-color: blueviolet;
+  }
 
   div {
     border: dotted #ccc 2px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 5px;
+    padding-top: 5px;
   }
+}
+
+.position {
+  //background-color:aliceblue;
+  width: 190px;
+  height: 88px;
 }

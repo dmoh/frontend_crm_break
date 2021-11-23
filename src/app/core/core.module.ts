@@ -21,7 +21,7 @@ import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {CdkTableModule} from '@angular/cdk/table';
+//import {CdkTableModule} from '@angular/cdk/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -33,11 +33,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AddProjectComponent } from '@app/add-project/add-project.component';
 import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal/add-member-modal.component';
 import { FilterPipe } from '@app/dashboard/filter.pipe';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+//import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe
   ],
-    imports: [
+  imports: [
+
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
@@ -51,7 +54,7 @@ import { FilterPipe } from '@app/dashboard/filter.pipe';
         MatAutocompleteModule,
         MatInputModule,
         MatCardModule,
-      MatDialogModule,
+        MatDialogModule,
         MatChipsModule,
         MatStepperModule,
         MatSlideToggleModule,
@@ -68,8 +71,9 @@ import { FilterPipe } from '@app/dashboard/filter.pipe';
         MatMenuModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        DragDropModule,
 
-        CdkTableModule
+        //CdkTableModule,
     ],
   exports: [
       ReactiveFormsModule,
@@ -97,8 +101,9 @@ import { FilterPipe } from '@app/dashboard/filter.pipe';
       MatMenuModule,
       MatDatepickerModule,
       MatNativeDateModule,
-      MatCheckboxModule,
-      CdkTableModule,
+    MatCheckboxModule,
+    DragDropModule,
+      //CdkTableModule,
 
       FilterPipe
   ],

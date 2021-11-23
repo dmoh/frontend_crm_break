@@ -28,6 +28,9 @@ import { ColortaskDirective } from '@app/tasks/colortask.directive';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 //import { DialogModalComponent } from '@app/dialog-modal/dialog-modal.component';
 import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
+import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
+import { OfferModalComponent } from './pipe-drive/offer-modal/offer-modal.component';
+import { DragDirective } from './pipe-drive/drag.directive';
 
 //import { FilterPipe } from './filter.pipe';
 //import { NgApexchartsModule } from 'ng-apexcharts';
@@ -47,12 +50,14 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
-    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactsComponent, ContactFormComponent],//FilterPipe],
+    BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactsComponent, ContactFormComponent, PipeDriveComponent,
+    OfferModalComponent,
+    DragDirective],
   imports: [
       CoreModule,
       DashboardRoutingModule,
       FullCalendarModule,
-    NgApexchartsModule,
+      NgApexchartsModule,
       MatDialogModule
   ],
   exports: [
