@@ -9,9 +9,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Ad } from '../models/ad';
 
 const ELEMENT_DATA: Ad[] = [
-  {id: 1, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 2, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 3, title: "Villa sur Paris", sellingPrice: 350000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 1, title: "Appartement locatif", sellingPrice: 150000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 2, title: "Immeuble de bureaux", sellingPrice: 200000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 3, title: "Maison", sellingPrice: 400000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
 
 ];
 
@@ -51,7 +51,7 @@ export class AdsComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.warn(result, 'result');
-        if (result.success) {
+        if (result) {
             this.snackBar.open(result.success, 'Annonce ajoutée', {duration: 3000});
         }
       });

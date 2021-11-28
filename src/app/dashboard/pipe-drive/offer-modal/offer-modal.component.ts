@@ -23,13 +23,14 @@ export class OfferModalComponent implements OnInit {
 
 
   initForm(
-    offer: Offer = { offerName: "", name: "", lastName:"", amount:null}
+    offer: Offer = { offerName: "", name: "", lastName:"", amount:null, step:""}
     ) {
     this.offerForm = this.formBuilder.group({
      offer: [offer.offerName],
       name: [offer.name],
       lastName: [offer.lastName],
-      amount: [offer.amount]
+      amount: [offer.amount],
+      step: [offer.step]
     })
   }
   onSubmit(): void {

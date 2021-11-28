@@ -162,18 +162,17 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.contactService.contact$.subscribe(
+    this.contactSub = this.contactService.contact$.subscribe(
       (value: any[]) => {
         this.contactss = value;
-
         console.log(this.contactss, 'contacts');
       })
-    if (this.ad.id === 0) {
+    //if (this.ad.id === 0) {
       this.createForm('ad', 'update');
-     }else {
-      this.createForm('ad', 'add');
+     //}else {
+      //this.createForm('ad', 'add');
     }
-    if (this.ad.tags) {
+    /*if (this.ad.tags) {
       // tags (themes) en lien avec l'annonce courante
       if (this.ad.tags.length !== 0) {
         if (typeof this.ad.tags === 'object') {
@@ -182,7 +181,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           this.tags = this.ad.tags.split(',');
         }
       }
-    }
+    }*/
 
 
    /* this.dashboardService.getContactList().subscribe((emails: Contact[]) => {
@@ -190,7 +189,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     });*/
 
     // this.ad.contacts[0] = { email: 'mail@ndfd.fr'};
-  }
+  //}
 
   createForm(formType: string, action: string): void {
     switch (formType) {
@@ -257,11 +256,11 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           });
           this.contactForm = this.fb.group({
             contacts: this.fb.group({
-            lastName: [this.contact.lastName],
-            name: [this.contact.name],
+            contactLastName: [this.contact.lastName],
+            contactName: [this.contact.name],
             //adress: [this.contact.adress],
             phone_number: [this.contact.phone_number],
-            emails: [this.contact.email],
+            //emails: [this.contact.email],
             //mails: new FormArray([], CustomValidator.validateEmails)
             })
           });
@@ -294,7 +293,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
       this.contactForm.value
     );
     console.log('AD', add);
-    const key = Object.keys(add);
+    /*const key = Object.keys(add);
     //console.warn(key);
     key.forEach((elem) => {
       this.ad[elem] = null ?? '';
@@ -314,7 +313,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     this.dashboardService.updateAd(data).subscribe((result) => {
       this.onNoClick({ success: "L'annonce a été mise à jour" });
     });
-    console.log(data, 'data');
+    console.log(data, 'data');*/
     //console.log(this.globalForm.value, 'global', this.docsForm.value,"docs", this.contactForm.value, "contact")
     // this.ad.tags = this.tagAdCurrent.join(',');
     // this.ad.user_id = 1; // TODO USERID !!!!!

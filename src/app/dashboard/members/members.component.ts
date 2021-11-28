@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { AddMemberModalComponent } from './add-member-modal/add-member-modal.com
   providers: [MatSnackBar]
 })
 
-export class MembersComponent implements OnInit {
+export class MembersComponent implements OnInit, OnDestroy {
     memberSubscription: Subscription;
     dataSource : MatTableDataSource<Members> = new MatTableDataSource();
     displayedColumns: string[] = ['id', 'name', 'lastName', 'email', 'rules', 'actions'];
@@ -47,5 +47,8 @@ export class MembersComponent implements OnInit {
     }
     deleteMember(id){
       this.userService.deleteMember(id)
+    }
+  ngOnDestroy() {
+    this.memberSubscription.unsubscribe();
   }
 }

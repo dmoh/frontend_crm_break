@@ -5,6 +5,8 @@ import { List } from '../models/list';
 import { Offer } from '../models/offer';
 import { OfferModalComponent } from './offer-modal/offer-modal.component';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { DialogModalComponent } from '@app/dialog-modal/dialog-modal.component';
+import { Ad } from '../models/ad';
 
 @Component({
   selector: 'app-pipe-drive',
@@ -89,19 +91,24 @@ export class PipeDriveComponent implements OnInit {
     }
   ];*/
   basket: any[];
+  offreAttente: any[] = [];
   offres: any[] = [
+
     {
       titre: 'Prospect identifié',
       offre:
         [
-          {
-            offerName: 'Immeuble paris',
-            name: 'Sacko',
-            lastName: "Mohamed",
-            amount: 50000
-          },
 
-        ],
+
+              {
+                offerName: 'Immeuble paris',
+                name: 'Sacko',
+                lastName: "Mohamed",
+                amount: 50000
+              },
+            ],
+
+
 
 
 
@@ -121,7 +128,7 @@ export class PipeDriveComponent implements OnInit {
 
     },
     {
-      titre: 'Proposition effectué',
+      titre: 'Proposition effectuée',
       offre: [
         {
           offerName: 'Hôtel',
@@ -177,19 +184,27 @@ export class PipeDriveComponent implements OnInit {
 
   openDialog(): void {
     //let tab;
-    const dialogRef = this.dialog.open(OfferModalComponent, {
+    const dialogRef = this.dialog.open(DialogModalComponent, {
       width: '50%',
-      data: new Offer,
+      data: new Ad (),
     });
-    /*dialogRef.afterClosed().subscribe(offer => {
+    dialogRef.afterClosed().subscribe(offer => {
 
       if (offer) {
+        console.log('offer', offer)
 
-        this.offers.push(offer)
-        this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
+        //this.offers.push(offer)
+        /*this.offres.forEach((elt) => {
+          if (elt.titre === offer.titre) {
+            elt.offre.push(offer)
+          }
+          return this.offres
+        })*/
+        //this.offreAttente.push(offer)
+       //this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
       }
 
-    })*/
+    })
   }
   ngOnInit(): void {
     this.basket = this.offres.map((item) => {

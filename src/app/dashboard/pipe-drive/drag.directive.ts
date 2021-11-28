@@ -1,6 +1,5 @@
 import { Directive, HostBinding, HostListener, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
-
 @Directive({
   selector: '[appDrag]'
 })

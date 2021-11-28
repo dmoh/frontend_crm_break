@@ -20,6 +20,16 @@
           <mat-label>Valeur du bien </mat-label>
           <input type="text" matInput formControlName="amount" />
         </mat-form-field>
+
+        <mat-form-field  appearance="outline">
+          <mat-select placeholder='Etapes de la négociation' formControlName="step">
+            <mat-option value='Prospect identifé'>Prospect identifé</mat-option>
+            <mat-option value='Contact effectué'>Contact effectué</mat-option>
+            <mat-option value='Proposition effectuée'>Proposition effectué</mat-option>
+            <mat-option value='Négociations'>Négociation effectué</mat-option>
+
+          </mat-select>
+        </mat-form-field>
     </div>
   </form>
   <div style="text-align: right; margin-bottom: 20px;">

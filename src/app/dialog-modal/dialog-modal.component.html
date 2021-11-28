@@ -1,23 +1,45 @@
 <!--<h1 mat-dialog-title>Ajouter ou modifier une annonce</h1>-->
 <div mat-dialog-content>
-  <mat-horizontal-stepper style="background-color: RGB(245, 245, 245);" [linear]="true" #stepper>
+  <mat-horizontal-stepper
+    style="background-color: RGB(245, 245, 245)"
+    [linear]="true"
+    #stepper
+  >
     <mat-step [stepControl]="globalForm">
       <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
         <ng-template matStepLabel>Description</ng-template>
-        <div class="form-group" style="padding-top: 35px;border-bottom: solid 9px white" formGroupName="description">
-        <h5>Annonce</h5>
-          <mat-form-field appearance="outline"><mat-label>Titre de l'annonce</mat-label>
-            <input type="text" autocomplete="off" matInput formControlName="title"/>
+        <div
+          class="form-group"
+          style="padding-top: 35px; border-bottom: solid 9px white"
+          formGroupName="description"
+        >
+
+
+          <h6>Annonce</h6>
+          <mat-form-field appearance="outline"
+            ><mat-label>Titre de l'annonce</mat-label>
+            <input
+              type="text"
+              autocomplete="off"
+              matInput
+              formControlName="title"
+            />
           </mat-form-field>
 
-          <mat-form-field  appearance="outline">
-            <mat-select placeholder='Typologie immeuble' formControlName="type">
-              <mat-option value='logements'>Logements</mat-option>
-              <mat-option value='bureaux'>Bureaux</mat-option>
-              <mat-option value='commerces'>Commerces/Centres commerciaux</mat-option>
-              <mat-option value='industriel'>Industriel/Logistique/Artisanal</mat-option>
-              <mat-option value='hotel'>Hôtel/ApartHotel</mat-option>
-              <mat-option value='centres médicaux'>Cliniques/EMS/Hôpital</mat-option>
+          <mat-form-field appearance="outline">
+            <mat-select placeholder="Typologie immeuble" formControlName="type">
+              <mat-option value="logements">Logements</mat-option>
+              <mat-option value="bureaux">Bureaux</mat-option>
+              <mat-option value="commerces"
+                >Commerces/Centres commerciaux</mat-option
+              >
+              <mat-option value="industriel"
+                >Industriel/Logistique/Artisanal</mat-option
+              >
+              <mat-option value="hotel">Hôtel/ApartHotel</mat-option>
+              <mat-option value="centres médicaux"
+                >Cliniques/EMS/Hôpital</mat-option
+              >
             </mat-select>
           </mat-form-field>
 
@@ -119,24 +141,40 @@
             <mat-label>Description</mat-label>
             <textarea formControlName="comment" matInput></textarea>
           </mat-form-field>-->
-          <h5>Spécificités du bien</h5>
+          <h6>Spécificités du bien</h6>
           <mat-form-field appearance="outline">
             <mat-label>Prix de vente</mat-label>
-            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="sellingPrice"/>
-              <!--<span matPrefix style="">CHF</span>
+            <input
+              class="example-right-align"
+              type="number"
+              autocomplete="off"
+              matInput
+              formControlName="sellingPrice"
+            />
+            <!--<span matPrefix style="">CHF</span>
               <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>-->
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Etat locatif</mat-label>
-            <input class="example-right-align" type="number" autocomplete="off" matInput formControlName="rentalStatus"/>
-              <span matPrefix style="">CHF</span>
-              <span matSuffix><mat-slide-toggle formControlName="show_amount">Afficher</mat-slide-toggle></span>
+            <input
+              class="example-right-align"
+              type="number"
+              autocomplete="off"
+              matInput
+              formControlName="rentalStatus"
+            />
+            <span matPrefix style="">CHF</span>
+            <span matSuffix
+              ><mat-slide-toggle formControlName="show_amount"
+                >Afficher</mat-slide-toggle
+              ></span
+            >
           </mat-form-field>
 
-          <mat-form-field appearance="outline" >
+          <mat-form-field appearance="outline">
             <mat-label>Rendement en %</mat-label>
-            <input type='number' matInput formControlName="yield" matInput/>
+            <input type="number" matInput formControlName="yield" matInput />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -144,29 +182,26 @@
             <textarea formControlName="comment" matInput></textarea>
           </mat-form-field>
 
-          <h5>Localisation du bien</h5>
+          <h6>Localisation du bien</h6>
 
-          <mat-form-field appearance="outline" >
+          <mat-form-field appearance="outline">
             <mat-label>adresse</mat-label>
-            <input type='text' matInput formControlName="street" matInput/>
+            <input type="text" matInput formControlName="street" matInput />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" >
+          <mat-form-field appearance="outline">
             <mat-label>Ville</mat-label>
-            <input type='text' matInput formControlName="city" matInput/>
+            <input type="text" matInput formControlName="city" matInput />
           </mat-form-field>
-          <mat-form-field appearance="outline" >
+          <mat-form-field appearance="outline">
             <mat-label>Code postal</mat-label>
-            <input type='number' matInput formControlName="zipcode" matInput/>
+            <input type="number" matInput formControlName="zipcode" matInput />
           </mat-form-field>
-          <mat-form-field appearance="outline" >
+          <mat-form-field appearance="outline">
             <mat-label>Pays</mat-label>
-            <input type='text' matInput formControlName="country" matInput/>
+            <input type="text" matInput formControlName="country" matInput />
           </mat-form-field>
-
-
         </div>
-
 
         <!--<div formArrayName="tags">
               <button (click)="add('tag')" mat-raised-button color="accent">Ajouter un tag</button>
@@ -202,8 +237,7 @@
             </div>
           </div>-->
 
-
-       <!---- <div class="form-group" style="border-bottom: solid 9px white" formGroupName="location">
+        <!---- <div class="form-group" style="border-bottom: solid 9px white" formGroupName="location">
             <h5>Localisation du bien</h5>
             <mat-form-field appearance="outline">
               <mat-label>Adresse</mat-label>
@@ -266,11 +300,17 @@
             <mat-slide-toggle formControlName="handicap_accessibility">Accès handicapé</mat-slide-toggle>
           </div>
         </div>-->
-
       </form>
-        <div style="margin-top: 40px; text-align: right">
-          <button [disabled]="globalForm.invalid" mat-raised-button color="primary"  matStepperNext>Suivant</button>
-        </div>
+      <div style="margin-top: 40px; text-align: right">
+        <button
+          [disabled]="globalForm.invalid"
+          mat-raised-button
+          color="primary"
+          matStepperNext
+        >
+          Suivant
+        </button>
+      </div>
     </mat-step>
     <mat-step [stepControl]="docsForm">
       <form [formGroup]="docsForm">
@@ -308,13 +348,28 @@
         </div>
         <div
           class="btn"
-          style="margin-top: 40px; display: flex; justify-content: space-between;">
-        <div>
-          <button mat-raised-button matStepperPrevious>Précédent</button>
-        </div>
-          <div><button [disabled]="docsForm.invalid" mat-raised-button color="primary" matStepperNext (click)="contactSort()" >Suivant</button></div>
-          <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+          style="
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+          "
+        >
+          <div>
+            <button mat-raised-button matStepperPrevious>Précédent</button>
           </div>
+          <div>
+            <button
+              [disabled]="docsForm.invalid"
+              mat-raised-button
+              color="primary"
+              matStepperNext
+              (click)="contactSort()"
+            >
+              Suivant
+            </button>
+          </div>
+          <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+        </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="contactForm">
@@ -350,93 +405,146 @@
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>-->
-        <div class="form-group" style="border-bottom: solid 9px white" formGroupName="contacts" >
-        <div class="info">
-          <h5 class="text-center">
-            Envoyer cette annonce aux contacts suivants
-          </h5>
-          <mat-form-field>
-            <mat-label>Emails</mat-label>
-            <mat-chip-list #chipList aria-label="Contact selection">
-              <mat-chip *ngFor='let contact of contactEmails'
-                [selectable]="selectable"
-                [removable]="removable"
-                (removed)="remove(contact)">
-                {{contact.email}}
+        <div
+          class="form-group"
+          style="border-bottom: solid 9px white"
+          formGroupName="contacts"
+        >
+          <div class="info">
+            <h6 class="text-center">Contact</h6>
+            <mat-form-field
+              appearance="fill"
+            >
+              <mat-label>Nom</mat-label>
+              <input type="text" matInput formControlName="contactLastName"/>
+            </mat-form-field>
+            <mat-form-field appearance="fill" >
+              <mat-label>Prénom</mat-label>
+              <input type="text" matInput formControlName="contactName"/>
+            </mat-form-field>
+            <h6 class="text-center">
+              Envoyer cette annonce aux contacts suivants
+            </h6>
+            <mat-form-field>
+              <mat-label>Emails</mat-label>
+              <mat-chip-list #chipList aria-label="Contact selection">
+                <mat-chip
+                  *ngFor="let contact of contactEmails"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="remove(contact)"
+                >
+                  {{ contact.email }}
 
                   <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
 
-              </mat-chip>
+                <input
+                  matInput
+                  type="text"
+                  [(ngModel)]="search"
+                  placeholder="new email..."
+                  #contactInput
+                  [formControl]="contactCtrl"
+                  [matAutocomplete]="auto"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event)"
+                />
 
-              <input matInput
-                type="text" [(ngModel)]="search"
-
-                placeholder="new email..."
-                #contactInput
-                [formControl]="contactCtrl"
-                [matAutocomplete]="auto"
-                [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="addOnBlur"
-                (matChipInputTokenEnd)="add($event)"
-
-
-              />
-
-                  <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="selected($event)">
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="selected($event)"
+                >
                   <!--<mat-option *ngFor="let option of filteredOption | async" [value]="option">-->
-                  <mat-option *ngFor="let contact of contactss | filter: search let index = index"  [value]="contact">
-
-                    {{contact.email}}
-
+                  <mat-option
+                    *ngFor="
+                      let contact of contactss | filter: search;
+                      let index = index
+                    "
+                    [value]="contact"
+                  >
+                    {{ contact.email }}
                   </mat-option>
-
-
                 </mat-autocomplete>
-            </mat-chip-list>
-          </mat-form-field>
-          <div>
-
-            <mat-form-field appearance="fill" >
-              <mat-label>Rechercher</mat-label>
-              <input type='text' (keyup)="updateFilter($event.target.value)" matInput/>
+              </mat-chip-list>
             </mat-form-field>
+            <div>
+              <mat-form-field appearance="fill">
+                <mat-label>Rechercher</mat-label>
+                <input
+                  type="text"
+                  (keyup)="updateFilter($event.target.value)"
+                  matInput
+                />
+              </mat-form-field>
 
+              <table
+                matSort
+                style="width: 100%"
+                mat-table
+                [dataSource]="dataSource"
+                class="mat-elevation-z8"
+              >
+                <ng-container matColumnDef="fullname">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Nom Prénom
+                  </th>
+                  <td mat-cell *matCellDef="let contact">
+                    {{ contact.lastName }} {{ contact.name }}
+                  </td>
+                </ng-container>
 
-            <table matSort style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-              <ng-container matColumnDef="fullname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom Prénom </th>
-                <td mat-cell *matCellDef="let contact"> {{contact.lastName}} {{contact.name}}</td>
-              </ng-container>
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Email
+                  </th>
+                  <td mat-cell *matCellDef="let contact">
+                    {{ contact.email }}
+                  </td>
+                </ng-container>
 
+                <ng-container matColumnDef="criteres">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Critères
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let contact"
+                    style="color: yellowgreen"
+                  >
+                    {{ contact.criteriasBind }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="localisation">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Localisation
+                  </th>
+                  <td mat-cell *matCellDef="let contact">
+                    {{ contact.country }} {{ contact.city }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let contact">
+                    <button mat-icon-button>
+                      <mat-icon>edit_outline</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </div>
 
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="criteres">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Critères</th>
-                <td mat-cell *matCellDef="let contact" style="color:yellowgreen;">{{contact.criteriasBind}} </td>
-              </ng-container>
-              <ng-container matColumnDef="localisation">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Localisation</th>
-                <td mat-cell *matCellDef="let contact"> {{contact.country}} {{contact.city}} </td>
-              </ng-container>
-              <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef >Actions</th>
-                <td mat-cell *matCellDef="let contact">
-                  <button mat-icon-button ><mat-icon>edit_outline</mat-icon></button>
-                  <button mat-icon-button color="warn" ><mat-icon>delete_outline</mat-icon></button>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-          </div>
-
-
-         <!---- <div class="text-center"><small class="text-center" style="color: #ccc">
+            <!---- <div class="text-center"><small class="text-center" style="color: #ccc">
             <em>Il s'agit d'un nouveau contact ? Remplissez les champs ci dessous</em></small>
           </div>
         </div>
@@ -482,26 +590,54 @@
             </mat-list-option>
           </mat-selection-list>-->
 
-          <div class="btn" style="margin-top: 40px; display: flex; justify-content: space-between;">
-            <div>
-              <button style="margin-right: 0.4rem" mat-raised-button matStepperPrevious>Précédent</button>
-            </div>
-            <div>
-              <button (click)="openDialog()" mat-raised-button color="primary" style="margin-right: 15px;">
-                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
+            <div
+              class="btn"
+              style="
+                margin-top: 40px;
+                display: flex;
+                justify-content: space-between;
+              "
+            >
+              <div>
+                <button
+                  style="margin-right: 0.4rem"
+                  mat-raised-button
+                  matStepperPrevious
+                >
+                  Précédent
+                </button>
+              </div>
+              <div>
+                <button
+                  (click)="openDialog()"
+                  mat-raised-button
+                  color="accent"
+                  style="margin-right: 15px"
+                >
+                  <mat-icon
+                    class="example-icon"
+                    aria-hidden="false"
+                    aria-label="Example user verified icon"
+                    >add</mat-icon
+                  >
                   contact
-            </button>
-              <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Envoyer</button>
+                </button>
+                <button
+                  type="button"
+                  (click)="onSubmit()"
+                  mat-raised-button
+                  color="primary"
+                >
+                  Envoyer
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        </div>
       </form>
-
     </mat-step>
   </mat-horizontal-stepper>
 </div>
-
 
 <!--<div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">No Thanks</button>

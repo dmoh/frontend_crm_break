@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
-import { Subscription } from 'rxjs';
+import { FileService } from '@app/_services/file.service';
+import { Observable, Subscription } from 'rxjs';
 import { FilterPipe } from '../filter.pipe';
 
 /*const ELEMENT_DATA: Contact[] = [
@@ -36,10 +37,13 @@ export class ContactsComponent implements OnInit, OnDestroy {
   lettres;
   filter: FilterPipe;
   search = '';
+  public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
+
 
   constructor(
     private contactService: ContactService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -102,6 +106,13 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.opened = !this.opened;
 
     console.log('detail', this.detail)
+  }
+  addFiles($event) {
+    const files = $event.target.files;
+    this.fileService.addFile(files)
+  }
+  removeFile(index) {
+    this.fileService.removeFile(index)
   }
   ngOnDestroy() {
     this.contactSub.unsubscribe();

@@ -126,6 +126,29 @@
             <span class="ml-2 mr-1">Add</span>
           </button>
         </div>
+        <div class="wrapper-file-upload">
+          <label id="selector-files" for="input-file-id">
+            <span>Ajouter des fichiers </span>
+            <span style="cursor: pointer" class="material-icons">
+              attach_file
+            </span>
+          </label>
+          <input
+            (change)="addFiles($event)"
+            class="ng-hide"
+            accept="image/*"
+            id="input-file-id"
+            multiple
+            type="file"
+
+          />
+          <div class="files">
+            <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
+              <span> {{file.name}} </span>
+              <mat-icon (click)="removeFile(i)" >clear</mat-icon>
+            </div>
+          </div>
+          </div>
 
 
     <mat-divider style="margin-top: 50px;"></mat-divider>
