@@ -16,6 +16,7 @@ import { ReplaySubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { TemplateMailComponent } from './template-mail/template-mail.component';
 //import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component';
 //import { OfferModalComponent } from './dashboard/pipe-drive/offer-modal/offer-modal.component';
 //import { DragDirective } from './dashboard/pipe-drive/drag.directive';
@@ -46,6 +47,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     FooterComponent,
     //GantComponent,
     GanttComponent,
+    TemplateMailComponent,
     //PipeDriveComponent,
     //OfferModalComponent,
     //DragDirective,

@@ -36,6 +36,7 @@ import { ContactFormComponent } from '@app/dashboard/contacts/contact-form/conta
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterPipe } from '@app/dashboard/filter.pipe';
 import { MatSort } from '@angular/material/sort';
+import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
 @Component({
   selector: 'app-dialog-modal',
   templateUrl: './dialog-modal.component.html',
@@ -44,7 +45,21 @@ import { MatSort } from '@angular/material/sort';
   providers: [MatSnackBar]
 })
 
+
+
 export class DialogModalComponent implements OnInit, OnDestroy {
+
+  oktTheme = {
+    container: {
+      buttonColor:  "#3f51b5"
+    },
+    dial: {
+      dialBackgroundColor: " #3f51b5"
+    },
+    clockFace: {
+      clockHandColor: " #3f51b5",
+    }
+  };
 
   dataSource: MatTableDataSource<Contact> = new MatTableDataSource();
   displayedColumns: string[] = ['fullname', 'email', 'criteres', 'localisation', 'actions'];
@@ -91,6 +106,9 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   filter: FilterPipe;
   valueInput;
   tagAdCurrent: string[] = [];
+  event = false;
+  date: any;
+  dateEvent: Date;
 
   //readonly separatorKeysCodes = [ENTER, COMMA] as const;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -144,6 +162,10 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   }
 
+  attach() {
+    this.event = true;
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(ContactFormComponent, { // todo globaliser modal
       width: '100%',
@@ -151,9 +173,21 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result=> {
       if (result) {
-            this.snackBar.open( 'Contact Ajouté', 'Annulé',{duration: 3000});
+        this.snackBar.open('Contact Ajouté', 'Annulé', { duration: 3000 });
+
       }
     })
+  }
+  openEmail():void {
+    const dialogRef = this.dialog.open(TemplateMailComponent, { // todo globaliser modal
+      width: '100%',
+      data: 'email',
+    });
+    /*dialogRef.afterClosed().subscribe(result=> {
+      if (result) {
+            this.snackBar.open( 'Contact Ajouté', 'Annulé',{duration: 3000});
+      }
+    })*/
   }
 
   onNoClick(message: {}): void {
@@ -161,6 +195,8 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+
 
     this.contactSub = this.contactService.contact$.subscribe(
       (value: any[]) => {
@@ -171,6 +207,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
       this.createForm('ad', 'update');
      //}else {
       //this.createForm('ad', 'add');
+
     }
     /*if (this.ad.tags) {
       // tags (themes) en lien avec l'annonce courante
@@ -257,22 +294,25 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           this.contactForm = this.fb.group({
             contacts: this.fb.group({
             contactLastName: [this.contact.lastName],
-            contactName: [this.contact.name],
-            //adress: [this.contact.adress],
-            phone_number: [this.contact.phone_number],
-            //emails: [this.contact.email],
-            //mails: new FormArray([], CustomValidator.validateEmails)
+              contactName: [this.contact.name],
+              dateEvent: [],
+              timeEvent: [],
+              noteEvent:[],
+              //adress: [this.contact.adress],
+              phone_number: [this.contact.phone_number],
+              //emails: [this.contact.email],
+              //mails: new FormArray([], CustomValidator.validateEmails)
             })
           });
         }
-        this.contacts = this.contactForm.get('emails') as FormArray;
+        //this.contacts = this.contactForm.get('emails') as FormArray;
         // this.globalForm.registerControl('skills', new FormArray());
 
       break;
     }
 
   }
-  addEmail() {
+ /* addEmail() {
     const control = new FormControl('', Validators.required);
     this.contacts.push(control);
   }
@@ -283,16 +323,25 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   get tagsAd() {
     return this.globalForm.get('tags') as FormArray;
-  }
+  }*/
 
   onSubmit(): void {
     //this.ad = Object.assign(this.ad, this.globalForm.value);
     const add = Object.assign(
       this.globalForm.value,
       this.docsForm.value,
-      this.contactForm.value
+      this.contactForm.value,
     );
+    //this.dateEvent = add.contacts.dateEvent;
+    this.dialogRef.close(add)
+
     console.log('AD', add);
+    //console.log("event", this.dateEvent);
+
+
+    /*if (add.contacts.dateEvent === this.date) {
+      this.snackBar.open('évènement', 'Annulé',{duration: 3000});
+    }
     /*const key = Object.keys(add);
     //console.warn(key);
     key.forEach((elem) => {

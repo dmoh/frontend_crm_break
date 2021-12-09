@@ -35,12 +35,14 @@ import { AddMemberModalComponent } from '@app/dashboard/members/add-member-modal
 import { FilterPipe } from '@app/dashboard/filter.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 //import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe
   ],
   imports: [
 
+        [NgxMaterialTimepickerModule],
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
@@ -101,8 +103,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
       MatMenuModule,
       MatDatepickerModule,
       MatNativeDateModule,
-    MatCheckboxModule,
+      MatCheckboxModule,
     DragDropModule,
+    [NgxMaterialTimepickerModule],
       //CdkTableModule,
 
       FilterPipe

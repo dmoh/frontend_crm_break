@@ -16,6 +16,7 @@ import { ApexChartComponent } from '@app/apex-chart/apex-chart.component';
 import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
 import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
+import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
@@ -87,11 +88,13 @@ const routes: Routes = [{
         path: 'sales',
         component: PipeDriveComponent,
       },
+      {
+        path: 'email',
+        component: TemplateMailComponent,
+      },
     ]
-},
-
-
-  ];
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

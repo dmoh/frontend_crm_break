@@ -1,0 +1,28 @@
+<div mat-dialog-content>
+  <form [formGroup]="emailForm">
+    <div class="name">
+      <p>Bonjour,</p>
+      <!--<mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input type="text" matInput formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Prénom</mat-label>
+        <input type="text" matInput formControlName="lastName"/>
+      </mat-form-field>-->
+    </div>
+    <div class="content">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Contenu</mat-label>
+          <textarea matInput placeholder="Contenu" formControlName="content"></textarea>
+        </mat-form-field>
+      </div>
+  </form>
+  <div>
+    <p>Agence Immobilière BREC</p>
+    <p>A bientôt</p>
+  </div>
+  <div style="text-align: right;">
+    <button type="button" mat-raised-button color="accent">Valider</button>
+  </div>
+</div>

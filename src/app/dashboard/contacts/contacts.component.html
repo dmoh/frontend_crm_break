@@ -86,7 +86,7 @@
 <div class="container">
   <div class="card">
     <div class="card-heading">
-      <h2 class="text-center">Collaborateurs</h2>
+      <h2 class="text-center">Acheteurs</h2>
     </div>
   </div>
 
@@ -112,50 +112,64 @@
         <span class="material-icons-outlined">search</span>
         <input type="text" class="search-txt" placeholder="Search contacts" [(ngModel)]="search"/>
       </div>-->
-      <div style="margin-top: 40px;">
-        <mat-form-field style="margin-right: 18px;">
-          <input matInput placeholder="Rechercher" type="text"/>
-        </mat-form-field>
+      <div style="margin-top: 40px;display: flex;">
+        <div>
+          <mat-form-field style="margin-right: 18px;">
+            <input matInput placeholder="Rechercher" type="text"/>
+          </mat-form-field>
+
           <button
-            (click)="affiche()"
-            routerLink='new'
-            class="ml-3"
-            mat-raised-button
-            [color]="'primary'"
-            ><mat-icon>add</mat-icon>
-            <span class="ml-2 mr-1">Add</span>
-          </button>
+          (click)="affiche()"
+          routerLink='new'
+          class="ml-3"
+          mat-mini-fab
+          [color]="'primary'"
+          ><mat-icon>add</mat-icon>
+
+        </button>
+
         </div>
-        <div class="wrapper-file-upload">
-          <label id="selector-files" for="input-file-id">
-            <span>Ajouter des fichiers </span>
-            <span style="cursor: pointer" class="material-icons">
-              attach_file
-            </span>
-          </label>
-          <input
-            (change)="addFiles($event)"
-            class="ng-hide"
-            accept="image/*"
-            id="input-file-id"
-            multiple
-            type="file"
+          <div class="wrapper-file-upload">
+            <button
+              mat-mini-fab
+              [color]="'basic'"
+            >
+            <label id="selector-files" for="input-file-id">
 
-          />
-          <div class="files">
-            <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
-              <span> {{file.name}} </span>
-              <mat-icon (click)="removeFile(i)" >clear</mat-icon>
-            </div>
+              <span style="cursor: pointer" class="material-icons">
+                attach_file
+              </span>
+
+            </label>
+            <input
+              (change)="addFiles($event)"
+              class="ng-hide"
+              accept="image/*"
+              id="input-file-id"
+              multiple
+              type="file"
+
+            />
+            </button>
           </div>
+
+
+        </div>
+        <div class="files">
+          <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
+            <span> {{file.name}} </span>
+            <mat-icon (click)="removeFile(i)" >clear</mat-icon>
           </div>
+        </div>
 
 
-    <mat-divider style="margin-top: 50px;"></mat-divider>
+
+    <!--<mat-divider style="margin-top: 50px;"></mat-divider>-->
     <!--<div style="margin-top: 40px;">
       <mat-divider>A</mat-divider>
     </div>-->
     <div class="contacts" style="margin-top:4px;">
+      <mat-divider></mat-divider>
       <mat-list *ngFor="let contact of contacts | filter: search let index = index">
         <!--<mat-list-item>A</mat-list-item>
         <mat-divider></mat-divider>

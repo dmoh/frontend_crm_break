@@ -28,7 +28,7 @@ body {
 }
 mat-sidenav-container{
   ::-webkit-scrollbar{
-    width: 10px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track{
    background-color: transparent;
@@ -38,12 +38,12 @@ mat-sidenav-container{
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover{
-    background-color: #424242;
+    background-color: #9E9E9E;
   }
 }
 mat-sidenav{
   ::-webkit-scrollbar{
-    width: 10px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track{
    background-color: transparent;
@@ -53,7 +53,7 @@ mat-sidenav{
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover{
-    background-color: #bdbdbd;
+    background-color: #9E9E9E;
   }
 }
 /*mat-dialog-content{

@@ -15,6 +15,8 @@ import { Ad } from '../models/ad';
   providers: [MatSnackBar]
 })
 export class PipeDriveComponent implements OnInit {
+  ad: Ad[] = [];
+  green = false;
   listLabel = "";
   itemContent: string;
   over = false;
@@ -153,14 +155,19 @@ export class PipeDriveComponent implements OnInit {
 
     },
   ];
-
+  drag = false;
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   hoverBasket() {
     //this.over = true;
   }
 
+
   drop(event: CdkDragDrop<string[]>) {
+
+    /*if (event) {
+      this.drag = true
+    }*/
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -201,6 +208,9 @@ export class PipeDriveComponent implements OnInit {
           return this.offres
         })*/
         //this.offreAttente.push(offer)
+        //this.ad = [...this.ad, ...offer]
+        this.ad.push(offer)
+        console.log('ad offre', this.ad)
        //this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
       }
 
@@ -212,6 +222,8 @@ export class PipeDriveComponent implements OnInit {
     })
     console.log("basket", this.basket)
   }
+
+
  /* switchCard($event: {
       src: { itemIndex: number, listIndex: number},
       dst: { itemIndex:number, listIndex: number }

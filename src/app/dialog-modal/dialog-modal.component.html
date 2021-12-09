@@ -13,9 +13,18 @@
           style="padding-top: 35px; border-bottom: solid 9px white"
           formGroupName="description"
         >
-
-
-          <h6>Annonce</h6>
+        <h6>Contact</h6>
+        <mat-form-field
+          appearance="outline"
+        >
+          <mat-label>Nom</mat-label>
+          <input type="text" matInput formControlName="contactLastName"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" >
+          <mat-label>Prénom</mat-label>
+          <input type="text" matInput formControlName="contactName"/>
+        </mat-form-field>
+        <h6>Annonce</h6>
           <mat-form-field appearance="outline"
             ><mat-label>Titre de l'annonce</mat-label>
             <input
@@ -407,22 +416,38 @@
         </mat-form-field>-->
         <div
           class="form-group"
-          style="border-bottom: solid 9px white"
+          style="border-bottom: solid 9px white;padding-top: 35px;"
           formGroupName="contacts"
         >
           <div class="info">
-            <h6 class="text-center">Contact</h6>
-            <mat-form-field
-              appearance="fill"
-            >
-              <mat-label>Nom</mat-label>
-              <input type="text" matInput formControlName="contactLastName"/>
+
+            <h6>Ajouter un évènement</h6>
+
+            <mat-form-field appearance="outline" style="width: 100%">
+              <mat-label >Note</mat-label>
+              <textarea  placeholder="Ajouter un évènement ou un rappel" matInput (keypress)="attach()" formControlName="noteEvent"></textarea>
             </mat-form-field>
-            <mat-form-field appearance="fill" >
-              <mat-label>Prénom</mat-label>
-              <input type="text" matInput formControlName="contactName"/>
-            </mat-form-field>
-            <h6 class="text-center">
+
+            <div *ngIf="event">
+              <mat-form-field appearance="fill">
+                <mat-label>Choisissez une date</mat-label>
+                <input autocomplete="off" matInput [matDatepicker]="picker" formControlName="dateEvent">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Choisissez une horraire</mat-label>
+                <input  autocomplete="off" [ngxTimepicker]="pickerTime" matInput  formControlName="timeEvent"/>
+                <ngx-material-timepicker #pickerTime [theme]="oktTheme"></ngx-material-timepicker>
+              </mat-form-field>
+            </div>
+
+
+
+            <!--<input [ngxTimepicker]="picker">-->
+
+
+            <h6>
               Envoyer cette annonce aux contacts suivants
             </h6>
             <mat-form-field>
@@ -526,14 +551,12 @@
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
                   <td mat-cell *matCellDef="let contact">
                     <button mat-icon-button>
-                      <mat-icon>edit_outline</mat-icon>
+                      <mat-icon (click)="openEmail()" >edit_outline</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn">
-                      <mat-icon>delete_outline</mat-icon>
-                    </button>
+
                   </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

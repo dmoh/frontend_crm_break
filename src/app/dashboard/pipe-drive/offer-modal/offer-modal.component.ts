@@ -18,7 +18,7 @@ export class OfferModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initForm(this.offer)
+    this.initForm()
   }
 
 
