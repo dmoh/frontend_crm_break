@@ -1,9 +1,10 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
@@ -11,10 +12,14 @@ import { ContactService } from '@app/_services/contact.service';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
-  @Input() public newContact:boolean;
+  newContact:boolean;
   @Input() public detail: boolean;
-  @Input() public contacts:Contact[];
+  @ViewChild('fileinput', { static: true }) inputRef: ElementRef;
   contactForm: FormGroup;
+  @Input() public opened: boolean;
+  url: string;
+  //contacts: Contact[];
+  contactSub: Subscription;
   //contact: Contact;
   //contacts: Contact[];
   constructor(
@@ -31,12 +36,15 @@ export class ContactFormComponent implements OnInit {
       console.log("index", index)
       if (index !== null) {
         this.contact = this.contactService.getContact(index);
+        console.log('contact', this.contact)
       }
       this.initForm(this.contact);
+
+
     })
   }
   initForm(
-    contact: Contact = { id: null, typeClient:'', categoryClient:'', kind:'',  name: '', lastName: '', country:'', city:'', adress: '', phone_number: "", email: '', budget: null, geographicSector:'', buildings:'', buildingRegime:'', yield:null, comments:''}
+    contact: Contact = { id: null, typeClient:'', categoryClient:'', kind:'', name: '', lastName: '', country:'', city:'', adress: '', phone_number: "", email: '', budget: null, geographicSector:'', buildings:'', buildingRegime:'', yield:null, comments:''}
     ) {
     this.contactForm = this.formBuilder.group({
       //description: this.formBuilder.group({
@@ -58,11 +66,25 @@ export class ContactFormComponent implements OnInit {
       yield: [contact.yield],
       comments: [contact.comments]
     })
+
   }
   onSubmit(): void {
     const newContact = this.contactForm.value;
      this.contactService.addContact(newContact);
-     console.log('contact', newContact)
-     this.dialogRef.close(newContact)
+      console.log('contact', newContact);
+      this.dialogRef.close(newContact);
   }
+  onSelectFile(e) {
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      }
+    }
+  }
+  openFile() {
+    this.inputRef.nativeElement.click()
+  }
+
 }

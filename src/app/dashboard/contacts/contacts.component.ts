@@ -29,7 +29,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   detail: boolean;
   contacts: Contact[] = [];
   contact: Contact;
-  opened = false;
+  opened:boolean;
   contactSub: Subscription = new Subscription;
   nbContact;
   tab3;
@@ -104,7 +104,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.detail = true;
     this.newContact = false;
     this.opened = !this.opened;
-
     console.log('detail', this.detail)
   }
   addFiles($event) {
@@ -114,6 +113,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   removeFile(index) {
     this.fileService.removeFile(index)
   }
+
   ngOnDestroy() {
     this.contactSub.unsubscribe();
   }

@@ -55,7 +55,7 @@ export class AdsComponent implements OnInit, OnDestroy {
 
     //console.log('DATEEVENT', this.event.getDate())
     //let eventt;
-    let eventt;
+   /* let eventt;
     console.log(eventt);
 
     this.dateEventSub = this.dateEvent.subscribe((date) => {
@@ -77,10 +77,10 @@ export class AdsComponent implements OnInit, OnDestroy {
             console.log('getdate', this.event.getDate());
 
           //}
-        }*/
-        console.log('2', this.event);
+        }
+        //console.log('2', this.event);
 
-    })
+    })*/
 
 
     this.event === this.date ? this.snackBar.open('évènement', 'Annulé', {verticalPosition:'top'}) : null;
@@ -98,13 +98,15 @@ export class AdsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
 
         //console.warn(result, 'result');
-        const data = result.contacts.dateEvent.toISOString().split('T')[0];
-        this.dateEvent.next(data);
+        //const data = result.contacts.dateEvent.toISOString().split('T')[0];
+        //this.dateEvent.next(data);
 
-        console.log(data, "event");
+        //console.log(data, "event");
         if (result) {
           //console.log(result.contacts.dateEvent, 'result');
           this.snackBar.open('Annonce ajoutée', 'Annulé', { duration: 1000 });
+        } else {
+          return null
         }
         /*if (this.dateEvent.getDay() === this.date.getDay())  {
           this.snackBar.open('évènement','Annulé', {duration: 3000});

@@ -1,18 +1,28 @@
-<div mat-dialog-content>
-    <div class="container">
-      <div>
-        <h5>Nouveau contact</h5>
+<div mat-dialog-content style="padding: 10px;"
+>
+    <div class="container" >
+      <div style="display: flex; justify-content: space-between;padding-top: 12px; border-radius: 8px;">
+        <h5 *ngIf="contact"> {{contact.name}} {{contact.lastName}} </h5>
+        <h5 *ngIf="contact === undefined"> Nouveau contact</h5>
+
+
+        <!--<img [src]="url" height="50" width="50" alt="">-->
+
       </div>
-      <div>
-        <mat-icon>more_vert</mat-icon>
-        <mat-icon>clear</mat-icon>
+
+      <div style="display: flex;justify-content: center; margin-top: 30px;">
+        <div class="upload" (click)="openFile()">
+          <img *ngIf="url" [src]="url">
+          <div style="text-align: center;padding-top: 45px;">
+            <input #fileinput type="file" (change)="onSelectFile($event)" class="ng-hide">
+            <mat-icon *ngIf="!url">add_a_photo</mat-icon>
+          </div>
+        </div>
       </div>
     </div>
-    <mat-divider class="mt-6 mb-20"></mat-divider>
-
+    <!--<mat-divider class="mt-6 mb-20"></mat-divider>-->
     <form [formGroup]="contactForm">
-      <div style="margin-top: 35px; display: flex; flex-direction: column;">
-
+      <div style="margin-top: 70px; display: flex; flex-direction: column;">
         <mat-form-field appearance="outline">
           <mat-select placeholder="Type" formControlName="typeClient">
             <mat-option>Privé</mat-option>
@@ -99,10 +109,29 @@
         </mat-form-field>
         </div>
       </form>
-    <div style="text-align: right; margin-bottom: 20px;">
-      <button mat-raised-button color="primary" (click)='onSubmit()' >Ajouter</button>
-      <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
-    </div>
+      <div *ngIf="contact" style="display: flex;justify-content: space-between; margin-bottom: 20px;margin-top: 15px;">
+
+        <div>
+          <button mat-stroked-button color="warn" >Delete</button>
+          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
+        </div>
+        <div>
+          <button mat-stroked-button color="primary" (click)='onSubmit()' >Save</button>
+          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
+        </div>
+
+      </div>
+
+      <div *ngIf="contact === undefined">
+
+
+        <div style="text-align: right;">
+          <button mat-stroked-button color="primary" (click)='onSubmit()' >Ajouter</button>
+          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
+        </div>
+
+      </div>
+
   </div>
 
   <!--<div *ngIf="detail">

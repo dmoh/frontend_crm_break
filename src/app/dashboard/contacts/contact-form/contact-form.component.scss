@@ -1,5 +1,34 @@
+body {
+  //margin: 0px;
+  //padding: 7px;
+}
+
 .container {
-  display:flex;
-  justify-content: space-between;
+  //display:flex;
+  //justify-content: space-between;
   margin-bottom: 20px;
+  background-image: linear-gradient(to right, #eceff1, #cfd8dc, #b0bec5 );
+  //background-image: linear-gradient(to right, #b0bec5, #cfd8dc, #eceff1);
+  background-color: azure;
+  height: 150px;
+  border-radius: 6px;
+}
+.upload {
+
+  width: 125px;
+  height: 125px;
+  border: solid 4px white;
+  border-radius: 50%;
+  img {
+    height: 126px;
+    width: 126px;
+    border-radius: 50%;
+  }
+    input {display: none;}
+    mat-icon{
+      cursor: pointer;
+      :hover {
+        background: #E9EBEB;
+      }
+    }
 }
