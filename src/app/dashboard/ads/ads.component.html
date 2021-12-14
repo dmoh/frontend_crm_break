@@ -6,15 +6,20 @@
   </div>
 
     <div class="container" >
-      <mat-form-field>
-        <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
-      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
+        </mat-form-field>
 
+      </div>
 
+      <div>
         <button style="margin-left: 25px;" (click)="openDialog()" mat-mini-fab color="primary">
-            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
+          <mat-icon >add</mat-icon>
 
-        </button>
+      </button>
+      </div>
+
 
     </div>
         <table style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -20,7 +20,7 @@ export class Ad {
   published?: boolean = true;
   date_publication?: string;
 
-  tags?: string = '';
+  //tags?: string = '';
   //user_id: number = 0; // TODO CHECK USERID
   assets?: string = '';
   show_amount?: boolean = false;

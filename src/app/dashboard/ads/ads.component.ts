@@ -10,9 +10,9 @@ import { Ad } from '../models/ad';
 import { BehaviorSubject, Observable, Observer, Subject, Subscription } from 'rxjs';
 
 const ELEMENT_DATA: Ad[] = [
-  {id: 1, title: "Appartement locatif", sellingPrice: 150000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 2, title: "Immeuble de bureaux", sellingPrice: 200000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
-  {id: 3, title: "Maison", sellingPrice: 400000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', tags: '', image: ''},
+  {id: 1, title: "Appartement locatif", sellingPrice: 150000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', image: ''},
+  {id: 2, title: "Immeuble de bureaux", sellingPrice: 200000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', image: ''},
+  {id: 3, title: "Maison", sellingPrice: 400000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', image: ''},
 
 ];
 
@@ -22,7 +22,7 @@ const ELEMENT_DATA: Ad[] = [
   styleUrls: ['./ads.component.scss'],
   providers: [MatSnackBar]
 })
-export class AdsComponent implements OnInit, OnDestroy {
+export class AdsComponent implements OnInit{
   animal: string;
   ads: Ad[] = [];
   date = new Date().toISOString().split('T')[0];
@@ -83,16 +83,16 @@ export class AdsComponent implements OnInit, OnDestroy {
     })*/
 
 
-    this.event === this.date ? this.snackBar.open('évènement', 'Annulé', {verticalPosition:'top'}) : null;
+    //this.event === this.date ? this.snackBar.open('évènement', 'Annulé', {verticalPosition:'top'}) : null;
 
 }
-  ngOnDestroy() {
+  /*ngOnDestroy() {
     this.dateEventSub.unsubscribe();
-  }
+  }*/
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogModalComponent, { // todo globaliser modal
           width: '100%',
-          data: new Ad(),
+          data: new Ad,
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -105,8 +105,6 @@ export class AdsComponent implements OnInit, OnDestroy {
         if (result) {
           //console.log(result.contacts.dateEvent, 'result');
           this.snackBar.open('Annonce ajoutée', 'Annulé', { duration: 1000 });
-        } else {
-          return null
         }
         /*if (this.dateEvent.getDay() === this.date.getDay())  {
           this.snackBar.open('évènement','Annulé', {duration: 3000});
@@ -115,12 +113,12 @@ export class AdsComponent implements OnInit, OnDestroy {
       });
   }
 
-  onUpdateAd(ad: Ad): void {
+  /*onUpdateAd(ad: Ad): void {
     const dialogRef = this.dialog.open(DialogModalComponent, {
       width: '80%',
       data: ad
     });
-  }
+  }*/
 
   updateFilter(filter: any) {
     const finalFilter = filter.trim().toLowerCase();

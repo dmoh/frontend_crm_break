@@ -6,7 +6,7 @@
     #stepper
   >
     <mat-step [stepControl]="globalForm">
-      <form [formGroup]="globalForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="globalForm">
         <ng-template matStepLabel>Description</ng-template>
         <div
           class="form-group"
@@ -183,7 +183,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Rendement en %</mat-label>
-            <input type="number" matInput formControlName="yield" matInput />
+            <input type="number" matInput formControlName="yield"  />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -195,20 +195,20 @@
 
           <mat-form-field appearance="outline">
             <mat-label>adresse</mat-label>
-            <input type="text" matInput formControlName="street" matInput />
+            <input type="text" matInput formControlName="street" />
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Ville</mat-label>
-            <input type="text" matInput formControlName="city" matInput />
+            <input type="text" matInput formControlName="city" />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Code postal</mat-label>
-            <input type="number" matInput formControlName="zipcode" matInput />
+            <input type="number" matInput formControlName="zipcode" />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Pays</mat-label>
-            <input type="text" matInput formControlName="country" matInput />
+            <input type="text" matInput formControlName="country" />
           </mat-form-field>
         </div>
 
@@ -338,6 +338,7 @@
             id="input-file-id"
             multiple
             type="file"
+
             formControlName="image"
           />
         </div>
@@ -496,14 +497,14 @@
               </mat-chip-list>
             </mat-form-field>
             <div>
-              <mat-form-field appearance="fill">
+              <!--<mat-form-field appearance="fill">
                 <mat-label>Rechercher</mat-label>
                 <input
                   type="text"
                   (keyup)="updateFilter($event.target.value)"
                   matInput
                 />
-              </mat-form-field>
+              </mat-form-field>-->
 
               <table
                 matSort
@@ -632,16 +633,12 @@
               </div>
               <div>
                 <button
-                  (click)="openDialog()"
+                  (click)="openForm()"
                   mat-raised-button
                   color="accent"
                   style="margin-right: 15px"
                 >
-                  <mat-icon
-                    class="example-icon"
-                    aria-hidden="false"
-                    aria-label="Example user verified icon"
-                    >add</mat-icon
+                  <mat-icon>add</mat-icon
                   >
                   contact
                 </button>

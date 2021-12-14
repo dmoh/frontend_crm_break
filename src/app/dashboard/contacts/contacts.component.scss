@@ -29,7 +29,7 @@ mat-drawer {
   background-color: #F5F5F5;
   width: 550px;
 }
-.search{
+/*.search{
   display: flex;
 }
 .search-box {
@@ -59,7 +59,8 @@ mat-drawer {
   color: #94a3b8;
   margin: 4px;
   margin-left: 10px;
-}
+}*/
+
 .contacts {
   margin-top: 35px;
 }
@@ -73,10 +74,10 @@ mat-drawer {
 /*.wrapper-file-upload > input {
   display: none;
 }*/
-.wrapper-file-upload {
+.file-upload {
 
-  margin-left: 550px;
-  margin-top: 10px;
+// margin-left: 550px;
+  //margin-top: 10px;
   button {
     input {
       display: none;

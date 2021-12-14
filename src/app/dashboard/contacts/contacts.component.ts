@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
@@ -107,6 +107,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
     console.log('detail', this.detail)
   }
   addFiles($event) {
+
     const files = $event.target.files;
     this.fileService.addFile(files)
   }

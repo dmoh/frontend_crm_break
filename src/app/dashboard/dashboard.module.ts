@@ -66,7 +66,7 @@ FullCalendarModule.registerPlugins([
       ContactsComponent,
       MembersComponent,
       BillingComponent,
-
+      AdsComponent,
       UsersComponent,
       ChartComponent,
       ChartBarComponent,
