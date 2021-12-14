@@ -61,17 +61,17 @@ li {
 
 }
 .green {
-  background-color: #81c784;
+  background-color: #98ee99;
 }
 .gray {
-  background-color: #e0e0e0;
+  background-color: #eeeeee;
 }
 .red {
-  background-color: #e57373;
+  background-color: #ff867f;
 }
 .cdk-drag-preview {
   //background-color: #e0e0e0;
-  background-image: linear-gradient(to right,#EEEEEE, #E0E0E0, #EEEEEE );
+  background-image: linear-gradient(to right,#EEEEEE, #E0E0E0, #EEEEEE);
 
 }
 .cdk-drop-list-dragging {
@@ -126,5 +126,5 @@ li {
   padding-bottom: 7px;
   margin-top: 50px;
   justify-content: center;
-  border: dotted #ccc 2px;
+  border: dotted #78909c 2px;
 }

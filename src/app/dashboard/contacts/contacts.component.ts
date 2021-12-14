@@ -36,7 +36,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   tabLettres;
   lettres;
   filter: FilterPipe;
-  search = '';
+  research = '';
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
 
 
