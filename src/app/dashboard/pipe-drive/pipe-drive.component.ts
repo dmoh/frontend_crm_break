@@ -98,6 +98,8 @@ export class PipeDriveComponent implements OnInit {
 
     {
       titre: 'Prospect identifié',
+      colorBox: 'redBox',
+      color: 'red',
       offre:
         [
 
@@ -108,15 +110,12 @@ export class PipeDriveComponent implements OnInit {
                 lastName: "Mohamed",
                 amount: 50000
               },
-            ],
-
-
-
-
-
+        ],
     },
     {
       titre: 'Contact effectué',
+      colorBox: 'blueBox',
+      color: 'blue',
       offre:
         [
           {
@@ -131,6 +130,8 @@ export class PipeDriveComponent implements OnInit {
     },
     {
       titre: 'Proposition effectuée',
+      colorBox: 'orangeBox',
+      color: 'orange',
       offre: [
         {
           offerName: 'Hôtel',
@@ -143,6 +144,8 @@ export class PipeDriveComponent implements OnInit {
     },
     {
       titre: "Négociations",
+      colorBox: 'greenBox',
+      color: 'green',
       offre: [
         {
           offerName: 'Villa',

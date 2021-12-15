@@ -39,7 +39,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
   research = '';
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
 
-
   constructor(
     private contactService: ContactService,
     private activatedRoute: ActivatedRoute,
@@ -118,5 +117,22 @@ export class ContactsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.contactSub.unsubscribe();
   }
+
+
+  /*onSubmit() {
+    this.product = Object.assign(this.product, this.productForm.value);
+    const fd = new FormData();
+    fd.append('product', JSON.stringify(this.product));
+    if (this.medias.length > 0) {
+      for (let i = 0; i < this.medias.length; i++) {
+        fd.append('file[]', this.medias[i]);
+      }
+    }
+    this.productService
+      .updateProduct(fd)
+      .subscribe((response) => {
+        console.warn('response product', response);
+      });
+  }*/
 }
 

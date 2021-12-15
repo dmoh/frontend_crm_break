@@ -95,18 +95,25 @@
           [cdkDropListData]="group.offre"
           (cdkDropListDropped)="drop($event)" over = "false"
         >
-        <div class="column-title" cdkDropList [class.cdk-drop-list-dragging]="false">
+        <div class="column-title" cdkDropList [class.cdk-drop-list-dragging]="false" class="{{group.colorBox}}" >
+
           <h6 style="text-align: center;padding-top: 15px;">{{group.titre}}</h6>
+
           <li style="text-align: center;" >Total CA</li>
           <li style="text-align: center;">Total nombre d'offres</li>
         </div>
 
           <mat-card cdkDrag *ngFor = "let item of group.offre" style="margin-bottom: 6px;margin-left: 13px;">
-            <li id="offer">Offre : {{item.offerName}} </li>
-            <li> {{item.name}} {{item.lastName}} </li>
-            <li> <img style="width: 20px;height: 20px;"
-              src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
-            /> {{item.amount}}€</li>
+            <div style="display: flex;gap: 10px;">
+              <div class="{{group.color}}"></div>
+              <div>
+                <li id="offer">Offre : {{item.offerName}} </li>
+                <li> {{item.name}} {{item.lastName}} </li>
+                <li> <img style="width: 20px;height: 20px;"
+                src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
+                /> {{item.amount}}€</li>
+              </div>
+            </div>
           </mat-card>
 
 
@@ -123,7 +130,7 @@
           cdkDropList
           [cdkDropListData]="offreAttente"
           (cdkDropListDropped)="drop($event)"
-      > En attente
+      ><h6>En attente</h6>
         <mat-card cdkDrag *ngFor = "let item of ad">
           <li id="offer">Offre : {{item.description.title}} </li>
           <li> {{item.description.contactName}} {{item.description.contactLastName}} </li>
@@ -137,11 +144,11 @@
           cdkDropList
           [cdkDropListData]="basket"
           (cdkDropListDropped)="drop($event)">Supprimer</div>
-        <div class="green" [class.cdk-drop-list-dragging]="false"
+        <div class="greenBox" [class.cdk-drop-list-dragging]="false"
           cdkDropList
           [cdkDropListData]="basket"
           (cdkDropListDropped)="drop($event)">Gagné</div>
-        <div class="red" [class.cdk-drop-list-dragging]="false"
+        <div class="redBox" [class.cdk-drop-list-dragging]="false"
           cdkDropList
           [cdkDropListData]="basket"
           (cdkDropListDropped)="drop($event)">Perdu</div>
