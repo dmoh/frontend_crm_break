@@ -104,8 +104,15 @@
 
   <mat-drawer-content>
     <div class="header" style="margin-bottom: 15px; border-bottom: solid 1px black;">
-
-      <h5 style="color: #1e293b;">Vous avez {{nbContact}} contact(s)</h5>
+      <div><h5 style="color: #1e293b;">Vous avez {{nbContact}} contact(s)</h5></div>
+      <div style="display: flex;gap:5px;margin-bottom:10px">
+        <div>
+          <button mat-stroked-button color="primary" (click)="openList()" >Liste</button>
+        </div>
+        <div>
+          <button mat-stroked-button color="accent" (click)="openTab()" >Tableau</button>
+        </div>
+      </div>
     </div>
 
      <!-- <div class="search-box">
@@ -167,7 +174,39 @@
     <!--<div style="margin-top: 40px;">
       <mat-divider>A</mat-divider>
     </div>-->
-    <div class="contacts" style="margin-top:30px;">
+    <div *ngIf="tab">
+      <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="Commune">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Commune</th>
+          <td mat-cell *matCellDef="let data"> {{data.commune}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Typologie">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Typologie</th>
+          <td mat-cell *matCellDef="let data"> {{data.typologie}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Adresse">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+          <td mat-cell *matCellDef="let data"> {{data.adress}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Propriétaire">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Propriétaire</th>
+          <td mat-cell *matCellDef="let data"> {{data.proprietaire}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Numéro">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro</th>
+          <td mat-cell *matCellDef="let data"> {{data.numero}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Observations">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 250px;">Observations</th>
+          <td mat-cell *matCellDef="let data"> {{data.observations}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </table>
+    </div>
+
+
+    <div *ngIf="list" class="contacts" style="margin-top:30px;">
       <mat-divider></mat-divider>
       <mat-list  *ngFor="let contact of contacts | filter: research let index = index">
         <!--<mat-list-item>A</mat-list-item>

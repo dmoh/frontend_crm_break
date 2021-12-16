@@ -88,17 +88,15 @@
       </mat-card>
     </div>-->
 
-   <div class="container" cdkDropListGroup >
+   <div class="container" cdkDropListGroup>
       <div class="cols"  style="display: flex;justify-content: center;gap: 5px; flex-direction: row;" >
         <div style="width: 280px;" *ngFor = "let group of offres" class="colum"
           cdkDropList
           [cdkDropListData]="group.offre"
           (cdkDropListDropped)="drop($event)" over = "false"
         >
-        <div class="column-title" cdkDropList [class.cdk-drop-list-dragging]="false" class="{{group.colorBox}}" >
-
+        <div class="column-title" cdkDropList [class.cdk-drop-list-dragging]="false" class="{{group.colorBox}}">
           <h6 style="text-align: center;padding-top: 15px;">{{group.titre}}</h6>
-
           <li style="text-align: center;" >Total CA</li>
           <li style="text-align: center;">Total nombre d'offres</li>
         </div>
@@ -115,8 +113,6 @@
               </div>
             </div>
           </mat-card>
-
-
       </div>
         <div>
           <button mat-mini-fab color="primary" style="margin-top: 20px; margin-left: 5px;"
