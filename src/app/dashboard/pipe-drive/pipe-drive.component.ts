@@ -94,6 +94,88 @@ export class PipeDriveComponent implements OnInit {
   ];*/
   basket: any[];
   offreAttente: any[] = [];
+  columns: any[] = [
+    {
+      titre: 'Teaser',
+      colorBox: 'redBox',
+      color: 'red',
+      offre:
+        [
+          {
+            offerName: 'Immeuble',
+            name: 'Sacko',
+            lastName: "Mohamed",
+            amount: 50000
+          },
+        ],
+    },
+    {
+      titre: 'Mémorandum / Dossier complet',
+      colorBox: 'blueBox',
+      color: 'blue',
+      offre:
+        [
+          {
+            offerName: 'Commerce',
+            name: 'Courtois',
+            lastName: "Mathieu",
+            amount: 50000
+          },
+        ],
+    },
+    {
+      titre: 'Offre Indicative',
+      colorBox: 'orangeBox',
+      color: 'orange',
+      offre: [
+        {
+          offerName: 'Hôtel',
+          name: 'Lopez',
+          lastName: "Jennifer",
+          amount: 800000
+        },
+      ],
+    },
+    {
+      titre: 'Due Diligence / Visites',
+      colorBox: 'greenBox',
+      color: 'green',
+      offre: [
+        {
+          offerName: 'Villa',
+          name: 'Marc',
+          lastName: 'Julien',
+          amount: 600000
+        },
+      ],
+    },
+    {
+      titre: 'Offre Ferme',
+      colorBox: 'tealBox',
+      color: 'teal',
+      offre: [
+        {
+          offerName: 'Villa',
+          name: 'Marc',
+          lastName: 'Julien',
+          amount: 600000
+        },
+      ],
+    },
+    {
+      titre: 'Closing / Signature',
+      colorBox: 'purpleBox',
+      color: 'purple',
+      offre: [
+        {
+          offerName: 'Villa',
+          name: 'Marc',
+          lastName: 'Julien',
+          amount: 600000
+        },
+      ],
+    },
+]
   offres: any[] = [
 
     {
@@ -102,10 +184,8 @@ export class PipeDriveComponent implements OnInit {
       color: 'red',
       offre:
         [
-
-
-              {
-                offerName: 'Immeuble paris',
+          {
+                offerName: 'Immeuble',
                 name: 'Sacko',
                 lastName: "Mohamed",
                 amount: 50000
@@ -164,13 +244,22 @@ export class PipeDriveComponent implements OnInit {
   hoverBasket() {
     //this.over = true;
   }
-
+  openOfferModal(): void {
+    //let tab;
+    const dialogRef = this.dialog.open(OfferModalComponent, {
+      width: '50%',
+      data: new Ad(),
+    });
+    console.log('je suis dans le container')
+  }
 
   drop(event: CdkDragDrop<string[]>) {
 
-    /*if (event) {
-      this.drag = true
-    }*/
+    if (event.container.id === "cdk-drop-list-14") {
+        this.openOfferModal();
+        console.log('je suis dans le container')
+    }
+
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

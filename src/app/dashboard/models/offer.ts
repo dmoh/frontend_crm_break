@@ -5,5 +5,5 @@ export class Offer {
   name: string;
   lastName: string;
   amount: number;
-  step: string;
+  commission: number;
 }

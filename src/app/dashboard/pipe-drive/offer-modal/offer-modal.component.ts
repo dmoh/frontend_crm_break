@@ -23,14 +23,14 @@ export class OfferModalComponent implements OnInit {
 
 
   initForm(
-    offer: Offer = { offerName: "", name: "", lastName:"", amount:null, step:""}
+    offer: Offer = { offerName: "", name: "", lastName:"", amount:null, commission:null}
     ) {
     this.offerForm = this.formBuilder.group({
      offer: [offer.offerName],
       name: [offer.name],
       lastName: [offer.lastName],
       amount: [offer.amount],
-      step: [offer.step]
+      commission: [offer.commission]
     })
   }
   onSubmit(): void {
@@ -38,5 +38,8 @@ export class OfferModalComponent implements OnInit {
     //
     this.dialogRef.close(newOffer)
     console.log(' new offer', newOffer)
+    const offerJson = JSON.stringify(newOffer)
+    console.log('json', offerJson);
+
   }
 }

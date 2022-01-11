@@ -174,11 +174,8 @@
               formControlName="rentalStatus"
             />
             <span matPrefix style="">CHF</span>
-            <span matSuffix
-              ><mat-slide-toggle formControlName="show_amount"
-                >Afficher</mat-slide-toggle
-              ></span
-            >
+
+
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -466,6 +463,7 @@
                 </mat-chip>
 
                 <input
+
                   matInput
                   type="text"
                   [(ngModel)]="search"
@@ -477,6 +475,9 @@
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur"
                   (matChipInputTokenEnd)="add($event)"
+
+
+                  formControlName="emails"
                 />
 
                 <mat-autocomplete
@@ -654,6 +655,8 @@
             </div>
           </div>
         </div>
+
+
       </form>
     </mat-step>
   </mat-horizontal-stepper>

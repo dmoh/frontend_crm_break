@@ -27,7 +27,7 @@ export class ContactFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public contact: Contact,
-    public dialogRef: MatDialogRef<ContactFormComponent>,
+    //public dialogRef: MatDialogRef<ContactFormComponent>,
   ) { }
 
   ngOnInit(): void {
@@ -70,9 +70,12 @@ export class ContactFormComponent implements OnInit {
   }
   onSubmit(): void {
     const newContact = this.contactFormu.value;
-     this.contactService.addContact(newContact);
-      console.log('contact', newContact);
-      this.dialogRef.close(newContact);
+    this.contactService.addContact(newContact);
+    const contactJson = JSON.stringify(this.contactFormu.value);
+    console.log('contact', newContact);
+    console.log('json', contactJson);
+
+      //this.dialogRef.close(newContact);
   }
   onSelectFile(e) {
     if (e.target.files) {

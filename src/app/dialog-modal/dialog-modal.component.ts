@@ -45,8 +45,6 @@ import { TemplateMailComponent } from '@app/template-mail/template-mail.componen
   providers: [MatSnackBar]
 })
 
-
-
 export class DialogModalComponent implements OnInit, OnDestroy {
 
   oktTheme = {
@@ -109,6 +107,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   event = false;
   date: any;
   dateEvent: Date;
+
 
   //readonly separatorKeysCodes = [ENTER, COMMA] as const;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -233,18 +232,18 @@ export class DialogModalComponent implements OnInit, OnDestroy {
             description: this.fb.group({
               title: [this.ad.title], //Validators.required],
               type: [this.ad.type], //Validators.required],
-              contactSocity: [this.contact.categoryClient],
+              //contactSocity: [this.contact.categoryClient],
               contactName: [this.contact.name], //Validators.required],
               contactLastName: [this.contact.lastName],
-              contactCountry: [this.contact.country],
-              contactCity: [this.contact.city],
-              contactAdress: [this.contact.adress],
-              contactNumber: [this.contact.phone_number],
-              contactMail: [this.contact.email],
-              buildingRegime: [this.ad.buildingRegime],
+              //contactCountry: [this.contact.country],
+              //contactCity: [this.contact.city],
+              //contactAdress: [this.contact.adress],
+              //contactNumber: [this.contact.phone_number],
+              //contactMail: [this.contact.email],
+             //buildingRegime: [this.ad.buildingRegime],
               sellingPrice: [this.ad.sellingPrice],
               rentalStatus: [this.ad.rentalStatus],
-              show_amount: [this.ad.show_amount],
+              //show_amount: [this.ad.show_amount],
               yield: [this.ad.yield],
               comment: [this.ad.comment],
               country: [this.ad.country], //Validators.required],
@@ -290,13 +289,14 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           });
           this.contactForm = this.fb.group({
             contacts: this.fb.group({
-            contactLastName: [this.contact.lastName],
-              contactName: [this.contact.name],
+              //contactLastName: [this.contact.lastName],
+              //contactName: [this.contact.name],
               dateEvent: [],
               timeEvent: [],
-              noteEvent:[],
+              noteEvent: [],
+              emails:[],
               //adress: [this.contact.adress],
-              phone_number: [this.contact.phone_number],
+              //phone_number: [this.contact.phone_number],
               //emails: [this.contact.email],
               //mails: new FormArray([], CustomValidator.validateEmails)
             })
@@ -324,14 +324,27 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     //this.ad = Object.assign(this.ad, this.globalForm.value);
+
+    const mail = this.contactEmails.map(elt => {
+      return elt.email
+    })
     const add = Object.assign(
-      this.globalForm.value,
-      this.docsForm.value,
-      this.contactForm.value,
+      //this.emails = Object.assign(
+      [
+        this.globalForm.value,
+        this.docsForm.value,
+        this.contactForm.value,
+        { emailList: mail }
+      ]
+
     );
     //this.dateEvent = add.contacts.dateEvent;
     this.dialogRef.close(add)
-    console.log('AD', add);
+    //add.jsonStringyfy()
+    //const add2 = JSON.stringify(add)
+    //console.log('AD', add);
+    console.log('AD2',add);
+
   }
     //console.log("event", this.dateEvent);
     /*if (add.contacts.dateEvent === this.date) {

@@ -1,7 +1,6 @@
 import {Contact} from './contact';
 
 export class Ad {
-
   public readonly id: number;
   title: string = '';
   type?: string;
@@ -11,7 +10,6 @@ export class Ad {
   rentalStatus?: number;
   yield?: number;
   comment: string = '';
-
   country?: string = '';
   city?: string = '';
   zipcode?: string = '';

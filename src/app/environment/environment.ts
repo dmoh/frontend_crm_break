@@ -6,5 +6,4 @@ export const environment = {
     production: false,
     baseApiUrl: baseApiUrl,
     agendaUrl: baseApiUrl + '/services/ws/api/',
-
 };

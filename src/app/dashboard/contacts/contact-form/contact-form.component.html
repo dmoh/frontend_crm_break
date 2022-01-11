@@ -9,9 +9,9 @@
 
       </div>
 
-      <div style="display: flex;justify-content: center; margin-top: 30px;">
+      <div class="contain-foto" style="display: flex;justify-content: center; margin-top: 30px;">
         <div class="upload" (click)="openFile()">
-          <img *ngIf="url" [src]="url">
+         <img *ngIf="url" [src]="url">
           <div style="text-align: center;padding-top: 45px;">
             <input #fileinput type="file" (change)="onSelectFile($event)" class="ng-hide">
             <mat-icon *ngIf="!url">add_a_photo</mat-icon>

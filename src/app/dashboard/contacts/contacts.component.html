@@ -197,8 +197,24 @@
           <td mat-cell *matCellDef="let data"> {{data.numero}} </td>
         </ng-container>
         <ng-container matColumnDef="Observations">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 250px;">Observations</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Observations</th>
           <td mat-cell *matCellDef="let data"> {{data.observations}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Statut">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 70px;">Statut</th>
+          <td mat-cell *matCellDef="let data"> <!--<mat-icon style="cursor: pointer;" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>En cours</button>
+              <button mat-menu-item>Terminée</button>
+            </mat-menu>-->
+
+            <mat-form-field style="width: 100px;" appearance="outline">
+              <mat-select placeholder="Statut">
+                <mat-option value="En cours">En cours</mat-option>
+                <mat-option value="Terminée">Terminée</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;">

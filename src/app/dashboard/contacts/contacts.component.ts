@@ -8,12 +8,12 @@ import { Observable, Subscription } from 'rxjs';
 import { FilterPipe } from '../filter.pipe';
 
 const DATA: any[] = [
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,"},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
+  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
 
 
 ];
@@ -24,7 +24,7 @@ const DATA: any[] = [
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations'];
+  displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations', 'Statut'];
   //dataSource : MatTableDataSource<any> = new MatTableDataSource();
   dataSource  = DATA;
   list: boolean = false;

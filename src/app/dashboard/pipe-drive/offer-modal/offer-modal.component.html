@@ -17,23 +17,18 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-          <mat-label>Valeur du bien </mat-label>
-          <input type="text" matInput formControlName="amount" />
+          <mat-label>Montant de la vente</mat-label>
+          <input type="number" matInput formControlName="amount" />
         </mat-form-field>
 
         <mat-form-field  appearance="outline">
-          <mat-select placeholder='Etapes de la négociation' formControlName="step">
-            <mat-option value='Prospect identifé'>Prospect identifé</mat-option>
-            <mat-option value='Contact effectué'>Contact effectué</mat-option>
-            <mat-option value='Proposition effectuée'>Proposition effectué</mat-option>
-            <mat-option value='Négociations'>Négociation effectué</mat-option>
-
-          </mat-select>
+          <mat-label>Montant de la commission</mat-label>
+          <input type="number" matInput formControlName="commission" />
         </mat-form-field>
     </div>
   </form>
   <div style="text-align: right; margin-bottom: 20px;">
-    <button mat-raised-button color="primary" (click)="onSubmit()" >Ajouter</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" >Envoyer</button>
   </div>
 </div>
 

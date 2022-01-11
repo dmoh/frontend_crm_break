@@ -25,7 +25,8 @@
 }
 
 mat-card {
-  width: 180px;
+  width: 140px;
+
 }
 mat-card-content {
   margin-top: 5px;
@@ -36,12 +37,12 @@ ul {
   list-style: none;
 }
 #offer{
-  font-size: 12;
+  font-size: 11px;
   font-weight: bold;
 }
 li {
   //padding: 5px;
-  font-size: 12px;
+  font-size: 11px;
   list-style: none;
  }
 .columns{
@@ -58,7 +59,7 @@ li {
   //background-color: #EEEEEE;
   //background-image: linear-gradient(to right,#EEEEEE, #E0E0E0, #EEEEEE );
   //background-color: #98ee99;
-
+  width: 140px;
   -webkit-clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
   clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
   height: 100px;
@@ -89,9 +90,14 @@ li {
 .orangeBox{
   //background-color: #ffe0b2;
   background-image: linear-gradient(to right,#ffcc80, #ffe0b2,#fff3e0);
-
-
 }
+.tealBox{
+  background-image: linear-gradient(to right,#80cbc4, #b2dfdb,#e0f2f1);
+}
+.purpleBox{
+  background-image: linear-gradient(to right,#ce93d8, #e1bee7,#f3e5f5);
+}
+
 .green {
   background-color: #98ee99;
   margin: 0px;
@@ -122,6 +128,22 @@ li {
 }
 .orange{
   background-color: #fbc02d;
+  margin: 0px;
+  padding: 0px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.purple{
+  background-color: #ce93d8;
+  margin: 0px;
+  padding: 0px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.teal{
+  background-color: #80cbc4;
   margin: 0px;
   padding: 0px;
   width: 10px;

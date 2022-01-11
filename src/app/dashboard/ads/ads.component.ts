@@ -34,6 +34,7 @@ export class AdsComponent implements OnInit{
   event: any;
   evenement = false;
 
+
   //dialogRef;
   //dataSource : MatTableDataSource<Ad> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -96,6 +97,8 @@ export class AdsComponent implements OnInit{
       });
 
     dialogRef.afterClosed().subscribe(result => {
+
+
 
         //console.warn(result, 'result');
         //const data = result.contacts.dateEvent.toISOString().split('T')[0];
