@@ -1,0 +1,14 @@
+.name {
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field{
+    width: 200px;
+  }
+}
+
+.content{
+  textarea{
+    height: 150px;
+  }
+}

@@ -1,7 +1,6 @@
 import {Contact} from './contact';
 
 export class Ad {
-
   public readonly id: number;
   title: string = '';
   type?: string;
@@ -11,7 +10,6 @@ export class Ad {
   rentalStatus?: number;
   yield?: number;
   comment: string = '';
-
   country?: string = '';
   city?: string = '';
   zipcode?: string = '';
@@ -20,7 +18,7 @@ export class Ad {
   published?: boolean = true;
   date_publication?: string;
 
-  tags?: string = '';
+  //tags?: string = '';
   //user_id: number = 0; // TODO CHECK USERID
   assets?: string = '';
   show_amount?: boolean = false;

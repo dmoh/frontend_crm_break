@@ -1,5 +1,28 @@
 .container {
-  display:flex;
-  justify-content: space-between;
+  //display:flex;
+  //justify-content: space-between;
   margin-bottom: 20px;
+  background-image: linear-gradient(to right, #eceff1, #cfd8dc, #b0bec5 );
+  //background-image: linear-gradient(to right, #b0bec5, #cfd8dc, #eceff1);
+  background-color: azure;
+  // height: 150px;
+  border-radius: 6px;
+}
+.upload {
+  width: 126px;
+  height: 126px;
+  border: solid 3px white;
+  border-radius: 50%;
+  img {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+  }
+    input {display: none;}
+    mat-icon{
+      cursor: pointer;
+      :hover {
+        background: #E9EBEB;
+      }
+    }
 }

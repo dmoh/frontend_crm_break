@@ -62,8 +62,12 @@ export class AddMemberModalComponent implements OnInit {
       this.memberForm.value,
       this.actionForm.value,
      );
-     this.userService.addMember(newUser);
+    this.userService.registerUser(newUser)
+      .subscribe((response) => {
+        console.warn('response', response);
+      })
+     /*this.userService.addMember(newUser);
      console.log('user', newUser)
-     this.dialogRef.close(newUser)
+     this.dialogRef.close(newUser)*/
   }
 }

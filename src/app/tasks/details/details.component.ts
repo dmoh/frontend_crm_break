@@ -55,19 +55,17 @@ export class DetailsComponent implements OnInit {
     })
 
   }
-
-
   onSubmit(): void {
 
     if (this.task) {
       this.taskService.EditTask(this.taskForm.value);
-
       console.log(this.taskForm.value, 'je suis un task')
 
       } else {
         //console.log('data', dataTodo)
         this.taskService.addTodo(this.taskForm.value);
-        this.taskForm.reset();
+        console.log(this.taskForm.value, 'je suis un task')
+      this.taskForm.reset();
     }
     //this.router.navigate(["task"]);
   }

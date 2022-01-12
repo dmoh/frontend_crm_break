@@ -4,27 +4,35 @@
       <h2 class="text-center">Annonces</h2>
     </div>
   </div>
-    <div style="padding-top: 1rem; padding-bottom: 1rem">
-        <button (click)="openDialog()" mat-raised-button color="primary">
-            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">add</mat-icon>
-            AJOUTER UNE ANNONCE
-        </button>
-    </div>
+
     <div class="container" >
-      <mat-form-field>
-        <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
-      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <mat-label>Rechercher</mat-label>
+          <input matInput autocomplete="off" (keyup)="updateFilter($event.target.value)" type="text"/>
+        </mat-form-field>
+
+      </div>
+
+      <div>
+        <button style="margin-left: 25px;" (click)="openDialog()" mat-mini-fab color="primary">
+          <mat-icon >add</mat-icon>
+
+      </button>
+      </div>
+
+
     </div>
-        <table style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
             <td mat-cell *matCellDef="let ad"> {{ad.id}} </td>
 
           </ng-container>
 
 
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
             <td mat-cell *matCellDef="let ad"> {{ad.title}} </td>
           </ng-container>
 
@@ -36,11 +44,11 @@
 
 
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let ad"> {{ad.amount}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.sellingPrice}} </td>
           </ng-container>
           <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef> Image </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
             <td mat-cell *matCellDef="let ad"> {{ad.image}} </td>
           </ng-container>
 
@@ -99,4 +107,6 @@
 
       </div>
     </div>-->
+
+
 </section>

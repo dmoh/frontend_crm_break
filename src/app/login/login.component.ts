@@ -51,13 +51,28 @@ export class LoginComponent implements OnInit {
     //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   onLoggedin() {
-    console.log('user', this.loginForm.value);
-    let isValidUser: Boolean = this.autService.SignIn(this.loginForm.value);
-    if (isValidUser) {
+    // let isValidUser: Boolean = this.autService.SignIn(this.loginForm.value);
+
+    /*if (isValidUser) {
       this.router.navigate(['/dashboard'])
     } else {
       this.error = true;
-    }
+    }*/
+
+
+    let user = new User();
+    user = Object.assign(user, this.loginForm.value);
+    user.username = user.email;
+
+    this.authenticationService.login({username: user.username, password: user.password})
+      .subscribe((response) => {
+        if(response.token)  {
+          this.router.navigate(['/dashboard/ads']);
+        } else {
+        }
+      }, error => {
+        this.error = error.message
+      });
   }
   // convenience getter for easy access to form fields
   /*get f() { return this.loginForm.controls; }*/

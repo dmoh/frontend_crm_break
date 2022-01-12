@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, from, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environment/environment';
 import { User } from '@app/_models/user';
+import {crmConstants} from "@app/_helpers/crm-constants";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -18,33 +19,37 @@ export class AuthenticationService {
   ];*/
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(crmConstants.nameCurrentUser)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
   /*this.user = [
     {id:1, username:'mohamed', email:'momo@gmail.com', roles:['admin']}
   ]*/
 
+  public get tokenUserCurrent(): string | boolean {
+    return <string>localStorage.getItem(crmConstants.nameCurrentUser) ? JSON.parse(<string>localStorage.getItem(crmConstants.nameCurrentUser)).token : false; // this.currentUserSubject.value.token;
+  }
+
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
   //login(username: string, password: string) {
-    login(user: User) {
-    return this.http.post<any>(`${environment.baseApiUrl}/user/login`, { user })
+    login(userData: any) {
+    return from(this.http.post<any>(`${environment.apiUrl}/api/login_check`, userData)
       .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        // email, role ['ROLE_ADMIN','ROLE_SECRETAIREE'], id, firstname lastname
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem(
+          crmConstants.nameCurrentUser,
+          JSON.stringify(user)
+          );
         this.currentUserSubject.next(user);
-        //return user;
-        console.log('user', user)
-      }));
+        return user;
+      })));
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(crmConstants.nameCurrentUser);
     this.currentUserSubject.next(null);
   }
 }

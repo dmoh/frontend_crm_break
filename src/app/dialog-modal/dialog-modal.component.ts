@@ -36,6 +36,7 @@ import { ContactFormComponent } from '@app/dashboard/contacts/contact-form/conta
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterPipe } from '@app/dashboard/filter.pipe';
 import { MatSort } from '@angular/material/sort';
+import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
 @Component({
   selector: 'app-dialog-modal',
   templateUrl: './dialog-modal.component.html',
@@ -45,6 +46,18 @@ import { MatSort } from '@angular/material/sort';
 })
 
 export class DialogModalComponent implements OnInit, OnDestroy {
+
+  oktTheme = {
+    container: {
+      buttonColor:  "#3f51b5"
+    },
+    dial: {
+      dialBackgroundColor: " #3f51b5"
+    },
+    clockFace: {
+      clockHandColor: " #3f51b5",
+    }
+  };
 
   dataSource: MatTableDataSource<Contact> = new MatTableDataSource();
   displayedColumns: string[] = ['fullname', 'email', 'criteres', 'localisation', 'actions'];
@@ -91,6 +104,10 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   filter: FilterPipe;
   valueInput;
   tagAdCurrent: string[] = [];
+  event = false;
+  date: any;
+  dateEvent: Date;
+
 
   //readonly separatorKeysCodes = [ENTER, COMMA] as const;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -144,36 +161,50 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   }
 
-  openDialog(): void {
+  attach() {
+    this.event = true;
+  }
+
+  openForm(): void {
     const dialogRef = this.dialog.open(ContactFormComponent, { // todo globaliser modal
       width: '100%',
       data: new Contact,
     });
     dialogRef.afterClosed().subscribe(result=> {
       if (result) {
-            this.snackBar.open( 'Contact Ajouté', 'Annulé',{duration: 3000});
+        this.snackBar.open('Contact Ajouté', 'Annulé', { duration: 3000 });
+
       }
     })
   }
-
-  onNoClick(message: {}): void {
-    this.dialogRef.close(message);
+  openEmail():void {
+    const dialogRef = this.dialog.open(TemplateMailComponent, { // todo globaliser modal
+      width: '100%',
+      data: 'email',
+    });
+    /*dialogRef.afterClosed().subscribe(result=> {
+      if (result) {
+            this.snackBar.open( 'Contact Ajouté', 'Annulé',{duration: 3000});
+      }
+    })*/
   }
 
-  ngOnInit(): void {
+  /*onNoClick(message: {}): void {
+    this.dialogRef.close(message);
+  }*/
 
-    this.contactService.contact$.subscribe(
+  ngOnInit(): void {
+    this.contactSub = this.contactService.contact$.subscribe(
       (value: any[]) => {
         this.contactss = value;
-
         console.log(this.contactss, 'contacts');
       })
-    if (this.ad.id === 0) {
-      this.createForm('ad', 'update');
-     }else {
-      this.createForm('ad', 'add');
-    }
-    if (this.ad.tags) {
+    //if (this.ad.id === 0) {
+      //this.createForm('ad', 'update');
+      this.createForm();
+
+  }
+    /*if (this.ad.tags) {
       // tags (themes) en lien avec l'annonce courante
       if (this.ad.tags.length !== 0) {
         if (typeof this.ad.tags === 'object') {
@@ -182,7 +213,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           this.tags = this.ad.tags.split(',');
         }
       }
-    }
+    }*/
 
 
    /* this.dashboardService.getContactList().subscribe((emails: Contact[]) => {
@@ -190,28 +221,29 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     });*/
 
     // this.ad.contacts[0] = { email: 'mail@ndfd.fr'};
-  }
+  //}
 
-  createForm(formType: string, action: string): void {
-    switch (formType) {
-      case 'ad':
-        if (action === 'add' || action === 'update') {
+  //createForm(formType: string, action: string): void {
+    //switch (formType) {
+     // case 'ad':
+        //if (action === 'add' || action === 'update') {
+   createForm(): void {
           this.globalForm = this.fb.group({
             description: this.fb.group({
               title: [this.ad.title], //Validators.required],
               type: [this.ad.type], //Validators.required],
-              contactSocity: [this.contact.categoryClient],
+              //contactSocity: [this.contact.categoryClient],
               contactName: [this.contact.name], //Validators.required],
               contactLastName: [this.contact.lastName],
-              contactCountry: [this.contact.country],
-              contactCity: [this.contact.city],
-              contactAdress: [this.contact.adress],
-              contactNumber: [this.contact.phone_number],
-              contactMail: [this.contact.email],
-              buildingRegime: [this.ad.buildingRegime],
+              //contactCountry: [this.contact.country],
+              //contactCity: [this.contact.city],
+              //contactAdress: [this.contact.adress],
+              //contactNumber: [this.contact.phone_number],
+              //contactMail: [this.contact.email],
+             //buildingRegime: [this.ad.buildingRegime],
               sellingPrice: [this.ad.sellingPrice],
               rentalStatus: [this.ad.rentalStatus],
-              show_amount: [this.ad.show_amount],
+              //show_amount: [this.ad.show_amount],
               yield: [this.ad.yield],
               comment: [this.ad.comment],
               country: [this.ad.country], //Validators.required],
@@ -257,23 +289,27 @@ export class DialogModalComponent implements OnInit, OnDestroy {
           });
           this.contactForm = this.fb.group({
             contacts: this.fb.group({
-            lastName: [this.contact.lastName],
-            name: [this.contact.name],
-            //adress: [this.contact.adress],
-            phone_number: [this.contact.phone_number],
-            emails: [this.contact.email],
-            //mails: new FormArray([], CustomValidator.validateEmails)
+              //contactLastName: [this.contact.lastName],
+              //contactName: [this.contact.name],
+              dateEvent: [],
+              timeEvent: [],
+              noteEvent: [],
+              emails:[],
+              //adress: [this.contact.adress],
+              //phone_number: [this.contact.phone_number],
+              //emails: [this.contact.email],
+              //mails: new FormArray([], CustomValidator.validateEmails)
             })
           });
-        }
-        this.contacts = this.contactForm.get('emails') as FormArray;
+        //}
+        //this.contacts = this.contactForm.get('emails') as FormArray;
         // this.globalForm.registerControl('skills', new FormArray());
 
-      break;
-    }
+      //break;
+    //}
 
   }
-  addEmail() {
+ /* addEmail() {
     const control = new FormControl('', Validators.required);
     this.contacts.push(control);
   }
@@ -284,17 +320,37 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   get tagsAd() {
     return this.globalForm.get('tags') as FormArray;
-  }
+  }*/
 
   onSubmit(): void {
     //this.ad = Object.assign(this.ad, this.globalForm.value);
+
+    const mail = this.contactEmails.map(elt => {
+      return elt.email
+    })
     const add = Object.assign(
-      this.globalForm.value,
-      this.docsForm.value,
-      this.contactForm.value
+      //this.emails = Object.assign(
+      [
+        this.globalForm.value,
+        this.docsForm.value,
+        this.contactForm.value,
+        { emailList: mail }
+      ]
+
     );
-    console.log('AD', add);
-    const key = Object.keys(add);
+    //this.dateEvent = add.contacts.dateEvent;
+    this.dialogRef.close(add)
+    //add.jsonStringyfy()
+    //const add2 = JSON.stringify(add)
+    //console.log('AD', add);
+    console.log('AD2',add);
+
+  }
+    //console.log("event", this.dateEvent);
+    /*if (add.contacts.dateEvent === this.date) {
+      this.snackBar.open('évènement', 'Annulé',{duration: 3000});
+    }
+    /*const key = Object.keys(add);
     //console.warn(key);
     key.forEach((elem) => {
       this.ad[elem] = null ?? '';
@@ -314,16 +370,16 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     this.dashboardService.updateAd(data).subscribe((result) => {
       this.onNoClick({ success: "L'annonce a été mise à jour" });
     });
-    console.log(data, 'data');
+    console.log(data, 'data');*/
     //console.log(this.globalForm.value, 'global', this.docsForm.value,"docs", this.contactForm.value, "contact")
     // this.ad.tags = this.tagAdCurrent.join(',');
     // this.ad.user_id = 1; // TODO USERID !!!!!
-  }
-  onGroupEmailChange(options: MatListOption[]) {
+
+  /*onGroupEmailChange(options: MatListOption[]) {
     //console.log('emailChange', options.map(o => o.value));
     this.emailsSelected = options.map((o) => o.value);
     console.log('emailSelect', this.emailsSelected);
-  }
+  }*/
 
   /*add(choice: string) {
         if(choice === 'tag'){
@@ -354,7 +410,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     }
   }*/
 
-  addContactEmail(event): void {
+  /*addContactEmail(event): void {
     const input = event.input;
     const value = event.value;
     if (value.trim() !== '') {
@@ -363,7 +419,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
       // this.globalForm.controls['contact'].markAsDirty();
       input.value = '';
     }
-  }
+  }*/
   add(event: MatChipInputEvent) {
     console.warn('event', event);
     const value = (event.value || '').trim();
@@ -376,16 +432,12 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     if (input) {
       input.value = '';
     }
-    //this.contactCtrl.setValue(null);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-
-
     this.contactEmails.push(event.option.value);
     this.contactInput.nativeElement.value = '';
     this.contactCtrl.setValue(null);
-
   }
 
  /* remove(tag: string, isEmail?: boolean): void {
@@ -404,12 +456,12 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     }
   }*/
 
-  private _filter(value: string): Contact[] {
+  /*private _filter(value: string): Contact[] {
     const filterValue = value.toLowerCase();
     return this.emailList.filter(
       (emailTable) => emailTable.email.toLowerCase().indexOf(filterValue) === 0
     );
-  }
+  }*/
 
   onUploadFile(event): void {
     console.log(event.target.files);
@@ -446,8 +498,6 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   }
 
   contactSort() {
-
-
     this.contactEmails = [];
     let value = this.globalForm.value;
     let ad = value.description;
@@ -473,8 +523,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
 
   remove(contact: Contact): void {
     const index = this.contactEmails.indexOf(contact);
-
-    if (index >= 0) {
+      if (index >= 0) {
       this.contactEmails.splice(index, 1);
     }
   }

@@ -1,8 +1,8 @@
-import { Item } from "./item";
+import { Offer } from "./offer";
 
 export interface List {
   label: string;
-  totalAmount: number;
-  totalOffer: number;
-  items: Item[];
+  //cards: Offer[];
+  offers:Offer[];
+  //offer: Offer[];
 }

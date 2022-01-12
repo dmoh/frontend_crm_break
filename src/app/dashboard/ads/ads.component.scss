@@ -3,6 +3,8 @@
   background-size: cover;
 }
 .container {
+  display: flex;
+  justify-content: space-between;
   padding: 1rem;
 }
 .p-05 {

@@ -16,7 +16,10 @@ import { ReplaySubject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component';
+import { TemplateMailComponent } from './template-mail/template-mail.component';
+//import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component';
+//import { OfferModalComponent } from './dashboard/pipe-drive/offer-modal/offer-modal.component';
+//import { DragDirective } from './dashboard/pipe-drive/drag.directive';
 //import { FilterPipe } from './dashboard/filter.pipe';
 //import { ContactFormComponent } from './contact-form/contact-form.component';
 //import { BasicChartComponent } from './basic-chart/basic-chart.component';
@@ -31,6 +34,7 @@ import { PipeDriveComponent } from './dashboard/pipe-drive/pipe-drive.component'
 //import { GanttComponent } from './gantt/gantt.component';
 //import { HttpClient } from '@angular/common/http';
 //import { GanttComponent } from './gantt/gantt.component';
+//import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 
@@ -43,7 +47,10 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     FooterComponent,
     //GantComponent,
     GanttComponent,
-    PipeDriveComponent,
+    TemplateMailComponent,
+    //PipeDriveComponent,
+    //OfferModalComponent,
+    //DragDirective,
     //FilterPipe,
     //ContactFormComponent,
     //BasicChartComponent,
@@ -59,13 +66,14 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        //DragDropModule,
         CoreModule,
         NgbModule,
         GoogleMapsModule,
         GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
         HttpClientModule,
         //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
-      FullCalendarModule,
+        FullCalendarModule,
       //NgApexchartsModule,
     ],
   providers: [
