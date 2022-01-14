@@ -1,41 +1,50 @@
-<div>
-<section id="login" class="wrapper-login">
-  <h3 style="text-align: center;">BREC</h3>
-  <h6>Connexion</h6>
-<div class="alert alert-danger mt-10" *ngIf="error">
-  <strong>login ou mot de passe incorrect</strong>
+<div class="w-100 overflow-hidden">
+  <div style="justify-content: flex-start; align-items: center" class="w-100 d-flex flex-auto">
+    <div id="login"
+         style="display: flex; width: 50%; height: 100%; padding: 4rem; padding-top: 0; justify-content: flex-end; align-items: center" class="wrapper-login">
+      <div style="width: 20rem !important;">
+        <h3 style="text-align: left; font-size: xxx-large ">B R E C</h3>
+        <div class="alert alert-danger mt-10" *ngIf="error">
+          <strong>login ou mot de passe incorrect</strong>
+        </div>
+        <form [formGroup]="loginForm">
+          <div>
+            <mat-form-field class="w-100" appearance="outline"  style="width: 100%">
+              <mat-label>Email</mat-label>
+              <input formControlName="email"
+                     matInput placeholder="Email"/>
+              <!--<mat-hint *ngIf="f.email.errors">
+                Email obligatoire
+              </mat-hint>-->
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="w-100" appearance="outline"  style="width: 100%">
+
+              <mat-label>Password</mat-label>
+
+              <input formControlName="password"
+                     type="password"
+                     matInput/>
+
+              <!--<mat-hint *ngIf="f.email.errors.required">
+                Mot de passe obligatoire
+              </mat-hint>-->
+            </mat-form-field>
+          </div>
+          <div><a routerLink="/login">Mot de passe oublié ?</a></div>
+          <!----<div class="mt-3 mb-3">
+             <button type="submit" mat-raised-button color="primary">Se connecter</button>
+           </div>-->
+          <div style="margin-top: 15px;">
+            <button mat-raised-button color="primary" (click)="onLoggedin()">Se connecter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="flex-auto" style="position:relative;width: 50% !important;height: 100%; display: flex; padding: 25rem ">
+      <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: url('assets/images/brec-bg.jpg'); background-size: cover" class="">
+      </div>
+    </div>
+  </div>
 </div>
-    <form [formGroup]="loginForm">
-    <div>
-      <mat-form-field  style="width: 100%">
-        <mat-label>Email</mat-label>
-        <input formControlName="email"
-          matInput placeholder="Email"/>
-        <!--<mat-hint *ngIf="f.email.errors">
-          Email obligatoire
-        </mat-hint>-->
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field style="width: 100%">
-
-        <mat-label>Password</mat-label>
-
-        <input formControlName="password"
-               type="password"
-          matInput/>
-
-        <!--<mat-hint *ngIf="f.email.errors.required">
-          Mot de passe obligatoire
-        </mat-hint>-->
-      </mat-form-field>
-    </div>
-    <div><a href="">Mot de passe oublié ?</a></div>
-   <!----<div class="mt-3 mb-3">
-      <button type="submit" mat-raised-button color="primary">Se connecter</button>
-    </div>-->
-  <div style="margin-top: 15px;"><button  mat-raised-button color="primary" (click)="onLoggedin()">Se connecter</button></div>
-</form>
-</section>
-
-

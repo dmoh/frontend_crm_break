@@ -9,10 +9,10 @@ export class AutServiceService {
 
   //public user$: BehaviorSubject<User[] | null> = new BehaviorSubject([
   public users:User[] = [
-    { id: 1, username: 'mohamed', email: 'mohamed@brec.com', role: 'admin', password:'123' },
-    { id: 2, username: 'ali', email: 'ali@brec.com', role: 'manager', password:'123' },
-    { id: 3, username: 'omar', email: 'omar@brec.com', role: 'moderateur', password:'123' },
-    { id: 4, username:'mariam', email:'mariam@brec.com', role:'secretaire', password:'123'}
+    /*{ id: 1, username: 'mohamed', email: 'mohamed@brec.com', role: ['admin'], password:'123' },
+    { id: 2, username: 'ali', email: 'ali@brec.com', role: ['manager'], password:'123' },
+    { id: 3, username: 'omar', email: 'omar@brec.com', role: ['moderateur'], password:'123' },
+    { id: 4, username:'mariam', email:'mariam@brec.com', role:['secretaire'], password:'123'}*/
   ];
   loggedUserName: string;
   loggedUserRole: string;
@@ -25,7 +25,7 @@ export class AutServiceService {
 
   SignIn(user :User):Boolean{
     let validUser: Boolean = false;
-    this.users.forEach((curUser) => {
+    /*this.users.forEach((curUser) => {
       //if(user.username=== curUser.username && user.password==curUser.password) {
         if(user.email === curUser.email) {
           validUser = true;
@@ -39,7 +39,7 @@ export class AutServiceService {
           localStorage.setItem('loggedUserEmail',this.loggedUserMail);
           localStorage.setItem('isloggedIn',String(this.isLoggedIn));
       }
-    });
+    });*/
 
     return validUser;
   }

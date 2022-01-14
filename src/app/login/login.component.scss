@@ -1,4 +1,4 @@
-.wrapper-login {
+/*.wrapper-login {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,5 +8,8 @@
   margin: 2rem auto;
   padding: 1rem;
   box-shadow: 10px 7px 25px rgba(0,0,0, 0.5);
-}
+}*/
 
+.flex-auto {
+  flex: 1 1 auto!important;
+}
