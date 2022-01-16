@@ -37,6 +37,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterPipe } from '@app/dashboard/filter.pipe';
 import { MatSort } from '@angular/material/sort';
 import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
+import { OfferService } from '@app/_services/offer.service';
 @Component({
   selector: 'app-dialog-modal',
   templateUrl: './dialog-modal.component.html',
@@ -115,6 +116,7 @@ export class DialogModalComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private dashboardService: DashboardService,
+    private offerService: OfferService,
     public dialogRef: MatDialogRef<DialogModalComponent>,
     public contactService: ContactService,
     @Inject(MAT_DIALOG_DATA) public ad: Ad,
@@ -328,22 +330,27 @@ export class DialogModalComponent implements OnInit, OnDestroy {
     const mail = this.contactEmails.map(elt => {
       return elt.email
     })
-    const add = Object.assign(
+    const offer = Object.assign(
       //this.emails = Object.assign(
-      [
+      //[
         this.globalForm.value,
         this.docsForm.value,
         this.contactForm.value,
-        { emailList: mail }
-      ]
+        //{ emailList: mail }
+      //]
 
     );
+
+    //const dataOffers  = offer;
+    this.offerService.addOffer(offer);
+    this.dialogRef.close(offer)
+    console.log('data offers', offer)
     //this.dateEvent = add.contacts.dateEvent;
-    this.dialogRef.close(add)
+    //this.dialogRef.close(offer)
     //add.jsonStringyfy()
     //const add2 = JSON.stringify(add)
     //console.log('AD', add);
-    console.log('AD2',add);
+    //console.log('AD2', offer);
 
   }
     //console.log("event", this.dateEvent);

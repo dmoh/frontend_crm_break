@@ -9,7 +9,9 @@
       <div>
         <mat-form-field>
           <mat-label>Rechercher</mat-label>
-          <input matInput autocomplete="off" (keyup)="updateFilter($event.target.value)" type="text"/>
+          <!--<input matInput autocomplete="off" (keyup)="updateFilter($event.target.value)" type="text"/>-->
+          <input matInput autocomplete="off" type="text"/>
+
         </mat-form-field>
 
       </div>
@@ -23,17 +25,17 @@
 
 
     </div>
-        <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-          <ng-container matColumnDef="id">
+        <table style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+         <!----<ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
             <td mat-cell *matCellDef="let ad"> {{ad.id}} </td>
 
-          </ng-container>
+          </ng-container>-->
 
 
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-            <td mat-cell *matCellDef="let ad"> {{ad.title}} </td>
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.description.title}} </td>
           </ng-container>
 
 
@@ -44,12 +46,21 @@
 
 
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-            <td mat-cell *matCellDef="let ad"> {{ad.sellingPrice}} </td>
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let ad"> {{ad.description.sellingPrice}} </td>
           </ng-container>
-          <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
-            <td mat-cell *matCellDef="let ad"> {{ad.image}} </td>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button>
+                <mat-icon>edit_outline</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

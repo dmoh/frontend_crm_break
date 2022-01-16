@@ -1,8 +1,8 @@
 import {Contact} from './contact';
 
 export class Ad {
-  public readonly id: number;
-  title: string = '';
+  id: number;
+  title: string;
   type?: string;
   contact?: Contact;
   buildingRegime?: string;

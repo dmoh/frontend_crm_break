@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 //import { Ad } from '../models/ad';
 import { Ad } from '../models/ad';
 import { BehaviorSubject, Observable, Observer, Subject, Subscription } from 'rxjs';
+import { OfferService } from '@app/_services/offer.service';
 
 const ELEMENT_DATA: Ad[] = [
   {id: 1, title: "Appartement locatif", sellingPrice: 150000, description: "35 avenue charle de gaules Paris", published: false, assets: '', comment: '', image: ''},
@@ -22,17 +23,18 @@ const ELEMENT_DATA: Ad[] = [
   styleUrls: ['./ads.component.scss'],
   providers: [MatSnackBar]
 })
-export class AdsComponent implements OnInit{
+export class AdsComponent implements OnInit, OnDestroy{
+  offerSub: Subscription;
+  dataSource = new MatTableDataSource();
+  displayedColumns: string[] = ['title', 'price', 'actions'];
   animal: string;
-  ads: Ad[] = [];
-  date = new Date().toISOString().split('T')[0];
+  ads: Ad[];
+  //date = new Date().toISOString().split('T')[0];
   //public dateEvent: BehaviorSubject<any> = new BehaviorSubject(null);
-  displayedColumns: string[] = ['id', 'title', 'price', 'image'];
-  dataSource = ELEMENT_DATA;
-  dateEvent = new Subject<any>();
-  dateEventSub: Subscription;
-  event: any;
-  evenement = false;
+
+  //dataSource = ELEMENT_DATA;
+  offers: any[];
+
 
 
   //dialogRef;
@@ -41,6 +43,7 @@ export class AdsComponent implements OnInit{
 
   constructor(
         private dashboardService: DashboardService,
+        private offerService: OfferService,
         public dialog: MatDialog,
         private snackBar: MatSnackBar
               ) { }
@@ -51,45 +54,22 @@ export class AdsComponent implements OnInit{
       this.dataSource.paginator = this.paginator;
       console.warn('ads', this.ads);
       });*/
-      //this.date = new Date().toISOString().split('T')[0];
 
+     this.offerSub =
+        this.offerService.offers$.subscribe(
+        (value) => {
+            //this.offers = value;
 
-    //console.log('DATEEVENT', this.event.getDate())
-    //let eventt;
-   /* let eventt;
-    console.log(eventt);
+            this.dataSource.data = value;
+            console.log(this.dataSource.data, "data source")
+          },
 
-    this.dateEventSub = this.dateEvent.subscribe((date) => {
-
-     // console.log('DATE', this.date.getDate())
-      //this.event = date;
-      eventt = date;
-
-
-      return this.event;
-
-        //console.log("eventOnit", this.event.getDate())
-
-        /*if (this.event) {
-          if (this.event.getDate() === this.date.getDate()) {
-            this.evenement = true;
-            this.snackBar.open('évènement', 'Annulé');
-
-            console.log('getdate', this.event.getDate());
-
-          //}
-        }
-        //console.log('2', this.event);
-
-    })*/
-
-
-    //this.event === this.date ? this.snackBar.open('évènement', 'Annulé', {verticalPosition:'top'}) : null;
+      )
 
 }
-  /*ngOnDestroy() {
-    this.dateEventSub.unsubscribe();
-  }*/
+  ngOnDestroy() {
+    this.offerSub.unsubscribe();
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogModalComponent, { // todo globaliser modal
           width: '100%',
@@ -97,7 +77,8 @@ export class AdsComponent implements OnInit{
       });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result, 'result');
+      //this.dataSource.data = result;
 
 
         //console.warn(result, 'result');
@@ -106,8 +87,10 @@ export class AdsComponent implements OnInit{
 
         //console.log(data, "event");
         if (result) {
-          //console.log(result.contacts.dateEvent, 'result');
-          this.snackBar.open('Annonce ajoutée', 'Annulé', { duration: 1000 });
+          //console.log(result, 'result');
+          //this.dataSource.push(result);
+
+          this.snackBar.open('Offer ajoutée', 'Annulé', { duration: 1000 });
         }
         /*if (this.dateEvent.getDay() === this.date.getDay())  {
           this.snackBar.open('évènement','Annulé', {duration: 3000});
@@ -123,8 +106,8 @@ export class AdsComponent implements OnInit{
     });
   }*/
 
-  updateFilter(filter: any) {
+  /*updateFilter(filter: any) {
     const finalFilter = filter.trim().toLowerCase();
     this.dataSource.filter = finalFilter;
-  }
+  }*/
 }
