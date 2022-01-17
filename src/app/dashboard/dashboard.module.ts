@@ -31,6 +31,8 @@ import { ContactFormComponent } from './contacts/contact-form/contact-form.compo
 import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
 import { OfferModalComponent } from './pipe-drive/offer-modal/offer-modal.component';
 import { DragDirective } from './pipe-drive/drag.directive';
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {MatSortModule} from "@angular/material/sort";
 
 //import { FilterPipe } from './filter.pipe';
 //import { NgApexchartsModule } from 'ng-apexcharts';
@@ -54,11 +56,13 @@ FullCalendarModule.registerPlugins([
     OfferModalComponent,
     DragDirective],
   imports: [
-      CoreModule,
-      DashboardRoutingModule,
-      FullCalendarModule,
-      NgApexchartsModule,
-      MatDialogModule
+    CoreModule,
+    DashboardRoutingModule,
+    FullCalendarModule,
+    NgApexchartsModule,
+    MatDialogModule,
+    SweetAlert2Module,
+    MatSortModule
   ],
   exports: [
       CoreModule,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Ad } from '@app/dashboard/models/ad';
 import { Contact } from '@app/dashboard/models/contact';
 import { BehaviorSubject } from 'rxjs';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 export class ContactService {
 
   contacts: Contact[];
+
+
   public contact$: BehaviorSubject<any[]> = new BehaviorSubject([
     {
       id: 1,
@@ -131,7 +134,7 @@ export class ContactService {
       type:"logements",
     },
   ])
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getContact(index: string) {
     const contacts = this.contact$.value;
@@ -153,5 +156,10 @@ export class ContactService {
         }
       })
     )
+  }
+
+
+  updateContact() {
+    return
   }
 }

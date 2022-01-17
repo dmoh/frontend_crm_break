@@ -13,7 +13,7 @@ import { TaskService } from './_services/task.service';
 //import { GantComponent } from './dashboard/gant/gant.component';
 import { GoogleChartsConfig, GoogleChartsModule, GOOGLE_CHARTS_LAZY_CONFIG } from 'angular-google-charts';
 import { ReplaySubject } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { GanttComponent } from './gantt/gantt.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TemplateMailComponent } from './template-mail/template-mail.component';
@@ -35,6 +35,10 @@ import { TemplateMailComponent } from './template-mail/template-mail.component';
 //import { HttpClient } from '@angular/common/http';
 //import { GanttComponent } from './gantt/gantt.component';
 //import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {ErrorInterceptor} from "@app/_helpers/error.interceptor";
+import {JwtInterceptor} from "@app/_helpers/jwt.interceptor";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 
@@ -74,12 +78,23 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         HttpClientModule,
         //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
         FullCalendarModule,
+        SweetAlert2Module.forRoot(),
+        MatSnackBarModule
       //NgApexchartsModule,
     ],
   providers: [
     TaskService,
-    {provide: GOOGLE_CHARTS_LAZY_CONFIG, useValue: googleChartsConfigSubject.asObservable()}
-
+    {provide: GOOGLE_CHARTS_LAZY_CONFIG, useValue: googleChartsConfigSubject.asObservable()},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    }
 
   ],
   bootstrap: [AppComponent],
