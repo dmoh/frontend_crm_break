@@ -6,7 +6,6 @@ export class User {
   role: any[] = [];
   token?: string|number;
   position?: number = 0;
-
 }
 
 export const ELEMENT_DATA: User[] = [

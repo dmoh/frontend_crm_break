@@ -28,4 +28,7 @@ export class AdService {
     return this.http
       .post<any>(`${this.urlBase}/ad/${adId}/opinion/customer`, data,this.httpOptions);
   }
+
+
+
 }
