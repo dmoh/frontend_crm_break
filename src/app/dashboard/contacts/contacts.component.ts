@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
+import {Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
@@ -6,6 +6,10 @@ import { ContactService } from '@app/_services/contact.service';
 import { FileService } from '@app/_services/file.service';
 import { Observable, Subscription } from 'rxjs';
 import { FilterPipe } from '../filter.pipe';
+import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {BuyerService} from "@app/_services/buyer.service";
+import {map, take} from "rxjs/operators";
+import {Buyer} from "@app/_models/buyer";
 
 const DATA: any[] = [
   {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
@@ -23,7 +27,7 @@ const DATA: any[] = [
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss']
 })
-export class ContactsComponent implements OnInit, OnDestroy {
+export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations', 'Statut'];
   //dataSource : MatTableDataSource<any> = new MatTableDataSource();
   dataSource  = DATA;
@@ -41,15 +45,22 @@ export class ContactsComponent implements OnInit, OnDestroy {
   lettres;
   filter: FilterPipe;
   research = '';
+  buyers: Buyer[] = [];
+
+
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
 
   constructor(
     private contactService: ContactService,
     private activatedRoute: ActivatedRoute,
-    private fileService: FileService
+    private fileService: FileService,
+    private buyerService: BuyerService
   ) { }
-
   ngOnInit(): void {
+
+
+    this.getBuyerList();
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       console.log("index", index)
@@ -96,7 +107,33 @@ export class ContactsComponent implements OnInit, OnDestroy {
             }
         )
       )
+
+
   }
+
+  ngAfterViewInit() {
+  }
+
+
+  private getBuyerList() {
+    this.buyerService
+      .getBuyerList()/*
+      .pipe(take(1),
+        map((response: any) => {
+          console.warn('response buyers', response);
+          if (response.buyers) {
+            this.buyers = response.buyers;
+          }
+        })
+      )*/
+      .subscribe((response: any) => {
+        if (response.ok) {
+          this.buyers = response.buyers;
+        }
+      })
+    ;
+  }
+
   affiche() {
     this.newContact = true;
     this.detail = false;

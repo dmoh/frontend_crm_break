@@ -3,16 +3,13 @@ export class User {
   username: string;
   email: string = '';
   password?: string = '';
-  role: string;
+  role: any[] = [];
   token?: string|number;
   position?: number = 0;
-
-  //roles? = ['supAdmin', 'admin', 'manager', 'moderateur', 'secretaire'];
-   //firstname?: string = '';
-  //lastname?: string = '';
-  //
-
-
+  isAdmin = false;
+  isSuperAdmin = false;
+  isEmployee = false;
+  isCustomer = false;
 }
 
 export const ELEMENT_DATA: User[] = [

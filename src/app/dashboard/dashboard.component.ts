@@ -22,7 +22,9 @@ export class DashboardComponent implements OnInit {
   admin: boolean;
   secretaire: Boolean;
 
-    constructor(private dashboardService: DashboardService, public autService: AutServiceService) { }
+    constructor(private dashboardService: DashboardService,
+                private authenticationService: AuthenticationService,
+                public autService: AutServiceService) { }
 
     ngOnInit(): void {
         /*this.filteredOptions = this.myControl.valueChanges
@@ -46,6 +48,7 @@ export class DashboardComponent implements OnInit {
         return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
     logout() {
+      this.authenticationService.logout()
       //this.autService.logout()
     }
 }
