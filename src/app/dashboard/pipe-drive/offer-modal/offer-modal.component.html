@@ -25,6 +25,44 @@
           <mat-label>Montant de la commission</mat-label>
           <input type="number" matInput formControlName="commission" />
         </mat-form-field>
+
+        <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
+          <ng-container [formGroupName]="i">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-select placeholder="Type d'acheteur"
+                          formControlName="customerType">
+                <mat-option [value]="1">
+                  Particulier
+                </mat-option>
+                <mat-option [value]="2">
+                  Société
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field  appearance="outline">
+              <mat-label>Nom de l'acheteur</mat-label>
+              <input matInput formControlName="name" />
+            </mat-form-field>
+            <mat-form-field  appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" />
+            </mat-form-field>
+            <mat-form-field  appearance="outline">
+              <mat-label>Budget min.</mat-label>
+              <input matInput type="number" formControlName="budgetMax" />
+            </mat-form-field>
+            <mat-form-field  appearance="outline">
+              <mat-label>Budget max.</mat-label>
+              <input matInput type="number" formControlName="budgetMax" />
+            </mat-form-field>
+            <button (click)="removeBuyer(i)">X</button>
+          </ng-container>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" >
+            + Ajouter un acheteur
+          </button>
+        </div>
     </div>
   </form>
   <div style="text-align: right; margin-bottom: 20px;">

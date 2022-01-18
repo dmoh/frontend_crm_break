@@ -15,7 +15,7 @@ export class ContactFormComponent implements OnInit {
   newContact:boolean;
   @Input() public detail: boolean;
   @ViewChild('fileinput', { static: true }) inputRef: ElementRef;
-  contactFormu: FormGroup;
+  contactForm: FormGroup;
   @Input() public opened: boolean;
   url: string;
   //contacts: Contact[];
@@ -46,7 +46,7 @@ export class ContactFormComponent implements OnInit {
   initForm(
     contact: Contact = { id: null, typeClient:'', categoryClient:'', kind:'', name: '', lastName: '', country:'', city:'', adress: '', phone_number: "", email: '', budget: null, geographicSector:'', buildings:'', buildingRegime:'', yield:null, comments:''}
     ) {
-    this.contactFormu = this.formBuilder.group({
+    this.contactForm = this.formBuilder.group({
       //description: this.formBuilder.group({
       id: [contact.id],
       typeClient: [contact.typeClient],
@@ -69,9 +69,9 @@ export class ContactFormComponent implements OnInit {
 
   }
   onSubmit(): void {
-    const newContact = this.contactFormu.value;
+    const newContact = this.contactForm.value;
     this.contactService.addContact(newContact);
-    const contactJson = JSON.stringify(this.contactFormu.value);
+    const contactJson = JSON.stringify(this.contactForm.value);
     console.log('contact', newContact);
     console.log('json', contactJson);
 

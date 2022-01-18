@@ -10,4 +10,6 @@ export class Buyer {
    budgetMin = null;
    budgetMax = null;
    properties = null;
+   messageMail = null;
+   currency = null;
 }

@@ -20,7 +20,7 @@
       </div>
     </div>
     <!--<mat-divider class="mt-6 mb-20"></mat-divider>-->
-    <form [formGroup]="contactFormu">
+    <form [formGroup]="contactForm">
       <div style="margin-top: 70px; display: flex; flex-direction: column;">
         <mat-form-field appearance="outline">
           <mat-select placeholder="Type" formControlName="typeClient">
@@ -56,31 +56,31 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Pays</mat-label>
-          <input type='text' matInput formControlName="country" matInput/>
+          <input type='text' matInput formControlName="country" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Ville</mat-label>
-          <input type='text' matInput formControlName="city" matInput/>
+          <input type='text' matInput formControlName="city" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Adresse</mat-label>
-          <input type='text' matInput formControlName="adress" matInput/>
+          <input type='text' matInput formControlName="adress" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Budget</mat-label>
-          <input type='number' matInput formControlName="budget" matInput/>
+          <input type='number'  formControlName="budget" matInput/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Secteur géographique</mat-label>
-          <input type='text' matInput formControlName="geographicSector" matInput/>
+          <input type='text'  formControlName="geographicSector" matInput/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-select placeholder="Type d'immeuble" formControlName="buildings">
+          <mat-select placeholder="Type de bien" formControlName="buildings">
             <mat-option>Logements</mat-option>
             <mat-option>Bureaux</mat-option>
             <mat-option>Commerces/Centres commerciaux</mat-option>
@@ -99,7 +99,7 @@
 
         <mat-form-field appearance="outline" >
           <mat-label>Rendement en %</mat-label>
-          <input type='text' matInput formControlName="yield" matInput/>
+          <input type='text' disabled="true"  formControlName="yield" matInput/>
         </mat-form-field>
 
         <mat-form-field appearance="outline">

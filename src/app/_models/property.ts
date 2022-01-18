@@ -1,3 +1,5 @@
+import {Address} from "@app/_models/address";
+
 export class Property {
   id = 0;
   labelBuilding = null;
@@ -9,7 +11,6 @@ export class Property {
   rentalStatus = null;
   yield = null;
   comment = null;
-  address = null;
+  address = new Address();
   updateAt = null;
-
 }
