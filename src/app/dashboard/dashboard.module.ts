@@ -33,6 +33,9 @@ import { OfferModalComponent } from './pipe-drive/offer-modal/offer-modal.compon
 import { DragDirective } from './pipe-drive/drag.directive';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {MatSortModule} from "@angular/material/sort";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 //import { FilterPipe } from './filter.pipe';
 //import { NgApexchartsModule } from 'ng-apexcharts';
@@ -62,7 +65,10 @@ FullCalendarModule.registerPlugins([
     NgApexchartsModule,
     MatDialogModule,
     SweetAlert2Module,
-    MatSortModule
+    MatSortModule,
+    MatStepperModule,
+    MatChipsModule,
+    MatProgressSpinnerModule
   ],
   exports: [
       CoreModule,

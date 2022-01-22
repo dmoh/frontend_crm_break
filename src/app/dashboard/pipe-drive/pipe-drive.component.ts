@@ -15,7 +15,7 @@ import { Ad } from '../models/ad';
   providers: [MatSnackBar]
 })
 export class PipeDriveComponent implements OnInit {
-  ad: Ad[] = [];
+  offers: Offer[] = [];
   green = false;
   listLabel = "";
   itemContent: string;
@@ -248,13 +248,13 @@ export class PipeDriveComponent implements OnInit {
     //let tab;
     const dialogRef = this.dialog.open(OfferModalComponent, {
       width: '50%',
-      data: new Ad(),
+      data: new Offer(),
     });
     console.log('je suis dans le container')
   }
 
   drop(event: CdkDragDrop<string[]>) {
-
+    console.log('event drop', event);
     if (event.container.id === "cdk-drop-list-14") {
         this.openOfferModal();
         console.log('je suis dans le container')
@@ -282,11 +282,17 @@ export class PipeDriveComponent implements OnInit {
   }
 
   openDialog(): void {
+    const dialogRef = this.dialog.open(OfferModalComponent, {
+      width: '50%',
+      data: {
+        offer: new Offer()
+      },
+    });
     //let tab;
-    const dialogRef = this.dialog.open(DialogModalComponent, {
+    /*const dialogRef = this.dialog.open(DialogModalComponent, {
       width: '50%',
       data: new Ad (),
-    });
+    });*/
     dialogRef.afterClosed().subscribe(offer => {
 
       if (offer) {
@@ -301,8 +307,8 @@ export class PipeDriveComponent implements OnInit {
         })*/
         //this.offreAttente.push(offer)
         //this.ad = [...this.ad, ...offer]
-        this.ad.push(offer)
-        console.log('ad offre', this.ad)
+        this.offers.push(offer)
+        console.log('ad offre', this.offers)
        //this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
       }
 

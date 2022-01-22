@@ -1,31 +1,294 @@
-<div mat-dialog-content>
-  <form [formGroup]="offerForm" >
-      <div style= "display: flex; flex-direction: column;">
-        <mat-form-field appearance="fill">
-          <mat-label>Nom de l'offre</mat-label>
-          <input type="text" matInput formControlName="offer" />
+<div mat-dialog-content style="font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <mat-horizontal-stepper
+    style="background: #fff; padding: 1rem"
+    [linear]="true"
+    #stepper
+  >
+    <mat-step [stepControl]="offerForm">
+      <form [formGroup]="offerForm">
+      <h4>Information relative à cette offre</h4>
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Titre</mat-label>
+        <input type="text"
+               matInput
+               formControlName="title"/>
+      </mat-form-field>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Prix de vente</mat-label>
+          <input type="text"
+                 matInput
+                 formControlName="sellingPropositionPrice"/>
+        </mat-form-field>
+      </form>
+        <div style="margin-top: 40px; text-align: right">
+          <button
+            [disabled]="offerForm.invalid"
+            mat-raised-button
+            color="primary"
+            matStepperNext
+          >
+            Suivant
+          </button>
+        </div>
+    </mat-step>
+
+    <mat-step [stepControl]="propertyForm">
+
+
+
+      <form [formGroup]="propertyForm">
+
+        <h4>Propriété à vendre</h4>
+        <!--Find property on db-->
+        <mat-form-field class="w-100" style="width: 100%" appearance="outline">
+          <mat-label>Chercher via le nom d'un propriétaire</mat-label>
+          <input type="text"
+                 placeholder="Pick one"
+                 aria-label="Propriétaire"
+                 matInput
+                 formControlName="ownerName"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (selectionchange)="onChange($event)" [displayWith]="displayFn">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option
+                (click)="onChange(option)"
+                *ngFor="let option of filteredOptions"
+                [value]="option">
+                <div
+                  style="width: 100%;
+                  overflow: hidden">
+                  <span style="color: #666; font-size: small; padding-right: .3rem; font-style: italic">
+                    {{ option.street }}, {{ option.city }}
+                  </span>
+                  <span>
+                    {{ option.owners }}
+                  </span>
+                </div>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Nom acheteur</mat-label>
-          <input type="text" matInput formControlName="name" />
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Prix de vente</mat-label>
+        <input type="text"
+               matInput
+               [autocomplete]="'off'"
+               formControlName="sellingPrice"/>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Etat locatif</mat-label>
+        <input type="text"
+               matInput
+               [autocomplete]="'off'"
+               formControlName="rentalStatus"/>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Rendement (%)</mat-label>
+        <input type="text" matInput
+               [disabled]="true"
+               [value]="yield"
+               formControlName="yield"/>
+
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Observations/Commentaires</mat-label>
+        <input type="text" matInput
+               [value]="yield"
+               formControlName="comment"/>
+      </mat-form-field>
+
+      <!--<mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Montant de la commission</mat-label>
+        <input type="number" matInput formControlName="commission"/>
+      </mat-form-field>-->
+
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-select placeholder="Régime de l'immeuble"
+                    [value]="1"
+                    formControlName="propertyRegime">
+          <mat-option [value]="1">Société (Share Deal)</mat-option>
+          <mat-option [value]="2">Nom (Asset Deal)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <h4>Le bien a mettre en vente</h4>
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-select placeholder="Typologie immeuble"
+                    [value]="3"
+                    formControlName="typeProperty">
+          <mat-option [value]="1">Logements</mat-option>
+          <mat-option [value]="2">Bureaux</mat-option>
+          <mat-option [value]="3"
+          >Commerces/Centres commerciaux
+          </mat-option
+          >
+          <mat-option [value]="4"
+          >Industriel/Logistique/Artisanal
+          </mat-option
+          >
+          <mat-option [value]="5">Hôtel/ApartHotel</mat-option>
+          <mat-option [value]="6"
+          >Clinique/EMS/Hôpital
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <div
+          class="btn"
+          style="
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+          "
+        >
+          <div>
+            <button mat-raised-button matStepperPrevious>Précédent</button>
+          </div>
+          <div>
+            <button
+              [disabled]="propertyForm.invalid"
+              mat-raised-button
+              color="primary"
+              matStepperNext
+            >
+              Suivant
+            </button>
+          </div>
+          <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="propertyAddressForm">
+      <h4>Adresse du bien</h4>
+      <form [formGroup]="propertyAddressForm">
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Rue, Avenue...</mat-label>
+          <input type="text" matInput
+                 formControlName="street"/>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Prénom acheteur</mat-label>
-          <input type="text" matInput formControlName="lastName" />
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Code Postale</mat-label>
+          <input type="text" matInput
+                 formControlName="zipcode"/>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Montant de la vente</mat-label>
-          <input type="number" matInput formControlName="amount" />
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input type="text" matInput
+                 formControlName="city"/>
         </mat-form-field>
 
-        <mat-form-field  appearance="outline">
-          <mat-label>Montant de la commission</mat-label>
-          <input type="number" matInput formControlName="commission" />
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Canton</mat-label>
+          <input type="text" matInput
+                 formControlName="canton"/>
         </mat-form-field>
 
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Pays</mat-label>
+          <input type="text" matInput
+                 formControlName="country"/>
+        </mat-form-field>
+      </form>
+
+      <div
+        class="btn"
+        style="
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+          "
+      >
+        <div>
+          <button mat-raised-button matStepperPrevious>Précédent</button>
+        </div>
+        <div>
+          <button
+            [disabled]="propertyAddressForm.invalid"
+            mat-raised-button
+            color="primary"
+            matStepperNext
+            (click)="getPotentialBuyers()"
+          >
+            Suivant
+          </button>
+        </div>
+        <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+      </div>
+    </mat-step>
+
+
+    <!--
+            PARMI les buyer et property unsorted rechercher les proprios
+    -->
+    <mat-step [stepControl]="ownerForm">
+      <h4>Propriétaire</h4>
+      <form [formGroup]="ownerForm">
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-select placeholder="Propriétaire du bien"
+                      formControlName="customerType">
+            <mat-option [value]="1">
+              Particulier
+            </mat-option>
+            <mat-option [value]="2">
+              Société
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Nom du propriétaire</mat-label>
+          <input matInput formControlName="name"/>
+        </mat-form-field>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email"/>
+        </mat-form-field>
+      </form>
+      <div
+        class="btn"
+        style="
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+          "
+      >
+        <div>
+          <button mat-raised-button matStepperPrevious>Précédent</button>
+        </div>
+        <div>
+          <button
+            [disabled]="ownerForm.invalid"
+            mat-raised-button
+            color="primary"
+            matStepperNext
+          >
+            Suivant
+          </button>
+        </div>
+        <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+      </div>
+    </mat-step>
+    <!--METTRE ADRESSE DU PROPRIO-->
+
+
+    <!--        <mat-form-field  style="width: 100%" appearance="outline">-->
+    <!--          <mat-label>Budget min.</mat-label>-->
+    <!--          <input matInput type="number" formControlName="budgetMax" />-->
+    <!--        </mat-form-field>-->
+    <!--        <mat-form-field  style="width: 100%" appearance="outline">-->
+    <!--          <mat-label>Budget max.</mat-label>-->
+    <!--          <input matInput type="number" formControlName="budgetMax" />-->
+    <!--        </mat-form-field>-->
+    <mat-step [stepControl]="buyersForm">
+      <form [formGroup]="buyersForm">
         <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
           <ng-container [formGroupName]="i">
             <mat-form-field style="width: 100%" appearance="outline">
@@ -39,34 +302,110 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field  appearance="outline">
+            <mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Nom de l'acheteur</mat-label>
-              <input matInput formControlName="name" />
+              <input matInput formControlName="name"/>
             </mat-form-field>
-            <mat-form-field  appearance="outline">
+            <mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Email</mat-label>
-              <input matInput formControlName="email" />
+              <input matInput formControlName="email"/>
             </mat-form-field>
-            <mat-form-field  appearance="outline">
+            <<!--mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Budget min.</mat-label>
-              <input matInput type="number" formControlName="budgetMax" />
+              <input matInput type="number" formControlName="budgetMax"/>
             </mat-form-field>
-            <mat-form-field  appearance="outline">
+            <mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Budget max.</mat-label>
-              <input matInput type="number" formControlName="budgetMax" />
-            </mat-form-field>
-            <button (click)="removeBuyer(i)">X</button>
+              <input matInput type="number" formControlName="budgetMax"/>
+            </mat-form-field>-->
+            <button mat-raised-button color="warn"  (click)="removeBuyer(i)">Supprimer</button>
           </ng-container>
         </div>
-        <div>
-          <button mat-raised-button color="primary" >
-            + Ajouter un acheteur
-          </button>
-        </div>
-    </div>
-  </form>
-  <div style="text-align: right; margin-bottom: 20px;">
-    <button mat-raised-button color="primary" (click)="onSubmit()" >Envoyer</button>
-  </div>
-</div>
+      </form>
+      <div>
+        <button mat-raised-button color="primary" (click)="addBuyer()">
+          + Ajouter un acheteur
+        </button>
+      </div>
+      <div style="margin: 1rem">
+        <!--<mat-form-field appearance="fill">
+          <mat-label>Rechercher</mat-label>
+          <input
+            type="text"
+            (keyup)="updateFilter($event.target.value)"
+            matInput
+          />
+        </mat-form-field>-->
 
+        <table
+          matSort
+          style="width: 100%"
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="fullname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nom Prénom
+            </th>
+            <td mat-cell *matCellDef="let buyer">
+              {{ buyer.name | titlecase}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Email
+            </th>
+            <td mat-cell *matCellDef="let buyer">
+              {{ buyer.email }}
+            </td>
+          </ng-container>
+
+          <!--<ng-container matColumnDef="criteres">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Critères
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let buyer"
+              style="color: yellowgreen"
+            >
+              {{ buyer.criteriasBind }}
+            </td>
+          </ng-container>-->
+          <ng-container matColumnDef="localisation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Localisation
+            </th>
+            <td mat-cell *matCellDef="let buyer">
+              {{ buyer.country }} {{ buyer.city }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Template Email</th>
+            <td mat-cell *matCellDef="let buyer">
+              <button mat-raised-button color="primary" style="margin-right: .5rem">
+                <mat-icon (click)="openEmail(buyer)" >edit_outline</mat-icon>
+              </button>
+              <button color="warn" mat-raised-button>
+                <mat-icon>
+                  highlight_off
+                </mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
+        </table>
+      </div>
+      <div style="text-align: right; margin-bottom: 20px;">
+        <button mat-raised-button color="primary" (click)="onSubmit()">Envoyer</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

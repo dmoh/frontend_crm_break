@@ -15,4 +15,12 @@ export class BuyerService extends GlobalHttpService {
     )
   }
 
+
+  getPotentialBuyerList(offer: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/buyer/potential/list`, {
+        offer: offer
+      }
+    )
+  }
+
 }

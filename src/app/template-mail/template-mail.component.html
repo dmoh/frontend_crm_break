@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <form [formGroup]="emailForm">
+  <form [formGroup]="mailForm">
     <div class="name">
       <p>Bonjour,</p>
       <!--<mat-form-field appearance="outline">
@@ -23,6 +23,6 @@
     <p>A bientôt</p>
   </div>
   <div style="text-align: right;">
-    <button type="button" mat-raised-button color="accent">Valider</button>
+    <button type="button" mat-raised-button (click)="onValidate()" color="accent">Valider</button>
   </div>
 </div>
