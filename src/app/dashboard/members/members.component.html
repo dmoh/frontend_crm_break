@@ -9,7 +9,7 @@
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">
       add
     </mat-icon>
-    New user
+    Ajouter
   </button>
 </div>
 
@@ -18,26 +18,26 @@
     <th mat-header-cell *matHeaderCellDef> id </th>
     <td mat-cell *matCellDef="let member"> {{member.id}}</td>
   </ng-container>
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="lastname">
     <th mat-header-cell *matHeaderCellDef> Nom </th>
-    <td mat-cell *matCellDef="let member"> {{member.lastName}} </td>
+    <td mat-cell *matCellDef="let member"> {{member.lastname}} </td>
   </ng-container>
-  <ng-container matColumnDef="lastName">
+  <ng-container matColumnDef="firstname">
     <th mat-header-cell *matHeaderCellDef> Prénom </th>
-    <td mat-cell *matCellDef="let member"> {{member.name}} </td>
+    <td mat-cell *matCellDef="let member">  {{member.firstname}}</td>
   </ng-container>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef> Email </th>
     <td mat-cell *matCellDef="let member"> {{member.email}} </td>
   </ng-container>
-  <ng-container matColumnDef="rules">
+  <ng-container matColumnDef="roles">
     <th mat-header-cell *matHeaderCellDef> Rôle </th>
-    <td mat-cell *matCellDef="let member"> {{member.rules}} </td>
+    <td mat-cell *matCellDef="let member"> {{member.roles.join(', ')}} </td>
   </ng-container>
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let member">
-      <button mat-icon-button ><mat-icon>edit_outline</mat-icon></button>
+      <button mat-icon-button (click)="openDialog(member)" ><mat-icon>edit_outline</mat-icon></button>
       <button mat-icon-button color="warn" (click)="deleteMember(member.id)"><mat-icon>delete_outline</mat-icon></button>
     </td>
   </ng-container>

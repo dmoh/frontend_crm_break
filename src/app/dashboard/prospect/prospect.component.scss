@@ -1,0 +1,22 @@
+.mat-row:hover .mat-cell {
+  border-color: #ccc !important;
+}
+.background-status {
+  background: white;
+}
+
+.background-status-open {
+  background: palegoldenrod;
+}
+
+.background-status-seller {
+  background: palegreen;
+}
+
+.background-status-sold {
+  background: lawngreen;
+}
+
+.background-status-not-for-sale {
+  background: #ff8165;
+}

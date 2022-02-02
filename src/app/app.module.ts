@@ -39,6 +39,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {ErrorInterceptor} from "@app/_helpers/error.interceptor";
 import {JwtInterceptor} from "@app/_helpers/jwt.interceptor";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { ProspectComponent } from './dashboard/prospect/prospect.component';
+import {MatSortModule} from "@angular/material/sort";
 
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 
@@ -52,6 +54,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     //GantComponent,
     GanttComponent,
     TemplateMailComponent,
+    ProspectComponent,
     //PipeDriveComponent,
     //OfferModalComponent,
     //DragDirective,
@@ -74,13 +77,14 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
         CoreModule,
         NgbModule,
         GoogleMapsModule,
-        GoogleChartsModule.forRoot({ version: 'current', mapsApiKey: ''}),
+        GoogleChartsModule.forRoot({version: 'current', mapsApiKey: ''}),
         HttpClientModule,
         //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
         FullCalendarModule,
         SweetAlert2Module.forRoot(),
-        MatSnackBarModule
-      //NgApexchartsModule,
+        MatSnackBarModule,
+        MatSortModule,
+        //NgApexchartsModule,
     ],
   providers: [
     TaskService,
@@ -98,6 +102,6 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
 
   ],
   bootstrap: [AppComponent],
-  exports: [CoreModule, LoginComponent, ContactViewComponent, FooterComponent,]
+  exports: [CoreModule, LoginComponent, ContactViewComponent, FooterComponent, ProspectComponent,]
 })
 export class AppModule { }

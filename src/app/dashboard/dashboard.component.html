@@ -75,7 +75,35 @@
                   visibility
                   </span>
               </div>
-              <div class="" style="text-align: center; align-self: center">Vue Globale</div>
+              <div class="" style="text-align: center; align-self: center">Tableau de bord</div>
+              <div style="align-self: center;">
+
+              </div>
+            </div>
+          </a>
+
+          <a mat-list-item [routerLink]="'/dashboard/tracking-record'" routerLinkActive="active">
+            <div style="display: flex;width: 100%;justify-content: space-between;">
+              <div class="">
+                <span class="material-icons-outlined">
+                  groups
+                  </span>
+              </div>
+              <div class="" style="text-align: center; align-self: center">Tracking record</div>
+              <div style="align-self: center;">
+
+              </div>
+            </div>
+          </a>
+
+          <a mat-list-item [routerLink]="'/dashboard/prospect'" routerLinkActive="active">
+            <div style="display: flex;width: 100%;justify-content: space-between;">
+              <div class="">
+                <span class="material-icons-outlined">
+                  bar_chart
+                </span>
+              </div>
+              <div class="" style="text-align: center; align-self: center">Prospect</div>
               <div style="align-self: center;">
 
               </div>
@@ -101,7 +129,7 @@
                   support_agent
                   </span>
               </div>
-              <div class="" style="text-align: center; align-self: center">Acheteurs/Biens</div>
+              <div class="" style="text-align: center; align-self: center">Acheteurs</div>
               <div style="align-self: center;">
 
               </div>
@@ -177,7 +205,7 @@
               </div>
             </div>
           </a>
-          <a mat-list-item [routerLink]="'/dashboard/users'" routerLinkActive="active">
+          <a mat-list-item [routerLink]="'/dashboard/members'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -190,7 +218,7 @@
               </div>
             </div>
           </a>
-          <a mat-list-item [routerLink]="'/dashboard/members'" routerLinkActive="active">
+          <!--<a mat-list-item [routerLink]="'/dashboard/members'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -202,7 +230,7 @@
 
               </div>
             </div>
-          </a>
+          </a>-->
           <!--<button  mat-list-item (click)="sidenav.toggle()"  mat-list-item><span class="material-icons-outlined" style="text-align: center;">
             close
             </span></button>-->

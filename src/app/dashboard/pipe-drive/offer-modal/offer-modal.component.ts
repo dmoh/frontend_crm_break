@@ -138,7 +138,8 @@ export class OfferModalComponent implements OnInit {
     const newBuyers = this.buyersForm.value;
     if (newBuyers.length > 0) {
       newBuyers.forEach((b) => {
-        this.buyers = [...this.buyers, b]; // todo check if not exists
+        const newBuyer = Object.assign(new Buyer(), b);
+        this.buyers = [...this.buyers, newBuyer]; // todo check if not exists
       })
     }
     this.offer.potentialBuyers = this.buyers;
@@ -184,7 +185,6 @@ export class OfferModalComponent implements OnInit {
         this.propertyForm.get('rentalStatus')
           .valueChanges
           .subscribe((rentalStatus) => {
-            console.warn('rent', rentalStatus);
             if (+sellingPrice > 0 && +rentalStatus > 0) {
               const yieldCalculate = Math.round((+rentalStatus / +sellingPrice) * 100);
               this.propertyForm.get('yield')

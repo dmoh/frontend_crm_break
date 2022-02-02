@@ -1,10 +1,11 @@
 export class Members {
   id: number;
-  lastName: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   password:string;
-  rules: string;
+  roles: string;
+  phoneNumber: string;
   actions:string;
 }
 

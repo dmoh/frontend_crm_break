@@ -146,3 +146,7 @@ a {
   box-shadow: none !important;
 }
 
+
+.no-padding > .mat-form-field-wrapper {
+  padding: 0.5rem !important;
+}

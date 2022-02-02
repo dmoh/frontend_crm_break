@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Members } from '@app/dashboard/models/members';
 import { UsersService } from '@app/_services/users.service';
@@ -37,10 +37,11 @@ export class AddMemberModalComponent implements OnInit {
 
     this.memberForm = this.fb.group({
       //id: [this.member.id],
-      name: [this.member.name],
-      lastName: [this.member.lastName],
-      email: [this.member.email],
-      rules: [this.member.rules],
+      firstname: [this.member.firstname, [Validators.required]],
+      lastname: [this.member.lastname, [Validators.required]],
+      email: [this.member.email, [Validators.required]],
+      roles: [this.member.roles],
+      phoneNumber: [this.member.phoneNumber],
       actions: [this.member.actions],
       password: [this.member.actions],
     })

@@ -27,6 +27,10 @@ export class UsersService {
   }
 
 
+  getMemberList(): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/api/user/list`, this.headers);
+  }
+
   /*constructor() {
     this.members = [
       {id: 1, name: "Mohamed", lastName: "Litib", email:"m.litib@gmail.com", rules:'admin', actions:'edition', password: ''},

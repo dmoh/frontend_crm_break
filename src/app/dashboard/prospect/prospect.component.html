@@ -1,0 +1,72 @@
+<section class="w-100 overflow-hidden">
+  <div style="padding: 1rem 0; margin: 1rem 0" class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="Commune">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Commune</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.city}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Typologie">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Typologie</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.labelPropertyType}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Adresse">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.street}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Propriétaire">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Propriétaire</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> <div [innerText]="data.owners"></div> </td>
+          </ng-container>
+          <ng-container matColumnDef="Numéro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> <div [innerText]="data.phoneNumber"></div> </td>
+          </ng-container>
+          <ng-container matColumnDef="Observations">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Observations</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.comment}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Statut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 70px;">Statut</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> <!--<mat-icon style="cursor: pointer;" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>En cours</button>
+              <button mat-menu-item>Terminée</button>
+            </mat-menu>-->
+
+              <mat-form-field class="no-padding" style="width: 100px;" appearance="outline">
+                <mat-select (selectionChange)="onChangeStatus($event, data)" [value]="data.status" placeholder="Statut">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option [value]="crmConstants.CODE_PROPERTY_STATUS_NOT_FOR_SALE">Pas vendeur</mat-option>
+                  <mat-option [value]="crmConstants.CODE_PROPERTY_STATUS_OPEN">Ouvert</mat-option>
+                  <mat-option [value]="crmConstants.CODE_PROPERTY_STATUS_SELLER">Vendeur</mat-option>
+                  <mat-option [value]="crmConstants.CODE_PROPERTY_STATUS_SOLD">Vendu</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Géo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Géo</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data">
+              <mat-icon style="color: orange; cursor:pointer; " (click)="onOpenGeo(data)">place</mat-icon>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row
+              style="font-size: smaller !important;"
+              [ngClass]="{
+              'background-status': !row.status,
+              'background-status-open': +row.status == crmConstants.CODE_PROPERTY_STATUS_OPEN,
+              'background-status-seller': +row.status == crmConstants.CODE_PROPERTY_STATUS_SELLER,
+              'background-status-sold': +row.status == crmConstants.CODE_PROPERTY_STATUS_SOLD,
+              'background-status-not-for-sale': +row.status == crmConstants.CODE_PROPERTY_STATUS_NOT_FOR_SALE
+              }"
+              *matRowDef="let row; columns: displayedColumns;">
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</section>

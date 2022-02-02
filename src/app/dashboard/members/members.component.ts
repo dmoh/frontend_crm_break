@@ -17,7 +17,7 @@ import { AddMemberModalComponent } from './add-member-modal/add-member-modal.com
 export class MembersComponent implements OnInit, OnDestroy {
     memberSubscription: Subscription;
     dataSource : MatTableDataSource<Members> = new MatTableDataSource();
-    displayedColumns: string[] = ['id', 'name', 'lastName', 'email', 'rules', 'actions'];
+    displayedColumns: string[] = ['id', 'firstname', 'lastname', 'email', 'roles', 'actions'];
     /*dataSource: Members[]  = [
     {id: 1, name: "Mohamed", lastName: "Litib", email:"m.litib@gmail.com", rules:'admin', actions:'edition', password: ''},
     {id: 2, name: "Mohamed", lastName: "Litib", email:"m.litib@gmail.com", rules:'admin', actions:'supression', password: ''},
@@ -28,16 +28,22 @@ export class MembersComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private userService: UsersService) { }
 
     ngOnInit(): void {
-        this.memberSubscription = this.userService.membersSub.subscribe((members: Members[]) => {
+      this.userService.getMemberList()
+        .subscribe((response) => {
+          console.warn('res', response);
+          this.dataSource.data = response.users;
+
+        });
+        /*this.memberSubscription = this.userService.membersSub.subscribe((members: Members[]) => {
         this.dataSource.data = members;
         //this.dataSource.paginator = this.paginator;
       })
-      this.userService.emitMembers();
+      this.userService.emitMembers();*/
     }
-    openDialog(): void {
+    openDialog(member?: any): void {
       const dialogRef = this.dialog.open(AddMemberModalComponent, {
           width: '100%',
-          data: new Members,
+          data: !member ? new Members() : member,
       });
       dialogRef.afterClosed().subscribe(result=> {
         if (result) {
@@ -49,6 +55,6 @@ export class MembersComponent implements OnInit, OnDestroy {
       this.userService.deleteMember(id)
     }
   ngOnDestroy() {
-    this.memberSubscription.unsubscribe();
+    //this.memberSubscription.unsubscribe();
   }
 }

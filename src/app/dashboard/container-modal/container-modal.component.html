@@ -1,0 +1,61 @@
+<mat-dialog-content>
+  <div class="w-100 overflow-hidden">
+    <div class="container-fluid">
+      <h5>Status choisi:
+        <span *ngIf="statusSelected === crmConstants.CODE_PROPERTY_STATUS_NOT_FOR_SALE"><b>Pas vendeur</b></span>
+        <span *ngIf="statusSelected === crmConstants.CODE_PROPERTY_STATUS_OPEN"><b>Ouvert</b></span>
+        <span *ngIf="statusSelected === crmConstants.CODE_PROPERTY_STATUS_SELLER"><b>Vendeur</b></span>
+        <span *ngIf="statusSelected === crmConstants.CODE_PROPERTY_STATUS_SOLD"><b>Vendu</b></span>
+      </h5>
+      <div class="row">
+        <div class="col-md-12">
+          <button mat-raised-button style="float: right; cursor:pointer; " (click)="dialogRef.close(false)">Fermer</button>
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Observation(s)</mat-label>
+            <textarea matInput [formControl]="observationControl">
+            </textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="!showSaveBtn" class="row">
+        <div class="col-12">
+          <button mat-raised-button color="primary" type="button" (click)="onSave()">Valider</button>
+        </div>
+      </div>
+      <hr>
+      <h6>Ajouter un rappel</h6>
+      <div style="margin-top: 1rem; margin-bottom: 1rem">
+        <button (click)="addReminder()" mat-raised-button color="accent">
+          + Ajouter
+        </button>
+      </div>
+      <form [formGroup]="remindersForm">
+        <div *ngFor="let reminder of remindersForm.controls; index as i">
+          <ng-container [formGroupName]="i">
+            <button mat-raised-button color="warn" style="float: right"  (click)="removeReminder(i)">Supprimer</button>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput formControlName="remindAt" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Titre</mat-label>
+              <input matInput formControlName="subject"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Message</mat-label>
+              <textarea matInput formControlName="message">
+              </textarea>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </form>
+      <div [ngStyle]="{'display': showSaveBtn  ? 'block' : 'none'}" class="row">
+        <div class="col-12">
+          <button mat-raised-button color="primary" (click)="onSave()">Valider</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

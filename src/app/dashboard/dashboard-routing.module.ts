@@ -17,6 +17,8 @@ import { AreaChartComponent } from '@app/area-chart/area-chart.component';
 import { ContactFormComponent } from './contacts/contact-form/contact-form.component';
 import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
 import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
+import {ProspectComponent} from "@app/dashboard/prospect/prospect.component";
+import {TrackingRecordComponent} from "@app/dashboard/tracking-record/tracking-record.component";
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
@@ -69,12 +71,11 @@ const routes: Routes = [{
         component: CalendarComponent,
 
       },
-      /*{
-      path: 'details',
-      component: DetailsComponent,
+      {
+      path: 'tracking-record',
+      component: TrackingRecordComponent,
 
-      },*/
-
+      },
       {
         path: 'task',
         component: ListComponent,
@@ -91,6 +92,10 @@ const routes: Routes = [{
       {
         path: 'email',
         component: TemplateMailComponent,
+      },
+      {
+        path: 'prospect',
+        component: ProspectComponent,
       },
     ]
   },

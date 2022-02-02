@@ -36,13 +36,20 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ContainerModalComponent } from './container-modal/container-modal.component';
 
 //import { FilterPipe } from './filter.pipe';
 //import { NgApexchartsModule } from 'ng-apexcharts';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
 //import { GanttComponent } from '@app/gantt/gantt.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 
+import 'moment/locale/fr';
+import { TrackingRecordComponent } from './tracking-record/tracking-record.component';
+import { BuyerGeoComponent } from '../buyer-geo/buyer-geo.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -57,7 +64,10 @@ FullCalendarModule.registerPlugins([
   declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
     BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactsComponent, ContactFormComponent, PipeDriveComponent,
     OfferModalComponent,
-    DragDirective],
+    DragDirective,
+    ContainerModalComponent,
+    TrackingRecordComponent,
+    BuyerGeoComponent],
   imports: [
     CoreModule,
     DashboardRoutingModule,
@@ -68,7 +78,11 @@ FullCalendarModule.registerPlugins([
     MatSortModule,
     MatStepperModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    GoogleMapsModule,
+
   ],
   exports: [
       CoreModule,
@@ -84,6 +98,9 @@ FullCalendarModule.registerPlugins([
       AreaChartComponent,
       ApexChartComponent,
       BasicChartComponent,
+      ContainerModalComponent,
+      TrackingRecordComponent,
+      BuyerGeoComponent,
 
       //SchedulerComponent
       //GanttComponent,
@@ -92,7 +109,10 @@ FullCalendarModule.registerPlugins([
   providers: [
     DashboardService,
     { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} }
+    { provide: MatDialogRef, useValue: {} },
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    {provide: MAT_DATE_LOCALE, useValue: 'fr'}
   ]
 })
 export class DashboardModule { }

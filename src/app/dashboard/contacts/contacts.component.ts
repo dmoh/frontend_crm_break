@@ -155,12 +155,12 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fileService.removeFile(index)
   }
   openList() {
-    this.list = true;
-    this.tab = false;
+    /*this.list = true;
+    this.tab = false;*/
   }
   openTab() {
-    this.tab = true;
-    this.list = false;
+    /*this.tab = true;
+    this.list = false;*/
   }
   ngOnDestroy() {
     this.contactSub.unsubscribe();

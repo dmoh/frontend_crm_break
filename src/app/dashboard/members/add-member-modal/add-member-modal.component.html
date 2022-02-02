@@ -9,12 +9,12 @@
       <div style="display: flex; flex-direction: column;">
             <mat-form-field appearance="outline">
               <mat-label>Nom</mat-label>
-              <input type="text" matInput formControlName="name"/>
+              <input type="text" matInput formControlName="lastname"/>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Prénom</mat-label>
-              <input type="text" matInput formControlName="lastName"/>
+              <input type="text" matInput formControlName="firstname"/>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -22,13 +22,20 @@
               <input type="email" matInput formControlName="email"/>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline">
+                <mat-label>Tél</mat-label>
+                <input type="email" matInput formControlName="phoneNumber"/>
+              </mat-form-field>
+
+
+            <!--<mat-form-field appearance="outline">
               <mat-label>Mot de passe</mat-label>
               <input type="password" matInput formControlName="password"/>
-            </mat-form-field>
+            </mat-form-field>-->
 
             <mat-form-field appearance="outline">
-              <mat-select placeholder="Rôles" formControlName="rules">
+              <mat-select placeholder="Rôles" formControlName="roles">
+                <mat-option value="user">Collaborateur</mat-option>
                 <mat-option value="Admin">Admin</mat-option>
                 <mat-option value="Manager">Manager</mat-option>
                 <mat-option value="Modérateur">Modérateur</mat-option>
@@ -46,7 +53,7 @@
       <mat-step [stepControl]="actionForm">
         <ng-template matStepLabel>Actions</ng-template>
         <form style='margin-top: 30px;' [formGroup]="actionForm">
-      <div class="actions">
+      <!--<div class="actions">
         <h5>Capacités</h5>
         <div>
           <h6>Utilisateur</h6>
@@ -66,7 +73,7 @@
               <p><mat-checkbox formControlName="editContact">Modifier un contact</mat-checkbox></p>
               <p><mat-checkbox formControlName="deleteContact">Supprimer un contact</mat-checkbox></p>
           </div>
-      </div>
+      </div>-->
         </form>
         <div class="btn" style="margin-top: 40px; display: flex; justify-content: space-between;">
           <div>
