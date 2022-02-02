@@ -12,9 +12,9 @@ declare var google: any;
 export class BuyerGeoComponent implements OnInit {
   apiLoaded: Observable<boolean>;
   private geocoder: any;
-  constructor(private httpClient: HttpClient, @Inject()) {
+  constructor(private httpClient: HttpClient/*, @Inject()*/) {
     this.geocoder = new google.maps.Geocoder();
-    this.geocoder.geocode({address: })
+    // this.geocoder.geocode({address: })
   }
 
   ngOnInit(): void {
