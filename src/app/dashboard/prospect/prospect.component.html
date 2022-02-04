@@ -1,8 +1,19 @@
-<section class="w-100 overflow-hidden">
+<section style="position:relative;" class="w-100 overflow-hidden">
+
   <div style="padding: 1rem 0; margin: 1rem 0" class="container-fluid">
-    <div class="row">
+    <div class="spinner-container" style="min-height: 100vh; display: flex; justify-content: center; align-items: center; width: 100%" *ngIf="showSpinner">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </div>
+    <div style="position: relative" class="row" *ngIf="propects && propects.length > 0">
+      <div style="position: fixed;right: 1px;bottom: 4rem;z-index: 1500 !important;">
+        <button (click)="scrollTop()" mat-fab color="primary">
+          <mat-icon>
+            expand_less
+          </mat-icon>
+        </button>
+      </div>
       <div class="col-md-12">
-        <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+        <table #table style="width: 100%; z-index: 1 !important;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="Commune">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Commune</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.city}} </td>
@@ -48,9 +59,17 @@
           </ng-container>
 
           <ng-container matColumnDef="Géo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Géo</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: auto;">Géo</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data">
               <mat-icon style="color: orange; cursor:pointer; " (click)="onOpenGeo(data)">place</mat-icon>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Canton">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: auto">Canton</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data">
+              {{ data.canton }}
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -65,7 +84,14 @@
               }"
               *matRowDef="let row; columns: displayedColumns;">
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator
+          [pageSize]="150"
+          (page)="handlePageEvent($event)"
+          [length]="nbResults"
+          [pageSizeOptions]="[150]" ></mat-paginator>
+<!--
+          [pageSizeOptions]="[150]" showFirstLastButtons></mat-paginator>
+-->
       </div>
     </div>
   </div>

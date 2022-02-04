@@ -24,8 +24,8 @@
       <div style="margin-top: 70px; display: flex; flex-direction: column;">
         <mat-form-field appearance="outline">
           <mat-select placeholder="Type" formControlName="typeClient">
-            <mat-option>Privé</mat-option>
-            <mat-option>Institutionnel</mat-option>
+            <mat-option [value]="1">Privé</mat-option>
+            <mat-option [value]="2">Institutionnel</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -79,21 +79,31 @@
           <input type='text'  formControlName="geographicSector" matInput/>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-select placeholder="Type de bien" formControlName="buildings">
-            <mat-option>Logements</mat-option>
-            <mat-option>Bureaux</mat-option>
-            <mat-option>Commerces/Centres commerciaux</mat-option>
-            <mat-option>Industriel/Logistique/Artisanal</mat-option>
-            <mat-option>Hôtel/ApartHotel</mat-option>
-            <mat-option>Cliniques/EMS/Hôpital</mat-option>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-select placeholder="Typologie immeuble"
+                      [value]="3"
+                      formControlName="buildings">
+            <mat-option [value]="1">Logements</mat-option>
+            <mat-option [value]="2">Bureaux</mat-option>
+            <mat-option [value]="3"
+            >Commerces/Centres commerciaux
+            </mat-option
+            >
+            <mat-option [value]="4"
+            >Industriel/Logistique/Artisanal
+            </mat-option
+            >
+            <mat-option [value]="5">Hôtel/ApartHotel</mat-option>
+            <mat-option [value]="6"
+            >Clinique/EMS/Hôpital
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-select placeholder="Régime de l'immeuble" formControlName="buildingRegime">
-            <mat-option>Société(share deal)</mat-option>
-            <mat-option>Nom(asset deal)</mat-option>
+            <mat-option [value]="1">Société (Share Deal)</mat-option>
+            <mat-option [value]="2">Nom (Asset Deal)</mat-option>
           </mat-select>
         </mat-form-field>
 

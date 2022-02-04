@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '@app/tasks/task';
 import { TaskService } from '@app/_services/task.service';
 //import { CalendarOptions } from '@fullcalendar/angular';
+import frLocale from '@fullcalendar/core/locales/fr';
+
 import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/angular';
 import { Subscription } from 'rxjs';
 import { INITIAL_EVENTS, createEventId } from './event.utils';
@@ -31,6 +33,8 @@ export class CalendarComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
+    locales: [frLocale],
+    locale: 'fr',
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
@@ -91,6 +95,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
+    console.warn('info date select', selectInfo);
     const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
@@ -108,6 +113,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    console.warn('clickInfo', clickInfo);
     if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
     }
@@ -115,6 +121,8 @@ export class CalendarComponent implements OnInit {
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
+    console.warn('handleEvent', events);
+
     console.log('currentEvent', this.currentEvents)
   }
 }

@@ -41,6 +41,7 @@ import {JwtInterceptor} from "@app/_helpers/jwt.interceptor";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ProspectComponent } from './dashboard/prospect/prospect.component';
 import {MatSortModule} from "@angular/material/sort";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 
@@ -69,23 +70,24 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
 
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        //DragDropModule,
-        CoreModule,
-        NgbModule,
-        GoogleMapsModule,
-        GoogleChartsModule.forRoot({version: 'current', mapsApiKey: ''}),
-        HttpClientModule,
-        //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
-        FullCalendarModule,
-        SweetAlert2Module.forRoot(),
-        MatSnackBarModule,
-        MatSortModule,
-        //NgApexchartsModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    //DragDropModule,
+    CoreModule,
+    NgbModule,
+    GoogleMapsModule,
+    GoogleChartsModule.forRoot({version: 'current', mapsApiKey: ''}),
+    HttpClientModule,
+    //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
+    FullCalendarModule,
+    SweetAlert2Module.forRoot(),
+    MatSnackBarModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    //NgApexchartsModule,
+  ],
   providers: [
     TaskService,
     {provide: GOOGLE_CHARTS_LAZY_CONFIG, useValue: googleChartsConfigSubject.asObservable()},

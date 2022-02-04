@@ -8,8 +8,8 @@ import {environment} from "@environments/environment";
 })
 export class ProspectService extends GlobalHttpService {
 
-  getProspectList(): Observable<any> {
-    return this.http.get<any>(`${environment.baseApiUrl}/prospect/list`, {
+  getProspectList(page: number): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/prospect/list/${page}`, {
         headers: this.headers
       }
     )
@@ -23,6 +23,16 @@ export class ProspectService extends GlobalHttpService {
         reminders: data.reminders
       }, {
       headers: this.headers
+      }
+    )
+  }
+
+
+  findProspectByLocation(prospect: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/prospect/find/location`, {
+        prospect: prospect
+      }, {
+        headers: this.headers
       }
     )
   }

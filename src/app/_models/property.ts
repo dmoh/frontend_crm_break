@@ -17,4 +17,6 @@ export class Property {
   updateAt = null;
   ownerName = null;
   propertyUnsortedId = null;
+  canton = null;
+  isSociety = null;
 }
