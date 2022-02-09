@@ -1,0 +1,38 @@
+<mat-dialog-content>
+  <section class="w-100 overflow-hidden">
+    <div class="container-fluid">
+      <h5 class="text-capitalize">évènement</h5>
+<!--
+    <h6>prévu le {{ selectInfo | json }}</h6>
+-->
+      <span
+      style="display: block; margin-bottom: .5rem; color: #666666; font-size: small; font-style: italic; font-weight: 300">prévu le {{ dateEvent.start }} au {{ dateEvent.end }}  </span>
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Message</mat-label>
+          <textarea matInput
+                    formControlName="message">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Priorité</mat-label>
+          <mat-select placeholder="Priorité"
+                      [value]="crmConstants.CODE_COLOR_EVENT_DEFAULT"
+                      formControlName="color">
+            <mat-option [value]="crmConstants.CODE_COLOR_EVENT_DEFAULT">Normal</mat-option>
+            <mat-option [value]="'red'">Importante</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div style="display: flex; width: 100%; justify-content: space-between">
+          <button type="submit" [disabled]="eventForm.invalid" mat-raised-button color="primary">
+            OK
+          </button>
+          <button (click)="dialogRef.close(false)" mat-raised-button color="accent">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</mat-dialog-content>

@@ -8,8 +8,10 @@ import {environment} from "@environments/environment";
 })
 export class ProspectService extends GlobalHttpService {
 
-  getProspectList(page: number): Observable<any> {
-    return this.http.get<any>(`${environment.baseApiUrl}/prospect/list/${page}`, {
+  getProspectList(pageSelected: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/prospect/list/${pageSelected.page}`, {
+        isFirstTime: pageSelected.isFirstTime
+      },{
         headers: this.headers
       }
     )

@@ -59,4 +59,10 @@ export class Helper {
   }
 
 
+  static formatTimestampToDateTimeStr(timestamp): string {
+    return timestamp.replace(/( )/, 'T');
+  }
+
+
+
 }

@@ -50,6 +50,7 @@ import 'moment/locale/fr';
 import { TrackingRecordComponent } from './tracking-record/tracking-record.component';
 import { BuyerGeoComponent } from '../buyer-geo/buyer-geo.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { EventModalComponent } from '../event-modal/event-modal.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -61,13 +62,16 @@ FullCalendarModule.registerPlugins([
 
 
 @NgModule({
-  declarations: [DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
+  declarations: [
+    DashboardComponent, OverviewComponent, AdsComponent, ContactsComponent, UsersComponent, ChartComponent, ChartBarComponent, MembersComponent,
     BillingComponent,DetailsComponent, ListComponent, CalendarComponent, AreaChartComponent, ApexChartComponent, BasicChartComponent, ColortaskDirective, ContactsComponent, ContactFormComponent, PipeDriveComponent,
     OfferModalComponent,
     DragDirective,
     ContainerModalComponent,
     TrackingRecordComponent,
-    BuyerGeoComponent],
+    BuyerGeoComponent,
+    EventModalComponent
+  ],
   imports: [
     CoreModule,
     DashboardRoutingModule,
@@ -101,6 +105,7 @@ FullCalendarModule.registerPlugins([
       ContainerModalComponent,
       TrackingRecordComponent,
       BuyerGeoComponent,
+      EventModalComponent,
 
       //SchedulerComponent
       //GanttComponent,

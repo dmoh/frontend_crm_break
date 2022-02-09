@@ -18,12 +18,23 @@ import {ViewportScroller} from "@angular/common";
   styleUrls: ['./prospect.component.scss']
 })
 export class ProspectComponent implements OnInit {
-  displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations', 'Statut', 'Géo', 'Canton'];
+  displayedColumns: string[] = [
+    'Id',
+    'Commune',
+    'Typologie',
+    'Adresse',
+    'Propriétaire',
+    'Numéro',
+    'Observations',
+    'Status',
+    'Géo',
+    'Canton'];
   dataSource : MatTableDataSource<any> = new MatTableDataSource();
   propects: any[] = [];
   nbResults = 0;
   showSpinner = false;
   crmConstants = crmConstants;
+  firstTime = true;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild('table', {read: ElementRef}) table: ElementRef;
@@ -34,30 +45,32 @@ export class ProspectComponent implements OnInit {
   constructor(
     private prospectService: ProspectService,
     private viewportScroller: ViewportScroller,
-    public dialog: MatDialog,
-
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.showSpinner = true;
-    this.getProspectList(1);
+    this.getProspectList(1, true);
   }
 
-  private getProspectList(page: number) {
+  private getProspectList(page: number, isFirstTime?: boolean) {
+    let pageSelected = {page: page, isFirstTime: false};
+    if (isFirstTime) {
+      pageSelected.isFirstTime = true;
+    }
     this.prospectService
-      .getProspectList(page)
+      .getProspectList(pageSelected)
       .subscribe((response) => {
         this.showSpinner = false
         if (response.prospects) {
           this.propects = response.prospects;
           this.pageLength = response.pageLength;
+          this.pageIndex = +(response.pageIndex - 1);
           this.nbResults = response.nbResults;
           this.dataSource = new MatTableDataSource(this.propects);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
-
         }
-        console.warn('ress', response);
       })
     ;
   }
@@ -88,15 +101,13 @@ export class ProspectComponent implements OnInit {
   }
 
   handlePageEvent(event: PageEvent) {
-    console.warn('handle', event);
     this.dataSource = new MatTableDataSource();
     this.showSpinner = true;
     this.pageLength = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    console.warn(this.pageIndex);
     this.pageIndex = 0 ? 1 : this.pageIndex;
-    this.getProspectList(this.pageIndex + 1);
+    this.getProspectList(this.pageIndex + 1, false);
   }
 
   onOpenGeo(data) {

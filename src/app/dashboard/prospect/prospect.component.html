@@ -14,6 +14,10 @@
       </div>
       <div class="col-md-12">
         <table #table style="width: 100%; z-index: 1 !important;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Réf/Id</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.id}} </td>
+          </ng-container>
           <ng-container matColumnDef="Commune">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Commune</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.city}} </td>
@@ -38,8 +42,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Observations</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.comment}} </td>
           </ng-container>
-          <ng-container matColumnDef="Statut">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 70px;">Statut</th>
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 70px;">Status</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data"> <!--<mat-icon style="cursor: pointer;" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
             <mat-menu #menu="matMenu">
               <button mat-menu-item>En cours</button>
@@ -88,6 +92,7 @@
           [pageSize]="150"
           (page)="handlePageEvent($event)"
           [length]="nbResults"
+          [pageIndex]="pageIndex"
           [pageSizeOptions]="[150]" ></mat-paginator>
 <!--
           [pageSizeOptions]="[150]" showFirstLastButtons></mat-paginator>

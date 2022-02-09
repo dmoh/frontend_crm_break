@@ -12,4 +12,6 @@ export class Buyer {
    properties = null;
    messageMail = null;
    currency = null;
+   tags = null;
+   areasDesired = null;
 }

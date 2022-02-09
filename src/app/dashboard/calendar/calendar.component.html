@@ -1,7 +1,7 @@
 <!--<full-calendar [options]="calendarOptions"></full-calendar>-->
 <div class='demo-app'>
 
-  <div class='demo-app-sidebar'>
+  <!--<div class='demo-app-sidebar'>
     <div class='demo-app-sidebar-section'>
       <h2>Instructions</h2>
       <ul>
@@ -40,13 +40,29 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div>-->
 
   <div class='demo-app-main'>
     <full-calendar
-      *ngIf='calendarVisible'
-      [options]='calendarOptions'
+      #fullCalendarT
+      *ngIf="calendarVisible"
+      [options]="calendarOptions"
+      deepChangeDetection="true"
     ></full-calendar>
   </div>
+  <swal
+    #confirmSwal
+    title="Enregistrer cet évènement ?"
+    inputLabel="Message"
+    [input]="'text'"
+    [inputPlaceholder]="'exemple rdv avec notaire'"
+    icon="question"
+    [inputOptions]="optionsPriority"
+    [showCancelButton]="true"
+    [focusCancel]="true"
+    (confirm)="onAddEvent(selectInfo, $event)"
+  >
+    <!--(confirm)="onAddEvent(selectInfo, $event)">-->
+  </swal>
 
 </div>

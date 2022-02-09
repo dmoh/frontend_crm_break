@@ -20,5 +20,8 @@ export const crmConstants = {
 
   PROPERTY_TYPE: {
 
-  }
+  },
+
+
+  CODE_COLOR_EVENT_DEFAULT: '#0056b3'
 }

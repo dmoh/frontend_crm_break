@@ -41,6 +41,7 @@
     "chart.js": "^3.4.1",
     "dhtmlx-gantt": "^7.1.5",
     "dhtmlx-scheduler": "^5.3.11",
+    "fullcalendar": "^5.10.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "ng-apexcharts": "^1.5.12",

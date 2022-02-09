@@ -154,3 +154,8 @@ a {
 .mat-paginator-container {
   justify-content: center !important;
 }
+
+.card-header-style > .mat-card-header-text {
+  margin: 0 !important;
+  align-items: baseline;
+}

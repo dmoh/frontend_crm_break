@@ -3,13 +3,51 @@ background-color: #F5F5F5 ; padding: 3rem">
   <div class="row">
     <div class="col-md-12">
       <div class="card" style="text-align: center;">
-
         <div class="card-heading" style="text-align: center;height: 85px;">
           <h2>Compte rendu</h2>
           <small>l'ensemble des activités sur le crm présent</small>
         </div>
       </div>
-
+    </div>
+  </div>
+  <div *ngIf="showSpinnerReminder"
+       class="spinner-container"
+       style="min-height: 15vh; display: flex; justify-content: center; align-items: center; width: 100%"
+       >
+    <mat-spinner [diameter]="20"></mat-spinner>
+  </div>
+  <div  *ngIf="reminders && reminders.length > 0" style="margin-bottom: 1rem" class="row">
+    <div class="col-12">
+      <h6 class="">Rappels</h6>
+    </div>
+    <div *ngFor="let reminder of reminders" class="col-3">
+      <div style="width: 100%" class="cards">
+        <mat-card style="border-radius: 5px; border-left: 3px solid #ff3c3c; overflow: auto">
+          <mat-card-header style="align-items: baseline; justify-content: space-between; margin: 0 !important;" class="d-flex card-header-style">
+            <mat-card-title style="font-size: small">{{ reminder.subject }}</mat-card-title>
+            <div style="align-items: baseline">
+              <span style="font-size: x-small; font-style: italic; color: #666666">
+                {{  reminder.remindAt | date : "dd/MM/yyyy" }}
+              </span>
+            </div>
+          </mat-card-header>
+          <mat-card-content style="text-align: left;">
+            <p style="font-size: small; font-weight: bold; color:#c9c9c9;">{{ reminder.message }}</p>
+            <div>
+              <button mat-raised-button color="primary" (click)="onArchiveReminder(reminder)">
+                OK
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!showSpinnerReminder && reminders && reminders.length == 0" class="row">
+    <h6>Aucun rappel</h6>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
         <div class="container-card">
         <div class="cards">
           <mat-card style="border-radius: 5px;">
@@ -68,8 +106,9 @@ background-color: #F5F5F5 ; padding: 3rem">
           <!--<app-chart style="display: block; text-align: center;"></app-chart>-->
           <!--<app-chart-bar style="width: 70%;"></app-chart-bar>-->
           <mat-card style="width: 100%;"><app-basic-chart ></app-basic-chart></mat-card>
-
         </div>
+
+
 
         <!--<div style="height: 450px; margin-top: 50px;">
           <h5 style="text-align: center;margin-bottom: 50px;">Dernières annonces ajoutées</h5>
@@ -262,6 +301,7 @@ background-color: #F5F5F5 ; padding: 3rem">
       </div>-->
 
     </div>
+
    <!---- <div class="card">
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
