@@ -21,6 +21,15 @@ export class OfferService extends GlobalHttpService{
       })
   }
 
+  getOfferList(): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/offer/list`)
+  }
+
+  updateStatusOffer(id: number, status: number): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/offer/status/update/${id}`, {
+      status: status
+    })
+  }
 
   addOffer(offer:any): void {
     const value = this.offers$.value;
@@ -51,4 +60,7 @@ export class OfferService extends GlobalHttpService{
     const value = this.offers$.value;
     this.offers$.next(value.filter(offer => offer.id != id));
   }
+
+
+
 }

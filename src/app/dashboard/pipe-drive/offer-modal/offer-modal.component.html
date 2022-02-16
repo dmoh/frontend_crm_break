@@ -119,23 +119,22 @@
       </mat-form-field>
 
 
-      <h4>Le bien a mettre en vente</h4>
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-select placeholder="Typologie immeuble"
-                    [value]="3"
                     formControlName="typeProperty">
-          <mat-option [value]="1">Logements</mat-option>
-          <mat-option [value]="2">Bureaux</mat-option>
-          <mat-option [value]="3"
+          <mat-option [value]="null">Aucune</mat-option>
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.LODGING.value">Logements</mat-option>
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.BUREAU.value">Bureaux</mat-option>
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.SHOP.value"
           >Commerces/Centres commerciaux
           </mat-option
           >
-          <mat-option [value]="4"
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.INDUSTRIAL_LOGISTICS_ARTISANAL.value"
           >Industriel/Logistique/Artisanal
           </mat-option
           >
-          <mat-option [value]="5">Hôtel/ApartHotel</mat-option>
-          <mat-option [value]="6"
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.HOTEL.value">Hôtel/ApartHotel</mat-option>
+          <mat-option [value]="crmConstants.TYPE_PROPERTY.HOSPITAL.value"
           >Clinique/EMS/Hôpital
           </mat-option>
         </mat-select>
@@ -251,6 +250,10 @@
           <mat-label>Email</mat-label>
           <input matInput formControlName="email"/>
         </mat-form-field>
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Tèl</mat-label>
+          <input matInput type="text" formControlName="phoneNumber"/>
+        </mat-form-field>
       </form>
       <div
         class="btn"
@@ -290,7 +293,7 @@
     <mat-step [stepControl]="buyersForm">
       <form [formGroup]="buyersForm">
         <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
-          <ng-container [formGroupName]="i">
+          <ng-container style="margin-bottom: .5rem" [formGroupName]="i">
             <mat-form-field style="width: 100%" appearance="outline">
               <mat-select placeholder="Type d'acheteur"
                           formControlName="customerType">
@@ -309,6 +312,10 @@
             <mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Email</mat-label>
               <input matInput formControlName="email"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Téléphone</mat-label>
+              <input matInput formControlName="phoneNumber"/>
             </mat-form-field>
             <button mat-raised-button color="warn"  (click)="removeBuyer(i)">Supprimer</button>
           </ng-container>
@@ -395,7 +402,10 @@
           ></tr>
         </table>
       </div>
-      <div style="text-align: right; margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between;  margin-bottom: 20px;">
+        <div>
+          <mat-slide-toggle [formControl]="sendMailBuyersCtrl" (toggleChange)="onSendMail()">Envoyer les mails</mat-slide-toggle>
+        </div>
         <button mat-raised-button color="primary" (click)="onSubmit()">Envoyer</button>
       </div>
     </mat-step>

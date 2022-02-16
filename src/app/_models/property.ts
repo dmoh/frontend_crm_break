@@ -1,5 +1,5 @@
 import {Address} from "@app/_models/address";
-import {Buyer} from "@app/_models/buyer";
+import {Owner} from "@app/_models/owner";
 
 export class Property {
   id = 0;
@@ -13,10 +13,13 @@ export class Property {
   yield = null;
   comment = null;
   address = new Address();
-  owner = new Buyer();
+  owner = new Owner();
+  owners = null;
   updateAt = null;
-  ownerName = null;
+  ownerName: string = null;
   propertyUnsortedId = null;
   canton = null;
   isSociety = null;
+  phoneNumber = null;
+  email = null;
 }

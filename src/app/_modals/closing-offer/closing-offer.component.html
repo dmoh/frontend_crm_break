@@ -1,0 +1,39 @@
+<mat-dialog-content>
+  <h3>Closing de l'offre {{ offer.title }} </h3>
+  <section *ngIf="saleForm" class="w-100 overflow-hidden">
+    <form [formGroup]="saleForm">
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Prix de vente final</mat-label>
+        <input type="text" matInput
+               formControlName="sellingPrice"/>
+      </mat-form-field>
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Commission</mat-label>
+        <input type="text" matInput
+               formControlName="commission"/>
+      </mat-form-field>
+      <mat-form-field style="width: 100%" appearance="outline">
+        <mat-label>Vendu le</mat-label>
+        <input matInput formControlName="soldAt" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        Valider
+      </button>
+      <button style="float: right"  mat-raised-button color="warn" (click)="dialogRef.close(false)">
+        Annuler
+      </button>
+    </form>
+  </section>
+</mat-dialog-content>
+
+<swal
+  #confirmSwal
+  title="Validez-vous la vente ?"
+  icon="question"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+>
+  <!--(confirm)="onAddEvent(selectInfo, $event)">-->
+</swal>

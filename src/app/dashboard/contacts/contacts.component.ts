@@ -128,6 +128,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       )*/
       .subscribe((response: any) => {
         if (response.ok) {
+          console.warn('resp buyer', response);
           this.buyers = response.buyers;
         }
       })
@@ -140,9 +141,11 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.opened = !this.opened;
     console.log('detail', this.detail)
   }
-  afficheAutre() {
+  afficheAutre(buyer) {
     this.detail = true;
+
     this.newContact = false;
+    this.buyerService.setBuyerCurrent(buyer);
     this.opened = !this.opened;
     console.log('detail', this.detail)
   }

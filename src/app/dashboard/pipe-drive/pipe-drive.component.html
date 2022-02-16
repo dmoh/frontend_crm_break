@@ -1,8 +1,22 @@
 
 <div class="card">
   <div class="card-heading">
-    <h2 class="text-center">Prospects</h2>
+    <h2 class="text-center">Offres</h2>
   </div>
+
+  <mat-form-field style="padding: 1rem" *ngIf=" showListCollaborator && collaborators && collaborators.length > 0" appearance="outline">
+    <mat-label>Choix du collaborateur</mat-label>
+    <mat-select (selectionChange)="onGetOfferByCollaboratorId()" placeholder="Collaborateur"
+                [value]="'all'"
+                [formControl]="collaboratorCtrl">
+      <mat-option [value]="null">
+        Tous les collaborateurs
+      </mat-option>
+      <mat-option *ngFor="let collab of collaborators" [value]="collab.id">
+        {{ collab.email }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <!--<div class="container" style="border: solid 3px red;">
   <div class="columns"  style="border: solid 3px green;">
@@ -53,13 +67,13 @@
 </div>
 
 
-<!--<mat-form-field style="margin-right: 20px;">
+<mat-form-field style="margin-right: 20px;">
   <input (keydown.enter)="addList()" [(ngModel)]="listLabel" matInput placeholder="add list" type="text">
 </mat-form-field>
   <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addList()">
     <mat-icon>add</mat-icon>
   </button>
-  <!--<div style="display: flex; gap: 5px;justify-content: center;">
+  <div style="display: flex; gap: 5px;justify-content: center;">
     <mat-card>Prospect identifé</mat-card>
     <mat-card>Contact éffectué</mat-card>
     <mat-card>Proposition éffectué</mat-card>
@@ -88,28 +102,32 @@
       </mat-card>
     </div>-->
 
+
+
    <div class="container" cdkDropListGroup>
       <div class="cols"  style="display: flex;justify-content: center;gap: 5px; flex-direction: row;" >
         <div style="width: 280px;" *ngFor = "let col of columns" class="colum"
           cdkDropList
           [cdkDropListData]="col.offre"
-          (cdkDropListDropped)="drop($event)" over = "false"
+          (cdkDropListDropped)="drop($event, col.id)" over = "false"
         >
-        <div class="column-title" style="width: 100%" cdkDropList [class.cdk-drop-list-dragging]="false" class="{{col.colorBox}}">
+        <div style="width: 100%; height: 90px" cdkDropList [class.cdk-drop-list-dragging]="false" class="{{col.colorBox}}">
           <li style="text-align: center;padding-top: 15px; font-size: large">{{col.titre}}</li>
           <!--<li style="text-align: center;" >Total CA</li>
           <li style="text-align: center;">Total nombre d'offres</li>-->
         </div>
 
-          <mat-card cdkDrag *ngFor = "let item of col.offre" style="margin-bottom: 6px;cursor:grab; width: 100%">
+          <mat-card cdkDrag (dblclick)="openDialog(item)" (cdkDragDropped)="dropOffer(item)" *ngFor = "let item of col.offre" style="margin-bottom: 6px;cursor:grab; width: 100%">
             <div style="display: flex;gap: 5px;">
               <div class="{{col.color}}"></div>
               <div>
-                <li id="offer">Offre : {{item.offerName}}</li>
-                <li> {{item.name}} {{item.lastName}} </li>
-                <li> <img style="width: 20px;height: 20px;"
+                <li id="offer">
+                  <b>{{item.title}}</b>
+                </li>
+                <li> {{item.sellingPropositionPrice}}CHF</li>
+                <li *ngIf="item.collaborator"> <img style="width: 20px;height: 20px;"
                 src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
-                /> {{item.amount}}€</li>
+                /> {{ item.collaborator }} </li>
               </div>
             </div>
           </mat-card>
@@ -125,10 +143,12 @@
       <div class="waiting"
           cdkDropList
           [cdkDropListData]="offreAttente"
-          (cdkDropListDropped)="drop($event)"
+          (cdkDropListDropped)="drop($event, crmConstants.CODE_OFFER_STATUS_ON_WAITING.value)"
       ><h6>En attente</h6>
-        <mat-card cdkDrag *ngFor = "let item of offers">
-          <li id="offer">Offre : {{item.title}} </li>
+        <mat-card
+          (cdkDragDropped)="dropOffer(item)"
+          cdkDrag *ngFor = "let item of offersOnWaiting">
+          <li id="offer">{{item.title}} </li>
 <!--
           <li>{{item.selling}} {{item.description.contactLastName}}</li>
 -->

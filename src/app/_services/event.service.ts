@@ -20,6 +20,17 @@ export class EventService extends GlobalHttpService{
     )
   }
 
+  removeEvent(event: Event): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/event/remove/${event.eventId}`,
+      {
+        event: event
+      },
+      {
+        headers: this.headers
+      }
+    )
+  }
+
 
   getEventList(): Observable<any> {
     return this.http.get<any>(`${environment.baseApiUrl}/event/list`,

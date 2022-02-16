@@ -3,6 +3,7 @@ import { Ad } from "@app/dashboard/models/ad";
 import { Contact } from "@app/dashboard/models/contact";
 import { element } from "protractor";
 import { criterias } from "./helper-constants";
+import {crmConstants} from "@app/_helpers/crm-constants";
 
 export class Helper {
 
@@ -65,4 +66,29 @@ export class Helper {
 
 
 
+  static getLabelTypePropertyByValue(value: number): string {
+    let label = '';
+    switch (value) {
+      case crmConstants.TYPE_PROPERTY.LODGING.value:
+        label = crmConstants.TYPE_PROPERTY.LODGING.label
+        break;
+      case crmConstants.TYPE_PROPERTY.BUREAU.value:
+        label = crmConstants.TYPE_PROPERTY.BUREAU.label
+        break;
+      case crmConstants.TYPE_PROPERTY.SHOP.value:
+        label = crmConstants.TYPE_PROPERTY.SHOP.label
+        break;
+      case crmConstants.TYPE_PROPERTY.INDUSTRIAL_LOGISTICS_ARTISANAL.value:
+        label = crmConstants.TYPE_PROPERTY.INDUSTRIAL_LOGISTICS_ARTISANAL.label
+        break;
+      case crmConstants.TYPE_PROPERTY.HOTEL.value:
+        label = crmConstants.TYPE_PROPERTY.HOTEL.label
+        break;
+      case crmConstants.TYPE_PROPERTY.HOSPITAL.value:
+        label = crmConstants.TYPE_PROPERTY.HOSPITAL.label
+        break;
+      default: label = crmConstants.TYPE_PROPERTY.LODGING.label
+    }
+    return label;
+  }
 }

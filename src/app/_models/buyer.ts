@@ -1,3 +1,5 @@
+import {Address} from "@app/_models/address";
+
 export class Buyer {
    id = 0;
    name = null;
@@ -11,7 +13,16 @@ export class Buyer {
    budgetMax = null;
    properties = null;
    messageMail = null;
+   address = new Address();
+   country = null;
+   city = null;
+   street = null;
+   zipcode = null;
    currency = null;
    tags = null;
    areasDesired = null;
+   typeProperty = null;
+   propertyRegime = null;
+   employeeInCharge = null
 }
+

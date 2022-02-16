@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { List } from '../models/list';
-import { Offer } from '../models/offer';
+import { Offer } from '@app/_models/offer';
 import { OfferModalComponent } from './offer-modal/offer-modal.component';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { DialogModalComponent } from '@app/dialog-modal/dialog-modal.component';
 import { Ad } from '../models/ad';
+import {OfferService} from "@app/_services/offer.service";
+import {crmConstants} from "@app/_helpers/crm-constants";
+import {FormControl} from "@angular/forms";
+import {UsersService} from "@app/_services/users.service";
+import {map} from "rxjs/operators";
+import {ClosingOfferComponent} from "@app/_modals/closing-offer/closing-offer.component";
 
 @Component({
   selector: 'app-pipe-drive',
@@ -16,10 +22,16 @@ import { Ad } from '../models/ad';
 })
 export class PipeDriveComponent implements OnInit {
   offers: Offer[] = [];
+  offersOnWaiting: Offer[] = [];
   green = false;
+  offerDropped = new Offer();
   listLabel = "";
   itemContent: string;
   over = false;
+  collaborators = [];
+  collaboratorCtrl = new FormControl();
+  links = ['First', 'Second', 'Third'];
+  activeLink = this.links[0];
   /*offers: Offer[] = [
     {
       offerName: 'Villa',
@@ -93,171 +105,111 @@ export class PipeDriveComponent implements OnInit {
     }
   ];*/
   basket: any[];
+  showListCollaborator = false;
   offreAttente: any[] = [];
+  crmConstants = crmConstants;
   columns: any[] = [
     {
+      id: crmConstants.CODE_OFFER_STATUS_INIT.value,
       titre: 'Teaser',
       colorBox: 'redBox',
       color: 'red',
       offre:
-        [
-          {
-            offerName: 'Immeuble',
-            name: 'Sacko',
-            lastName: "Mohamed",
-            amount: 50000
-          },
-        ],
+        [],
     },
     {
+      id:crmConstants.CODE_OFFER_STATUS_MEMORANDUM.value,
       titre: 'Mémorandum / Dossier complet',
       colorBox: 'blueBox',
       color: 'blue',
       offre:
         [
-          {
-            offerName: 'Commerce',
-            name: 'Courtois',
-            lastName: "Mathieu",
-            amount: 50000
-          },
         ],
     },
     {
+      id: crmConstants.CODE_OFFER_STATUS_INDICATIVE.value,
       titre: 'Offre Indicative',
       colorBox: 'orangeBox',
       color: 'orange',
       offre: [
-        {
-          offerName: 'Hôtel',
-          name: 'Lopez',
-          lastName: "Jennifer",
-          amount: 800000
-        },
       ],
     },
     {
+      id: crmConstants.CODE_OFFER_STATUS_VISIT_PROPERTY.value,
       titre: 'Due Diligence / Visites',
       colorBox: 'greenBox',
       color: 'green',
       offre: [
-        {
-          offerName: 'Villa',
-          name: 'Marc',
-          lastName: 'Julien',
-          amount: 600000
-        },
       ],
     },
     {
+      id: crmConstants.CODE_OFFER_STATUS_LAST.value,
       titre: 'Offre Ferme',
       colorBox: 'tealBox',
       color: 'teal',
       offre: [
-        {
-          offerName: 'Villa',
-          name: 'Marc',
-          lastName: 'Julien',
-          amount: 600000
-        },
       ],
     },
     {
+      id: crmConstants.CODE_OFFER_STATUS_CLOSING.value,
       titre: 'Closing / Signature',
       colorBox: 'purpleBox',
       color: 'purple',
       offre: [
-        {
-          offerName: 'Villa',
-          name: 'Marc',
-          lastName: 'Julien',
-          amount: 600000
-        },
       ],
     },
 ]
-  offres: any[] = [
-
-    {
-      titre: 'Prospect identifié',
-      colorBox: 'redBox',
-      color: 'red',
-      offre:
-        [
-          {
-                offerName: 'Immeuble',
-                name: 'Sacko',
-                lastName: "Mohamed",
-                amount: 50000
-              },
-        ],
-    },
-    {
-      titre: 'Contact effectué',
-      colorBox: 'blueBox',
-      color: 'blue',
-      offre:
-        [
-          {
-            offerName: 'Commerce',
-            name: 'Courtois',
-            lastName: "Mathieu",
-            amount: 50000
-          },
-      ],
-
-
-    },
-    {
-      titre: 'Proposition effectuée',
-      colorBox: 'orangeBox',
-      color: 'orange',
-      offre: [
-        {
-          offerName: 'Hôtel',
-          name: 'Lopez',
-          lastName: "Jennifer",
-          amount: 800000
-        },
-      ],
-
-    },
-    {
-      titre: "Négociations",
-      colorBox: 'greenBox',
-      color: 'green',
-      offre: [
-        {
-          offerName: 'Villa',
-          name: 'Marc',
-          lastName: 'Julien',
-          amount: 600000
-        },
-      ],
-
-
-    },
-  ];
   drag = false;
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  offersSaved = [];
+  constructor(private dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              private userService: UsersService,
+              private offerService: OfferService
+  ) { }
 
-  hoverBasket() {
-    //this.over = true;
+  ngOnInit(): void {
+    this.getOfferList();
   }
-  openOfferModal(): void {
-    //let tab;
-    const dialogRef = this.dialog.open(OfferModalComponent, {
-      width: '50%',
-      data: new Offer(),
+
+
+  private getOfferList() {
+    this.offerService
+      .getOfferList()
+      .subscribe((res) => {
+        console.warn(res);
+        if (res.showListCollaborator) {
+          this.userService
+            .getMemberList()
+            .subscribe((resp) => {
+              console.warn('res', resp);
+              this.collaborators = resp.users;
+            });
+          this.showListCollaborator = true;
+        }
+        if(res.offers) {
+          this.offersSaved = res.offers;
+          this.sortOffer();
+        }
+      })
+  }
+
+  private sortOffer() {
+    this.columns.forEach((elem) => {
+      elem.offre = this.offersSaved.filter((offer) => +offer.status === +elem.id);
     });
-    console.log('je suis dans le container')
+    this.offersOnWaiting = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ON_WAITING.value === +offer.status);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log('event drop', event);
-    if (event.container.id === "cdk-drop-list-14") {
-        this.openOfferModal();
-        console.log('je suis dans le container')
+  drop(event: CdkDragDrop<string[]>, columnId?: number) {
+    if (columnId === crmConstants.CODE_OFFER_STATUS_CLOSING.value) {
+        setTimeout(() => {
+          this.openDialogClosing(this.offerDropped, columnId);
+        }, 500);
+    } else {
+      setTimeout(() => {
+        this.updateAll(columnId);
+      }, 500);
+
     }
 
 
@@ -277,99 +229,99 @@ export class PipeDriveComponent implements OnInit {
 
   }
   dropCard($event) {
-    //this.basket.push($event)
     console.log('event',$event)
   }
 
-  openDialog(): void {
+  private updateAll(columnId) {
+    this.handleOfferOnWaiting(columnId);
+    // mettra à jour le status offre et property si property il y a
+    this.offerService
+      .updateStatusOffer(this.offerDropped.id, columnId)
+      .subscribe((res) => {
+        if (res && res.ok) {
+          this.offerDropped.status = columnId;
+          this.snackBar.open('Status de l\'offre mis à jour', 'ok', {
+            duration: 3000
+          });
+          this.handleOfferOnWaiting(columnId);
+          this.sortOffer();
+        }
+      });
+  }
+  handleOfferOnWaiting(columnId: number) {
+    if (columnId === crmConstants.CODE_OFFER_STATUS_ON_WAITING.value) {
+      if (this.offersOnWaiting && this.offersOnWaiting.length > 0) {
+        const index = this.offersOnWaiting.findIndex((elem) => +elem.id && +this.offerDropped.id);
+        if (index === -1) {
+          this.offersOnWaiting = [...this.offersOnWaiting,  this.offerDropped];
+        }
+      } else {
+        this.offersOnWaiting = [this.offerDropped];
+      }
+    }
+  }
+
+  openDialog(offer?: Offer): void {
     const dialogRef = this.dialog.open(OfferModalComponent, {
       width: '50%',
       data: {
-        offer: new Offer()
+        offer: !offer ? new Offer() : offer
       },
     });
-    //let tab;
-    /*const dialogRef = this.dialog.open(DialogModalComponent, {
-      width: '50%',
-      data: new Ad (),
-    });*/
     dialogRef.afterClosed().subscribe(offer => {
-
       if (offer) {
-        console.log('offer', offer)
-
-        //this.offers.push(offer)
-        /*this.offres.forEach((elt) => {
-          if (elt.titre === offer.titre) {
-            elt.offre.push(offer)
-          }
-          return this.offres
-        })*/
-        //this.offreAttente.push(offer)
-        //this.ad = [...this.ad, ...offer]
-        this.offers.push(offer)
-        console.log('ad offre', this.offers)
-       //this.snackBar.open('Offre Ajoutée', 'Annulé', { duration: 2000 });
+        this.getOfferList();
       }
-
     })
   }
-  ngOnInit(): void {
-    this.basket = this.offres.map((item) => {
-      return item.offre
-    })
-    console.log("basket", this.basket)
+
+
+
+
+
+  dropOffer(item: any) {
+    this.offerDropped = item
   }
 
-
- /* switchCard($event: {
-      src: { itemIndex: number, listIndex: number},
-      dst: { itemIndex:number, listIndex: number }
-    }): void {
-    [
-      this.offers[$event.src.itemIndex],
-      this.offers[$event.dst.itemIndex]
-    ] = [
-      this.offers[$event.dst.itemIndex],
-      this.offers[$event.src.itemIndex]
-      ]
+  onGetOfferByCollaboratorId() {
+    const collabs = this.collaboratorCtrl.value;
+    if (collabs) {
+        this.columns.forEach((elem) => {
+          elem.offre = this.offersSaved.filter(
+            (offer) =>
+              +offer.status === +elem.id
+              && +collabs === +offer.collaboratorId
+          );
+      });
+    } else {
+      this.columns.forEach((elem) => {
+        elem.offre = this.offersSaved.filter(
+          (offer) =>
+            +offer.status === +elem.id);
+      });
+    }
   }
-  transferCard($event: {
-    src: { itemIndex: number, listIndex: number},
-    dst: { listIndex: number }
-  }): void {
 
-
-
-    let tab = [];
-    //
-    tab = [...tab, this.offers[$event.src.itemIndex]]
-    //this.cards = tab;
-
-    this.lists.offers.push(this.offers[$event.src.itemIndex])
-    this.offers.splice($event.src.itemIndex, 1)
-    this.lists[($event.dst.listIndex)];
-    //console.log('list', this.lists);
-    console.log('item', $event.src.itemIndex);
-    console.log('item', $event.src.listIndex);
-    console.log('listDst', $event.dst.listIndex);
-
-    //console.log("dst", this.offers[$event.dstIndex], 'src',  this.offers[$event.srcIndex] );
-
+  private openDialogClosing(offerDropped: Offer, columnId: number) {
+    const dialogRef = this.dialog.open(ClosingOfferComponent, {
+      data: {
+        offer: offerDropped
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe((res) => {
+        if (res && res.id) {
+          this.offerService
+            .updateOffer(res)
+            .subscribe((response) => {
+              if (response.ok) {
+                this.updateAll(columnId);
+              }
+            })
+        } else {
+          this.sortOffer();
+        }
+      })
+    ;
   }
-  /*switchCard($event: { srcIndex: number, dstIndex: number }): void {
-    /*const tmp = this.offers[$event.srcIndex];
-    this.offers[$event.srcIndex] = this.offers[$event.dstIndex];
-    this.offers[$event.dstIndex] = tmp;
-    [
-      this.lists[$event.srcIndex],
-      this.lists[$event.dstIndex]
-    ] = [
-        this.lists[$event.dstIndex],
-        this.lists[$event.srcIndex]
-      ]
-  }*/
-//console.log('src',  this.offers[$event.srcIndex], 'dst', this.offers[$event.dstIndex]);
-
-
 }

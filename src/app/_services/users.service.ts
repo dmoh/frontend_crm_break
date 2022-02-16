@@ -53,4 +53,9 @@ export class UsersService {
     this.members = this.members.filter(member=> member.id != id);
     this.emitMembers();
    }
+
+
+  getHistoryList(): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/api/user/history/list`, this.headers);
+  }
 }

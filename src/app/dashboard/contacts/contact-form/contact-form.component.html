@@ -1,8 +1,7 @@
 <div style="padding: 7px;">
     <div class="container" >
       <div style="display: flex; justify-content: space-between;padding-top: 12px; border-radius: 8px;">
-        <h5 *ngIf="contact"> {{contact.name}} {{contact.lastName}} </h5>
-        <h5 *ngIf="contact === undefined"> Nouveau contact</h5>
+        <h5 > Edition/Ajout d'un acheteur </h5>
 
 
         <!--<img [src]="url" height="50" width="50" alt="">-->
@@ -20,33 +19,34 @@
       </div>
     </div>
     <!--<mat-divider class="mt-6 mb-20"></mat-divider>-->
-    <form [formGroup]="contactForm">
+    <form [formGroup]="buyerForm">
       <div style="margin-top: 70px; display: flex; flex-direction: column;">
         <mat-form-field appearance="outline">
-          <mat-select placeholder="Type" formControlName="typeClient">
+          <mat-select placeholder="Type" formControlName="customerType">
             <mat-option [value]="1">Privé</mat-option>
             <mat-option [value]="2">Institutionnel</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <!--<mat-form-field *ngIf="buyer" appearance="outline">
           <mat-label>Nom de société</mat-label>
-          <input type="text" matInput formControlName="categoryClient" />
-        </mat-form-field>
+          <input type="text" matInput
+                 formControlName="categoryClient" />
+        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
           <input type="text" matInput formControlName="name" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+       <!-- <mat-form-field appearance="outline">
           <mat-label>Prénom</mat-label>
           <input type="text" matInput formControlName="lastName" />
-        </mat-form-field>
+        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
           <mat-label>Numéro</mat-label>
-          <input type="text" matInput formControlName="phone_number" />
+          <input type="text" matInput formControlName="phoneNumber" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -54,35 +54,33 @@
           <input type="email" matInput formControlName="email" />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Pays</mat-label>
-          <input type='text' matInput formControlName="country" />
-        </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Ville</mat-label>
-          <input type='text' matInput formControlName="city" />
+          <mat-label>Budget Min</mat-label>
+          <input type='number'  formControlName="budgetMin" matInput/>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Adresse</mat-label>
-          <input type='text' matInput formControlName="adress" />
-        </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Budget</mat-label>
-          <input type='number'  formControlName="budget" matInput/>
+          <mat-label>Budget Max</mat-label>
+          <input type='number'  formControlName="budgetMax" matInput/>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Secteur géographique</mat-label>
-          <input type='text'  formControlName="geographicSector" matInput/>
+        <mat-form-field *ngIf="cantons && cantons.length > 0" appearance="outline">
+          <mat-label>Canton préférentiels</mat-label>
+          <mat-select placeholder="Canton"
+                      [value]="buyerForm.value.areasDesired"
+                      formControlName="areasDesired" multiple>
+            <mat-option *ngFor="let canton of cantons" [value]="canton.name">
+              {{ canton.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field style="width: 100%" appearance="outline">
           <mat-select placeholder="Typologie immeuble"
-                      [value]="3"
-                      formControlName="buildings">
+                      [value]="buyerForm.value.typeProperty"
+                      formControlName="typeProperty" multiple>
             <mat-option [value]="1">Logements</mat-option>
             <mat-option [value]="2">Bureaux</mat-option>
             <mat-option [value]="3"
@@ -101,41 +99,56 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-select placeholder="Régime de l'immeuble" formControlName="buildingRegime">
+          <mat-select placeholder="Régime de l'immeuble"
+                      [value]="buyerForm.value.propertyRegime"
+                      formControlName="propertyRegime" multiple>
             <mat-option [value]="1">Société (Share Deal)</mat-option>
             <mat-option [value]="2">Nom (Asset Deal)</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" >
+        <!--<mat-form-field appearance="outline" >
           <mat-label>Rendement en %</mat-label>
           <input type='text' disabled="true"  formControlName="yield" matInput/>
-        </mat-form-field>
+        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
           <mat-label>Observations</mat-label>
-          <textarea formControlName="comments" matInput></textarea>
+          <textarea formControlName="comment" matInput></textarea>
         </mat-form-field>
         </div>
       </form>
-      <div *ngIf="contact" style="display: flex;justify-content: space-between; margin-bottom: 20px;margin-top: 15px;">
 
-        <div>
-          <button mat-stroked-button color="warn" >Delete</button>
-          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
-        </div>
+      <!--<form  [formGroup]="addressForm">
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Pays</mat-label>
+          <input type='text' matInput formControlName="country" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Canton</mat-label>
+          <input type='text' matInput formControlName="canton" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Ville</mat-label>
+          <input type='text' matInput formControlName="city" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input type='text' matInput formControlName="street" />
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%" appearance="outline">
+          <mat-label>Code postal</mat-label>
+          <input type='text' matInput formControlName="zipcode" />
+        </mat-form-field>
+      </form>-->
+      <div  style="display: flex;justify-content: space-between; margin-bottom: 20px;margin-top: 15px;">
+
         <div>
           <button mat-stroked-button color="primary" (click)='onSubmit()' >Save</button>
-          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
-        </div>
-
-      </div>
-
-      <div *ngIf="contact === undefined">
-
-
-        <div style="text-align: right;">
-          <button mat-stroked-button color="primary" (click)='onSubmit()' >Ajouter</button>
           <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
         </div>
 

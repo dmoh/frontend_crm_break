@@ -170,9 +170,17 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   handleDateSelect(selectInfo: DateSelectArg) {
     this.selectInfo = selectInfo;
 
+    console.warn('selectInfo', this.selectInfo);
+
+    let eventNew = new Event();
+    eventNew.allDay = selectInfo.allDay;
+    eventNew.endAt = selectInfo.endStr;
+    eventNew.end = selectInfo.end;
+    eventNew.startAt = selectInfo.startStr;
+    eventNew.start = selectInfo.start;
     const dialogRef = this.dialog.open(EventModalComponent, {
       data: {
-        event: this.selectInfo.event
+        event: eventNew
       }
     });
 
@@ -180,11 +188,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res && res.message) {
           // calendarApi.unselect(); // clear date selection
-          let eventNew = new Event();
           eventNew.title = res.message;
-          eventNew.allDay = selectInfo.allDay;
-          eventNew.endAt = selectInfo.endStr;
-          eventNew.startAt = selectInfo.startStr;
           if (crmConstants.CODE_COLOR_EVENT_DEFAULT !== res.color) {
             eventNew.color = res.color;
           }
@@ -210,39 +214,40 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    console.warn('clickInfo', clickInfo);
-    console.warn('pros', clickInfo.event.extendedProps);
     const eventId = clickInfo.event.extendedProps?.eventId;
-
     if(eventId && +eventId > 0) {
       const dialogRef = this.dialog.open(EventModalComponent, {
         data: {
           event: clickInfo.event
         }
       });
+
       dialogRef
         .afterClosed()
         .subscribe((res) => {
-          console.warn(res);
-          let eventUpdated = res;
-          eventUpdated.eventId = eventId;
-          this.updateEvent(eventUpdated);
+          if (res.event && res.remove) {
+            const eventSelected = res.event;
+            this.eventService
+              .removeEvent(res.event)
+              .subscribe((res) => {
+                if (res.ok) {
+                  this.snackBar
+                    .open('L\'évènement a bien été supprimé', 'ok', {
+                      duration: 4000
+                    });
+                  clickInfo.event.remove();
+                }
+              })
+          } else {
+            let eventUpdated = res;
+            console.warn(res);
+            eventUpdated.eventId = eventId;
+            this.updateEvent(eventUpdated);
+          }
+
       });
-
-
-
-
-      //update an event saved
-      console.warn('eventSelected', clickInfo.event.title);
-      console.warn('eventSelected', clickInfo.event.start);
-      console.warn('eventSelected', clickInfo.event.end);
-      console.warn('eventSelected', clickInfo.event.endStr);
-      console.warn('eventSelected', clickInfo.event.startStr);
     }
-    return;
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
+
   }
 
 
@@ -250,7 +255,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
 
   handleEvents(events: EventApi[]) {
-
+    return;
     this.currentEvents = events;
     console.warn('handleEvent', events);
 
@@ -272,7 +277,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((res) => {
         if (res && res.title) {
-          dropEvent.
           this.updateEvent(res);
         }
       }
@@ -285,20 +289,22 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       .updateEvent(event)
       .subscribe((response) => {
         if (response.ok) {
-          const title = event.title;
-          this.calendarApi.
-          this.calendarApi.addEvent({
-            id: !event.id || event.id === 0 ? createEventId() : event.id,
-            title,
-            start: event.startStr,
-            end: event.endStr,
-            allDay: event.allDay,
-            color: event.color,
-            extendedProps: {
-              eventId: response.event.id
-            }
-          });
-          // this.getEventList();
+          if (event.eventId && +event.eventId === 0) {
+            const title = event.title;
+            this.calendarApi.addEvent({
+              id: createEventId(),
+              title,
+              start: event.startStr,
+              end: event.endStr,
+              allDay: event.allDay,
+              color: event.color,
+              extendedProps: {
+                eventId: response.event.id
+              }
+            });
+          }
+          console.warn('cvent', event);
+          this.getEventList();
           if (event.eventId && event.eventId > 0) {
             this.snackBar
               .open('Mise à jour avec succés', 'ok', {

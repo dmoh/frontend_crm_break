@@ -94,6 +94,7 @@
 
     <mat-drawer
         [(opened)]="opened"
+
         mode="drawerMode"
         [position]="'end'"
         [disableClose]="false">
@@ -121,7 +122,7 @@
       </div>-->
       <div style="display: flex;justify-content: space-between;margin-top: 30px;">
         <div>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input [(ngModel)]="research" matInput autocomplete="off" placeholder="Rechercher" type="text"/>
           </mat-form-field>
         </div>
@@ -222,15 +223,15 @@
     </div>-->
 
 
-    <div  class="contacts" style="margin-top:30px;">
+    <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
       <mat-divider></mat-divider>
-      <mat-list  *ngFor="let contact of contacts | filter: research let index = index">
+      <mat-list  *ngFor="let buyer of buyers | filter: research let index = index">
         <!--<mat-list-item>A</mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>B</mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>C</mat-list-item>-->
-        <mat-list-item style="margin-bottom: 15px;cursor: pointer;" [routerLink]="[index]" (click)='afficheAutre()'>
+        <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
          <!---- <img style="width: 30px;margin-right: 15px;"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/1200px-Breezeicons-actions-22-im-user.svg.png"
           />-->
@@ -239,13 +240,10 @@
              <!--<mat-list-item *ngFor="let lettre of tabLettres, let index = index"></mat-list-item>-->
             <div style="display: flex;gap: 15px;">
               <mat-icon>person_outline</mat-icon>
-              <p>{{contact.name}} {{contact.lastName}}</p>
+              <p>{{buyer.name}}</p>
             </div>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <!--<mat-list-item>
-          <p>{{contact.fonction}}</p>
-        </mat-list-item>-->
+          </mat-list-item>
+          <mat-divider></mat-divider>
         </mat-list>
     </div>
     </mat-drawer-content>

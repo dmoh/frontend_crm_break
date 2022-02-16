@@ -1,14 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Contact } from './models/contact';
-//import { ContactsComponent } from './contacts/contacts.component';
-
+import {Buyer} from "@app/_models/buyer";
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: Contact[], search:string): Contact[] {
-    return value.filter((v)=> v.name.toLocaleLowerCase().includes(search));
+  transform(value: Buyer[], search:string): Buyer[] {
+    return value.filter((v) => v && v.name && v.name.trim() && v.name.toLocaleLowerCase().includes(search.toLowerCase()));
   }
 
 }

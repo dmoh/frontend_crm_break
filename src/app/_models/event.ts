@@ -8,4 +8,6 @@ export class Event {
   allDay = null;
   endAt = null;
   color = null;
+  start = null;
+  end = null;
 }

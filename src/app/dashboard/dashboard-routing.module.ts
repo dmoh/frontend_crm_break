@@ -19,6 +19,8 @@ import { PipeDriveComponent } from './pipe-drive/pipe-drive.component';
 import { TemplateMailComponent } from '@app/template-mail/template-mail.component';
 import {ProspectComponent} from "@app/dashboard/prospect/prospect.component";
 import {TrackingRecordComponent} from "@app/dashboard/tracking-record/tracking-record.component";
+import {HistoryCollaboratorComponent} from "@app/dashboard/history-collaborator/history-collaborator.component";
+import {ArchiveComponent} from "@app/dashboard/archive/archive.component";
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
@@ -75,6 +77,14 @@ const routes: Routes = [{
       path: 'tracking-record',
       component: TrackingRecordComponent,
 
+      },
+      {
+        path: 'history',
+        component: HistoryCollaboratorComponent,
+      },
+      {
+        path: 'archive',
+        component: ArchiveComponent,
       },
       {
         path: 'task',

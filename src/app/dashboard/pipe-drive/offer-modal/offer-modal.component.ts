@@ -8,14 +8,14 @@ import {Helper} from "@app/_helpers/helper";
 import {BuyerService} from "@app/_services/buyer.service";
 import {Property} from "@app/_models/property";
 import {ENTER, COMMA} from "@angular/cdk/keycodes";
-import {MatChipInputEvent} from "@angular/material/chips";
 import {debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap} from "rxjs/operators";
 import {PropertyService} from "@app/_services/property.service";
 import {TemplateMailComponent} from "@app/template-mail/template-mail.component";
 import {MatTableDataSource} from "@angular/material/table";
-import {Contact} from "@app/dashboard/models/contact";
 import {MatSort} from "@angular/material/sort";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {crmConstants} from "@app/_helpers/crm-constants";
+import {Owner} from "@app/_models/owner";
 
 @Component({
   selector: 'app-offer-modal',
@@ -32,6 +32,7 @@ export class OfferModalComponent implements OnInit {
   ownerForm: FormGroup;
   isLoading = false;
 
+  crmConstants = crmConstants;
   filteredOptions: any[];
 
   buyersForm = new FormArray([]);
@@ -50,6 +51,7 @@ export class OfferModalComponent implements OnInit {
   @ViewChild('propertyInput') propertyInput: ElementRef<HTMLInputElement>;
   private findOwners: boolean = true;
   @ViewChild(MatSort) public sort: MatSort;
+  sendMailBuyersCtrl: FormControl = new FormControl();
 
 
 
@@ -67,8 +69,12 @@ export class OfferModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data && this.data.offer) {
+      console.warn('offerSelected', this.data.offer);
       this.offer = Object.assign(new Offer(), this.data.offer);
     }
+    /*this.buyerService
+      .getAreaCodeCountry('ter')
+      .subscribe((res) => console.warn('res', res));*/
     this.initForm();
     this.calculateYield();
     this.findProperty();
@@ -100,6 +106,8 @@ export class OfferModalComponent implements OnInit {
       commission: [this.offer.commission],
     });
 
+    this.sendMailBuyersCtrl.patchValue(this.offer.sendMailBuyers);
+
     this.propertyForm = this.formBuilder.group({
       labelTypeProperty: [this.offer.property.labelTypeProperty],
       typeProperty: [this.offer.property.typeProperty],
@@ -121,6 +129,7 @@ export class OfferModalComponent implements OnInit {
       country: [this.offer.property.address.country]
     });
 
+    this.initOwnerForm();
     this.ownerForm = this.formBuilder.group({
       name: new FormControl(this.offer.property.owner.name, [Validators.required]),
       email: new FormControl(this.offer.property.owner.email, [Validators.required]),
@@ -130,6 +139,20 @@ export class OfferModalComponent implements OnInit {
       /* budgetMin: new FormControl(''), // todo type society/particular
        budgetMax: new FormControl('') */// todo type society/particular
     });
+
+    this.propertyForm
+      .get('typeProperty')
+      .valueChanges
+      .subscribe((val) => {
+        if (this.property
+          && this.property.labelTypeProperty
+          && val
+          && +val > 0
+        ) {
+          this.property.labelTypeProperty = Helper.getLabelTypePropertyByValue(val);
+        }
+
+      });
   }
 
   onSubmit(): void {
@@ -143,6 +166,9 @@ export class OfferModalComponent implements OnInit {
       })
     }
     this.offer.potentialBuyers = this.buyers;
+    console.warn('offer final', this.offer);
+    this.offer.property.yield = this.propertyForm.get('yield').value;
+    console.warn('offer final 2', this.offer);
     this.offerService
       .updateOffer(this.offer)
       .subscribe((response: any) => {
@@ -160,7 +186,10 @@ export class OfferModalComponent implements OnInit {
       .getPotentialBuyerList(this.offer)
       .subscribe((response: any) => {
         if (response.ok) {
-         this.buyers = response.buyers;
+         this.buyers = response.buyers && response.buyers.length > 0 ?
+         response.buyers.filter((elem) =>
+            elem.email && elem.email.length > 4
+         ) : [];
           this.dataSource.data = this.buyers;
           this.dataSource.sort = this.sort;
         }
@@ -171,6 +200,9 @@ export class OfferModalComponent implements OnInit {
     this.offer = Object.assign(this.offer, this.offerForm.value);
     this.offer.property = Object.assign(this.offer.property, this.propertyForm.value);
     this.offer.property.address = Object.assign(this.offer.property.address, this.propertyAddressForm.value);
+    if (!this.offer.property.owner) {
+      this.initOwnerForm();
+    }
     this.offer.property.owner = Object.assign(this.offer.property.owner, this.ownerForm.value);
     this.offer.property.sellingPrice = this.offer.sellingPropositionPrice;
   }
@@ -197,7 +229,6 @@ export class OfferModalComponent implements OnInit {
 
   remove(propertyId): void {
     const index = this.properties.findIndex((property) => +property.id === +propertyId );
-
     if (index >= 0) {
       this.properties.splice(index, 1);
     }
@@ -212,13 +243,18 @@ export class OfferModalComponent implements OnInit {
 
 
   private mergeProperty(property: any) {
-    this.property = new Property()
+    console.warn(property.owners);
+    this.property = new Property();
+    this.property.id = property.id
     this.property.propertyUnsortedId = property.id;
     this.property.typeProperty = property.propertyType;
     this.property.ownerName = property.owners;
     this.property.address.street = property.street;
     this.property.address.city = property.city;
-    this.property.labelTypeProperty = property.labelPropertyType;
+    this.property.labelTypeProperty = !property.propertyType &&
+      +property.propertyType > 0 ? Helper.getLabelTypePropertyByValue(+property.propertyType) :
+      null
+    ;
     this.property.comment = property.comment;
     this.property.owner.name = property.owners;
     this.property.owner.phoneNumber = property.phoneNumber;
@@ -226,17 +262,27 @@ export class OfferModalComponent implements OnInit {
       this.offer.property.address,
       this.property.address
     );
+    console.warn(property.owners);
+    console.warn(this.property);
+
+
     this.offer.property = Object.assign(this.offer.property, this.property);
     //setter les éléments
+    this.offer.property.ownerName = property.owners;
+    this.offer.property.yield = this.property.yield;
+    console.warn(this.offer);
 
     this.setValuesForm('address', 'street', property.street);
     this.setValuesForm('address', 'city', property.city);
+    this.setValuesForm('address', 'canton', property.canton);
+    this.setValuesForm('address', 'zipcode', property.zipcode);
+    this.setValuesForm('address', 'country', property.country);
     this.setValuesForm('owner', 'name', property.owners);
-
+    this.setValuesForm('property', 'typeProperty', property.propertyType);
     console.warn('prop', this.offer);
   }
 
-  setValuesForm(form: string,field: string, value: any) {
+  setValuesForm(form: string, field: string, value: any) {
     switch (form) {
       case 'property':
         this.propertyForm.get(field)
@@ -257,7 +303,6 @@ export class OfferModalComponent implements OnInit {
     }
   }
   findProperty() {
-
       this.propertyForm.get('ownerName')!
         .valueChanges
         .pipe(
@@ -301,5 +346,24 @@ export class OfferModalComponent implements OnInit {
               , 'ok', {duration: 5000});
       }
     });
+  }
+
+  onChangeTypeProperty() {
+
+  }
+
+  onSendMail() {
+    this.offer.sendMailBuyers = !this.offer.sendMailBuyers;
+  }
+
+
+  private initOwnerForm() {
+    if (!this.offer.property.owner) {
+      let initOwner = new Owner();
+      initOwner.name = this.offer.property.owners;
+      initOwner.phoneNumber = this.offer.property.phoneNumber;
+      initOwner.email = this.offer.property.email;
+      this.offer.property.owner = Object.assign(new Owner(), initOwner);
+    }
   }
 }

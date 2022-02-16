@@ -1,10 +1,16 @@
-import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
 import { Subscription } from 'rxjs';
+import {Buyer} from "@app/_models/buyer";
+import {PropertyService} from "@app/_services/property.service";
+import {BuyerService} from "@app/_services/buyer.service";
+import {Address} from "@app/_models/address";
+import {MatDrawer} from "@angular/material/sidenav";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-contact-form',
@@ -17,65 +23,115 @@ export class ContactFormComponent implements OnInit {
   @ViewChild('fileinput', { static: true }) inputRef: ElementRef;
   contactForm: FormGroup;
   @Input() public opened: boolean;
+  @Output() closeSidenav = new EventEmitter<boolean>();
   url: string;
+  buyerForm: FormGroup;
+  addressForm: FormGroup;
+  buyer: Buyer = new Buyer();
+  address = new Address();
+  cantons: any[] = [];
   //contacts: Contact[];
   contactSub: Subscription;
+  sideDrawer: MatDrawer;
   //contact: Contact;
   //contacts: Contact[];
   constructor(
     private contactService: ContactService,
     private formBuilder: FormBuilder,
+    private buyerService: BuyerService,
+    private propertyService: PropertyService,
     private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public contact: Contact,
     //public dialogRef: MatDialogRef<ContactFormComponent>,
   ) { }
 
   ngOnInit(): void {
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
-      console.log("index", index)
-      if (index !== null) {
-        this.contact = this.contactService.getContact(index);
-        console.log('contact', this.contact)
-      }
-      this.initForm(this.contact);
 
+      this.propertyService
+        .getCantonList()
+        .subscribe((response) => {
+          this.cantons = response.cantons;
+        });
 
+      this.buyerService.buyerCurrent.subscribe((buyer) => {
+        this.buyer = buyer;
+        this.initForm(this.buyer);
+      });
     })
   }
-  initForm(
-    contact: Contact = { id: null, typeClient:'', categoryClient:'', kind:'', name: '', lastName: '', country:'', city:'', adress: '', phone_number: "", email: '', budget: null, geographicSector:'', buildings:'', buildingRegime:'', yield:null, comments:''}
-    ) {
-    this.contactForm = this.formBuilder.group({
-      //description: this.formBuilder.group({
-      id: [contact.id],
-      typeClient: [contact.typeClient],
-      categoryClient: [contact.categoryClient],
-      kind: [contact.kind],
-      name: [contact.name],
-      lastName: [contact.lastName],
-      country: [contact.country],
-      city: [contact.city],
-      adress: [contact.adress],
-      phone_number: [contact.phone_number],
-      email: [contact.email],
-      budget: [contact.budget],
-      geographicSector: [contact.geographicSector],
-      buildings: [contact.buildings],
-      buildingRegime: [contact.buildingRegime],
-      yield: [contact.yield],
-      comments: [contact.comments]
+  initForm(buyer) {
+    this.buyerForm = this.formBuilder.group({
+      id: [buyer.id],
+      name: [buyer.name],
+      email: [buyer.email],
+      comment: [buyer.comment],
+      budgetMin: [buyer.budgetMin],
+      budgetMax: [buyer.budgetMax],
+      typeProperty: [buyer.typeProperty],
+      areasDesired: [buyer.areasDesired],
+      tags: [buyer.tags],
+      phoneNumber: [buyer.phoneNumber],
+      customerType: [buyer.customerType],
+      propertyRegime: [buyer.propertyRegime]
     })
+
+    if (buyer.areasDesired && buyer.areasDesired.length > 0) {
+      const arr = buyer.areasDesired.split(',');
+      this.buyerForm.get('areasDesired')
+        .patchValue(arr);
+
+    }
+    if (buyer.typeProperty && buyer.typeProperty.length > 0) {
+      const arr = buyer.typeProperty.split(',');
+      const arrInt = arr.map((e) => +e);
+      this.buyerForm.get('typeProperty')
+        .patchValue(arrInt);
+    }
+
+    if (buyer.propertyRegime && buyer.propertyRegime.length > 0) {
+      const arr = buyer.propertyRegime.split(',');
+      const arrInt = arr.map((e) => +e);
+      this.buyerForm.get('propertyRegime')
+        .patchValue(arrInt);
+    }
+
+
+    /*this.address = buyer.address ? Object.assign(buyer.address, this.address) : new Address();
+    this.addressForm = this.formBuilder.group({
+        city: [this.address.city
+        ],
+        street: [ this.address.street
+        ],
+        country: [
+          this.address.country
+        ],
+        zipcode: [
+          this.address.zipcode
+        ],
+        canton: [
+          this.address.canton
+        ]
+    });*/
 
   }
   onSubmit(): void {
-    const newContact = this.contactForm.value;
-    this.contactService.addContact(newContact);
-    const contactJson = JSON.stringify(this.contactForm.value);
-    console.log('contact', newContact);
-    console.log('json', contactJson);
-
-      //this.dialogRef.close(newContact);
+    this.buyer = Object.assign(this.buyer, this.buyerForm.value);
+    const buyerCurrent = Object.assign(new Buyer(), this.buyer);
+    // buyerCurrent.address = Object.assign(this.address, this.addressForm.value);
+    this.buyerService
+      .updateBuyer(buyerCurrent)
+      .subscribe((res) => {
+        if (res.ok) {
+          this.snackBar.open('Mise à jour avec succés', 'ok', {
+            duration: 4500
+          })
+          this.closeSidenav.emit(true);
+        }
+      });
   }
   onSelectFile(e) {
     if (e.target.files) {

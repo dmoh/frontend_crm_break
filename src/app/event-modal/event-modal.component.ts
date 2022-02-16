@@ -54,7 +54,12 @@ export class EventModalComponent implements OnInit {
       return;
     }
     this.event = Object.assign(this.event, this.eventForm.value);
+    this.event.title = this.eventForm.value.message;
     this.dialogRef.close(this.event);
   }
 
+  onRemoveEvent() {
+    this.dialogRef.close({event: this.event, remove: true});
+
+  }
 }

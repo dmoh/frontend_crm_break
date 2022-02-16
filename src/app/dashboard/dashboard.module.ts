@@ -51,6 +51,11 @@ import { TrackingRecordComponent } from './tracking-record/tracking-record.compo
 import { BuyerGeoComponent } from '../buyer-geo/buyer-geo.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { EventModalComponent } from '../event-modal/event-modal.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { HistoryCollaboratorComponent } from './history-collaborator/history-collaborator.component';
+import { ArchiveComponent } from './archive/archive.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { ClosingOfferComponent } from '../_modals/closing-offer/closing-offer.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -70,24 +75,29 @@ FullCalendarModule.registerPlugins([
     ContainerModalComponent,
     TrackingRecordComponent,
     BuyerGeoComponent,
-    EventModalComponent
+    EventModalComponent,
+    HistoryCollaboratorComponent,
+    ArchiveComponent,
+    ClosingOfferComponent
   ],
-  imports: [
-    CoreModule,
-    DashboardRoutingModule,
-    FullCalendarModule,
-    NgApexchartsModule,
-    MatDialogModule,
-    SweetAlert2Module,
-    MatSortModule,
-    MatStepperModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    GoogleMapsModule,
+    imports: [
+        CoreModule,
+        DashboardRoutingModule,
+        FullCalendarModule,
+        NgApexchartsModule,
+        MatDialogModule,
+        SweetAlert2Module,
+        MatSortModule,
+        MatStepperModule,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        GoogleMapsModule,
+        MatSlideToggleModule,
+        MatTabsModule,
 
-  ],
+    ],
   exports: [
       CoreModule,
       OverviewComponent,
@@ -106,6 +116,9 @@ FullCalendarModule.registerPlugins([
       TrackingRecordComponent,
       BuyerGeoComponent,
       EventModalComponent,
+      HistoryCollaboratorComponent,
+      ArchiveComponent,
+      ClosingOfferComponent,
 
       //SchedulerComponent
       //GanttComponent,

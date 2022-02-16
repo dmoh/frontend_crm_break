@@ -14,4 +14,9 @@ export class PropertyService extends GlobalHttpService{
       }
     ) : of(false);
   }
+
+
+  getCantonList() {
+    return this.http.get<any>(`${environment.baseApiUrl}/canton/list`);
+  }
 }
