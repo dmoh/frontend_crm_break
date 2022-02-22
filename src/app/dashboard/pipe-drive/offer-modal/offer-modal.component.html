@@ -276,20 +276,8 @@
             Suivant
           </button>
         </div>
-        <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
       </div>
     </mat-step>
-    <!--METTRE ADRESSE DU PROPRIO-->
-
-
-    <!--        <mat-form-field  style="width: 100%" appearance="outline">-->
-    <!--          <mat-label>Budget min.</mat-label>-->
-    <!--          <input matInput type="number" formControlName="budgetMax" />-->
-    <!--        </mat-form-field>-->
-    <!--        <mat-form-field  style="width: 100%" appearance="outline">-->
-    <!--          <mat-label>Budget max.</mat-label>-->
-    <!--          <input matInput type="number" formControlName="budgetMax" />-->
-    <!--        </mat-form-field>-->
     <mat-step [stepControl]="buyersForm">
       <form [formGroup]="buyersForm">
         <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
@@ -326,7 +314,7 @@
           + Ajouter un acheteur
         </button>
       </div>
-      <div style="margin: 1rem">
+      <div style="margin: 1rem 0">
         <!--<mat-form-field appearance="fill">
           <mat-label>Rechercher</mat-label>
           <input

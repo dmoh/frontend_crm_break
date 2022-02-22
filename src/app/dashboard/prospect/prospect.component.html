@@ -4,7 +4,79 @@
     <div class="spinner-container" style="min-height: 100vh; display: flex; justify-content: center; align-items: center; width: 100%" *ngIf="showSpinner">
       <mat-spinner [diameter]="20"></mat-spinner>
     </div>
-    <div style="position: relative" class="row" *ngIf="propects && propects.length > 0">
+    <form [formGroup]="searchForm">
+      <h4>Rechercher par</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Id/rèf</mat-label>
+            <input type="text" matInput
+                   formControlName="id"/>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input type="text" matInput
+                   formControlName="name"/>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Ville</mat-label>
+            <input type="text" matInput
+                   formControlName="city"/>
+          </mat-form-field>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Canton</mat-label>
+              <input type="text" matInput
+                     formControlName="canton"/>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Rue, avenue...</mat-label>
+              <input type="text" matInput
+                     formControlName="street"/>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-select placeholder="Typologie immeuble"
+                          formControlName="typeProperty" multiple>
+                <mat-option [value]="null">Type</mat-option>
+                <mat-option [value]="1">Logements</mat-option>
+                <mat-option [value]="2">Bureaux</mat-option>
+                <mat-option [value]="3"
+                >Commerces/Centres commerciaux
+                </mat-option
+                >
+                <mat-option [value]="4"
+                >Industriel/Logistique/Artisanal
+                </mat-option
+                >
+                <mat-option [value]="5">Hôtel/ApartHotel</mat-option>
+                <mat-option [value]="6"
+                >Clinique/EMS/Hôpital
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center" class="col-md-3">
+            <button mat-raised-button (click)="onSubmit()" color="primary">
+              Chercher
+            </button>
+            <button mat-raised-button *ngIf="showCancelButton" (click)="onCancelFilter()" color="warn">
+              Annuler
+            </button>
+          </div>
+        </div>
+    </form>
+    <div style="position: relative" class="row" *ngIf="prospects && prospects.length > 0">
       <div style="position: fixed;right: 1px;bottom: 4rem;z-index: 1500 !important;">
         <button (click)="scrollTop()" mat-fab color="primary">
           <mat-icon>
@@ -14,6 +86,12 @@
       </div>
       <div class="col-md-12">
         <table #table style="width: 100%; z-index: 1 !important;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="buyer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Acheteur</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data">
+              <mat-checkbox color="primary" [checked]="data.ownerIsBuyer"  (change)="onChangeBuyerState($event, data)"></mat-checkbox>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Réf/Id</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data"> {{data.id}} </td>
@@ -89,11 +167,11 @@
               *matRowDef="let row; columns: displayedColumns;">
         </table>
         <mat-paginator
-          [pageSize]="150"
+          [pageSize]="isSearch ? pageIndex : 100"
           (page)="handlePageEvent($event)"
           [length]="nbResults"
           [pageIndex]="pageIndex"
-          [pageSizeOptions]="[150]" ></mat-paginator>
+          [pageSizeOptions]="[100]" ></mat-paginator>
 <!--
           [pageSizeOptions]="[150]" showFirstLastButtons></mat-paginator>
 -->

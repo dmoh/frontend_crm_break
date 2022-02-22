@@ -10,6 +10,9 @@ import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {BuyerService} from "@app/_services/buyer.service";
 import {map, take} from "rxjs/operators";
 import {Buyer} from "@app/_models/buyer";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {crmConstants} from "@app/_helpers/crm-constants";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 const DATA: any[] = [
   {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
@@ -46,21 +49,39 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter: FilterPipe;
   research = '';
   buyers: Buyer[] = [];
+  searchForm: FormGroup;
+  crmConstants = crmConstants;
+  showCancelButton = false;
 
 
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
+  showSpinner = true;
 
   constructor(
     private contactService: ContactService,
     private activatedRoute: ActivatedRoute,
     private fileService: FileService,
-    private buyerService: BuyerService
-  ) { }
+    private buyerService: BuyerService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {
+    this.searchForm = this.fb.group({
+      id: [null],
+      name: [null],
+      email: [null],
+      phoneNumber: [null],
+      budget: [null],
+      areasDesired: [null],
+      typeProperty: [null],
+    });
+  }
   ngOnInit(): void {
-
-
     this.getBuyerList();
-
+    this.buyerService
+      .drawer
+      .subscribe((res) =>{
+        this.opened = res;
+      });
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       console.log("index", index)
@@ -131,23 +152,23 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
           console.warn('resp buyer', response);
           this.buyers = response.buyers;
         }
+        this.showSpinner = false;
       })
     ;
   }
 
   affiche() {
     this.newContact = true;
+    const buyer = new Buyer();
+    this.buyerService.setBuyerCurrent(buyer);
     this.detail = false;
     this.opened = !this.opened;
-    console.log('detail', this.detail)
   }
   afficheAutre(buyer) {
     this.detail = true;
-
     this.newContact = false;
     this.buyerService.setBuyerCurrent(buyer);
     this.opened = !this.opened;
-    console.log('detail', this.detail)
   }
   addFiles($event) {
 
@@ -158,32 +179,60 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fileService.removeFile(index)
   }
   openList() {
-    /*this.list = true;
-    this.tab = false;*/
   }
   openTab() {
-    /*this.tab = true;
-    this.list = false;*/
+
   }
   ngOnDestroy() {
     this.contactSub.unsubscribe();
   }
 
-
-  /*onSubmit() {
-    this.product = Object.assign(this.product, this.productForm.value);
-    const fd = new FormData();
-    fd.append('product', JSON.stringify(this.product));
-    if (this.medias.length > 0) {
-      for (let i = 0; i < this.medias.length; i++) {
-        fd.append('file[]', this.medias[i]);
-      }
+  onSubmit() {
+    const search = Object.assign({}, this.searchForm.value);
+    if (
+      !search.id
+      && !search.name
+      && !search.email
+      && !search.phoneNumber
+      && !search.budget
+      && !search.areasDesired
+      && !search.typeProperty
+    ) {
+      return;
     }
-    this.productService
-      .updateProduct(fd)
-      .subscribe((response) => {
-        console.warn('response product', response);
+
+
+    this.buyerService
+      .searchBuyersByParams(search)
+      .subscribe((res) => {
+        if (res.buyers) {
+          this.showCancelButton = true;
+          this.buyers = res.buyers;
+        } else {
+          this.snackBar
+            .open('Aucun résultat', 'ok' , {
+              duration: 2500
+            });
+        }
       });
-  }*/
+
+  }
+
+  onCancelFilter() {
+    this.showSpinner = true;
+    this.searchForm.reset();
+    this.showCancelButton = false;
+    this.ngOnInit();
+  }
+
+
+
+  onChangeStateDrawer(event: any) {
+    if (event) {
+      this.opened = true;
+      this.buyerService
+        .setStateDrawer(true);
+    }
+  }
 }
 

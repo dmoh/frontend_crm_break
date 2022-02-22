@@ -1,4 +1,5 @@
 import {Address} from "@app/_models/address";
+import {AgentBuyer} from "@app/_models/agent-buyer";
 
 export class Buyer {
    id = 0;
@@ -23,6 +24,7 @@ export class Buyer {
    areasDesired = null;
    typeProperty = null;
    propertyRegime = null;
-   employeeInCharge = null
+   employeeInCharge = null;
+   agentsBuyer: AgentBuyer[] = [];
 }
 

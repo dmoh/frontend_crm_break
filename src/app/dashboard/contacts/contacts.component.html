@@ -91,153 +91,174 @@
   </div>
 
   <mat-drawer-container>
-
     <mat-drawer
         [(opened)]="opened"
-
+        (openedChange)="onChangeStateDrawer($event)"
         mode="drawerMode"
         [position]="'end'"
         [disableClose]="false">
-      <!--<app-contact-form [newContact]="newContact" [detail]="detail" [contacts]="contacts"></app-contact-form>-->
       <router-outlet></router-outlet>
-
     </mat-drawer>
-
   <mat-drawer-content style="margin: 2rem">
-    <!--div class="header" style="margin-bottom: 15px; border-bottom: solid 1px black;">
-      <div><h5 style="color: #1e293b;">Vous avez {{nbContact}} contact(s)</h5></div>
-      <div style="display: flex;gap:5px;margin-bottom:10px">
-        <div>
-          <button mat-stroked-button color="primary" (click)="openList()" >Liste</button>
-        </div>
-        <div>
-          <button mat-stroked-button color="accent" (click)="openTab()" >Tableau</button>
-        </div>
+    <div *ngIf="showSpinner" class="w-100 d-flex overflow-hidden">
+      <div style="width: 100%; display: flex; height: 70vh; justify-content: center; align-items: center">
+        <mat-spinner [diameter]="20"></mat-spinner>
       </div>
-    </div>-->
-
-     <!-- <div class="search-box">
-        <span class="material-icons-outlined">search</span>
-        <input type="text" class="search-txt" placeholder="Search contacts" [(ngModel)]="search"/>
-      </div>-->
-      <div style="display: flex;justify-content: space-between;margin-top: 30px;">
-        <div>
-          <mat-form-field appearance="outline">
-            <input [(ngModel)]="research" matInput autocomplete="off" placeholder="Rechercher" type="text"/>
-          </mat-form-field>
+    </div>
+      <div *ngIf="!showSpinner" style="width: 100%; overflow: hidden">
+        <form [formGroup]="searchForm">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3">
+                <div>
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Id/Réf</mat-label>
+                    <input
+                      formControlName="id"
+                      matInput
+                      [autocomplete]="'off'"
+                      placeholder="Rechercher"
+                      type="text"/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div>
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Nom</mat-label>
+                    <input
+                      formControlName="name"
+                      matInput
+                      [autocomplete]="'off'"
+                      placeholder="Nom"
+                      type="text"/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div>
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                      formControlName="email"
+                      matInput
+                      [autocomplete]="'off'"
+                      placeholder="Rechercher"
+                      type="text"/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div>
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Téléphone</mat-label>
+                    <input
+                      formControlName="phoneNumber"
+                      matInput
+                      [autocomplete]="'off'"
+                      placeholder="Rechercher"
+                      type="text"/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline">
+                  <mat-label>Budget</mat-label>
+                  <input
+                    formControlName="budget"
+                    matInput
+                    [autocomplete]="'off'"
+                    placeholder="Rechercher"
+                    type="text"/>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <div>
+                  <mat-form-field style="width: 100%" appearance="outline">
+                    <mat-label>Secteur(s) préférentiel(s)</mat-label>
+                    <input
+                      formControlName="areasDesired"
+                      matInput
+                      [autocomplete]="'off'"
+                      placeholder="Rechercher"
+                      type="text"/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field style="width: 100%" appearance="outline">
+                  <mat-select placeholder="Typologie immeuble"
+                              formControlName="typeProperty">
+                    <mat-option [value]="null">Aucune</mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.LODGING.value">Logements</mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.BUREAU.value">Bureaux</mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.SHOP.value"
+                    >Commerces/Centres commerciaux
+                    </mat-option
+                    >
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.INDUSTRIAL_LOGISTICS_ARTISANAL.value"
+                    >Industriel/Logistique/Artisanal
+                    </mat-option
+                    >
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.HOTEL.value">Hôtel/ApartHotel</mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.HOSPITAL.value"
+                    >Clinique/EMS/Hôpital
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <button mat-raised-button color="primary" (click)="onSubmit()">Ok</button>
+          <button *ngIf="showCancelButton" style="float: right" mat-raised-button color="accent" (click)="onCancelFilter()">Annuler</button>
+        </form>
         </div>
-
         <div style="display: flex;gap: 15px;">
-          <div>
-            <button
-                (click)="affiche()"
-                routerLink='new'
-                mat-mini-fab
-                [color]="'primary'"
-              ><mat-icon>add</mat-icon>
-            </button>
-          </div>
-        <div class="file-upload">
-            <button
-              mat-mini-fab
-              [color]="'basic'"
-            >
-            <label id="selector-files" for="input-file-id">
+      <div>
+        <button
+          (click)="affiche()"
+          routerLink='new'
+          mat-mini-fab
+          [color]="'primary'"
+        ><mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="file-upload">
+        <button
+          mat-mini-fab
+          [color]="'basic'"
+        >
+          <label id="selector-files" for="input-file-id">
 
-              <mat-icon style="cursor: pointer" class="material-icons">
-                attach_file
-              </mat-icon>
+            <mat-icon style="cursor: pointer" class="material-icons">
+              attach_file
+            </mat-icon>
 
-            </label>
-            <input
-              (change)="addFiles($event)"
-              class="ng-hide"
-              accept="image/*"
-              id="input-file-id"
-              multiple
-              type="file"
-              />
-            </button>
-          </div>
-        </div>
-
-        </div>
+          </label>
+          <input
+            (change)="addFiles($event)"
+            class="ng-hide"
+            accept="image/*"
+            id="input-file-id"
+            multiple
+            type="file"
+          />
+        </button>
+      </div>
+    </div>
         <div class="files">
           <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
             <span> {{file.name}} </span>
-            <mat-icon (click)="removeFile(i)" >clear</mat-icon>
+            <mat-icon (click)="removeFile(i)">clear</mat-icon>
           </div>
         </div>
-
-
-
-    <!--<mat-divider style="margin-top: 50px;"></mat-divider>-->
-    <!--<div style="margin-top: 40px;">
-      <mat-divider>A</mat-divider>
-    </div>-->
-    <!--<div >
-      <table style="width: 100%;" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="Commune">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Commune</th>
-          <td mat-cell *matCellDef="let data"> Lausanne </td>
-        </ng-container>
-        <ng-container matColumnDef="Typologie">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Typologie</th>
-          <td mat-cell *matCellDef="let data"> {{data.typologie}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Adresse">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
-          <td mat-cell *matCellDef="let data"> {{data.adress}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Propriétaire">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Propriétaire</th>
-          <td mat-cell *matCellDef="let data"> {{data.proprietaire}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Numéro">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro</th>
-          <td mat-cell *matCellDef="let data"> {{data.numero}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Observations">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 220px;">Observations</th>
-          <td mat-cell *matCellDef="let data"> {{data.observations}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Statut">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 70px;">Statut</th>
-          <td mat-cell *matCellDef="let data"> &lt;!&ndash;<mat-icon style="cursor: pointer;" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>En cours</button>
-              <button mat-menu-item>Terminée</button>
-            </mat-menu>&ndash;&gt;
-
-            <mat-form-field style="width: 100px;" appearance="outline">
-              <mat-select placeholder="Statut">
-                <mat-option value="En cours">En cours</mat-option>
-                <mat-option value="Terminée">Terminée</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-      </table>
-    </div>-->
-
 
     <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
       <mat-divider></mat-divider>
       <mat-list  *ngFor="let buyer of buyers | filter: research let index = index">
-        <!--<mat-list-item>A</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>B</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>C</mat-list-item>-->
         <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
-         <!---- <img style="width: 30px;margin-right: 15px;"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/1200px-Breezeicons-actions-22-im-user.svg.png"
-          />-->
-
-
-             <!--<mat-list-item *ngFor="let lettre of tabLettres, let index = index"></mat-list-item>-->
             <div style="display: flex;gap: 15px;">
               <mat-icon>person_outline</mat-icon>
               <p>{{buyer.name}}</p>

@@ -3,12 +3,9 @@
       <div style="display: flex; justify-content: space-between;padding-top: 12px; border-radius: 8px;">
         <h5 > Edition/Ajout d'un acheteur </h5>
 
-
-        <!--<img [src]="url" height="50" width="50" alt="">-->
-
       </div>
 
-      <div class="contain-foto" style="display: flex;justify-content: center; margin-top: 30px;">
+      <!--<div class="contain-foto" style="display: flex;justify-content: center; margin-top: 30px;">
         <div class="upload" (click)="openFile()">
          <img *ngIf="url" [src]="url">
           <div style="text-align: center;padding-top: 45px;">
@@ -16,33 +13,20 @@
             <mat-icon *ngIf="!url">add_a_photo</mat-icon>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
-    <!--<mat-divider class="mt-6 mb-20"></mat-divider>-->
     <form [formGroup]="buyerForm">
       <div style="margin-top: 70px; display: flex; flex-direction: column;">
         <mat-form-field appearance="outline">
-          <mat-select placeholder="Type" formControlName="customerType">
-            <mat-option [value]="1">Privé</mat-option>
-            <mat-option [value]="2">Institutionnel</mat-option>
+          <mat-select (selectionChange)="onChangeCustomerType($event)"  placeholder="Type" formControlName="customerType">
+            <mat-option [value]="crmConstants.CUSTOMER_TYPE_PRIVATE">Privé</mat-option>
+            <mat-option [value]="crmConstants.CUSTOMER_TYPE_INSTITUTIONAL">Institutionnel</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <!--<mat-form-field *ngIf="buyer" appearance="outline">
-          <mat-label>Nom de société</mat-label>
-          <input type="text" matInput
-                 formControlName="categoryClient" />
-        </mat-form-field>-->
-
         <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
           <input type="text" matInput formControlName="name" />
         </mat-form-field>
-
-       <!-- <mat-form-field appearance="outline">
-          <mat-label>Prénom</mat-label>
-          <input type="text" matInput formControlName="lastName" />
-        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
           <mat-label>Numéro</mat-label>
@@ -106,57 +90,68 @@
             <mat-option [value]="2">Nom (Asset Deal)</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <!--<mat-form-field appearance="outline" >
-          <mat-label>Rendement en %</mat-label>
-          <input type='text' disabled="true"  formControlName="yield" matInput/>
-        </mat-form-field>-->
-
         <mat-form-field appearance="outline">
           <mat-label>Observations</mat-label>
           <textarea formControlName="comment" matInput></textarea>
         </mat-form-field>
         </div>
       </form>
+      <button *ngIf="buyer && +buyer.id > 0 && showAddAgentButton" mat-raised-button color="primary" (click)="onAddAgentBuyer()">
+        + Ajouter un représentant
+      </button>
+      <form [formGroup]="agentsBuyer">
+        <div style="margin-top: .5rem" *ngFor="let agentBuyer of agentsBuyer.controls; index as i">
+          <ng-container style="margin-bottom: .5rem" [formGroupName]="i">
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="lastname"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="firstname"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email"/>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="outline">
+              <mat-label>Téléphone</mat-label>
+              <input matInput formControlName="phoneNumber"/>
+            </mat-form-field>
+            <button mat-raised-button color="warn" (click)="removeAgentBuyer(i)">Supprimer ce représentant</button>
+          </ng-container>
+        </div>
+      </form>
 
-      <!--<form  [formGroup]="addressForm">
-        <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>Pays</mat-label>
-          <input type='text' matInput formControlName="country" />
-        </mat-form-field>
-
-        <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>Canton</mat-label>
-          <input type='text' matInput formControlName="canton" />
-        </mat-form-field>
-
-        <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>Ville</mat-label>
-          <input type='text' matInput formControlName="city" />
-        </mat-form-field>
-
-        <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>Adresse</mat-label>
-          <input type='text' matInput formControlName="street" />
-        </mat-form-field>
-
-        <mat-form-field style="width: 100%" appearance="outline">
-          <mat-label>Code postal</mat-label>
-          <input type='text' matInput formControlName="zipcode" />
-        </mat-form-field>
-      </form>-->
+      <div *ngIf="buyer && buyer.agentsBuyer && buyer.agentsBuyer.length > 0">
+        <h5 style="margin-top: 1rem;">Représentant(s)</h5>
+        <ul style="margin-left: 0; padding-left: 0">
+          <li *ngFor="let agent of buyer.agentsBuyer">
+            <div style="width: 100%; margin-top: 1rem; display: flex; justify-content: space-between">
+              <div>
+                <span style="display: block">
+                  {{ agent.lastname | uppercase }} {{ agent.firstname }}
+                </span>
+                <span style="display: block; color: #666666; font-weight: 100">
+                  {{ agent.email }}
+                </span>
+                <span style="display: block">
+                  {{ agent.phoneNumber }}
+                </span>
+              </div>
+              <div>
+                <button mat-raised-button color="warn" (click)="onRemoveAgent(agent)">
+                  <mat-icon>highlight_off</mat-icon>
+                  <span>Supprimer</span>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div  style="display: flex;justify-content: space-between; margin-bottom: 20px;margin-top: 15px;">
-
         <div>
           <button mat-stroked-button color="primary" (click)='onSubmit()' >Save</button>
-          <!--<button [routerLink] = '[id]' mat-raised-button color='warn' style="margin-right: 7px;" (click)='deleteTask("id")'>delete</button>-->
         </div>
-
       </div>
-
   </div>
-
-  <!--<div *ngIf="detail">
-    <h5>Mon contact</h5>
-
-  </div>-->

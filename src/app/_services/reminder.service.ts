@@ -16,6 +16,14 @@ export class ReminderService extends GlobalHttpService{
     )
   }
 
+  archivedReminderList(): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/reminder/archive/list`,
+      {
+        headers: this.headers
+      }
+    )
+  }
+
   archiveReminder(reminder: Reminder): Observable<any> {
     return this.http.get<any>(`${environment.baseApiUrl}/reminder/archive/${reminder.id}`,
       {

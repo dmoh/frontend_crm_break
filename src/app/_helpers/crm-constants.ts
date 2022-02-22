@@ -10,6 +10,7 @@ export const crmConstants = {
   CODE_OFFER_STATUS_CLOSING: {value: 55, label: 'Fermeture/Vendu avec succés'},
   CODE_OFFER_STATUS_CLOSED_WITH_SUCCESS: {value: 60, label: 'Fermeture/Vendu avec succés'},
   CODE_OFFER_STATUS_LOST: {value: 0, label: 'Abandonné/Perdu'},
+  CODE_OFFER_STATUS_ARCHIVED: {value: 3, label: 'Archivé'},
 
   CODE_PROPERTY_STATUS_OPEN: 10,
   CODE_PROPERTY_STATUS_NOT_FOR_SALE: 20,
@@ -18,6 +19,7 @@ export const crmConstants = {
   CODE_PROPERTY_STATUS_LAST: 50,
   CODE_PROPERTY_STATUS_CLOSED_WITH_SUCCESS: 60,
   CODE_PROPERTY_STATUS_LOST: 0,
+
 
 
 
@@ -50,7 +52,11 @@ export const crmConstants = {
   },
 
 
+  CUSTOMER_TYPE_PRIVATE: 1,
+  CUSTOMER_TYPE_INSTITUTIONAL: 2,
 
-  CODE_COLOR_EVENT_DEFAULT: '#0056b3'
+
+  CODE_COLOR_EVENT_DEFAULT: '#0056b3',
+  NB_PER_PAGE: 100
 }
 

@@ -36,7 +36,7 @@ ul {
 
   list-style: none;
 }
-#offer{
+.offer{
   font-size: 11px;
   font-weight: bold;
 }
@@ -49,7 +49,6 @@ li {
   display: flex;
   justify-content: center;
   gap: 5px;
-
 }
 /*.column{
   border: solid 2px blue;
@@ -179,6 +178,7 @@ li {
   //gap: 10px;
   justify-content: space-between;
   margin-top: 50px;
+  padding-bottom: 2rem;
   //border: solid 2px blue;
   //height: 250px;
   /*&:hover {
@@ -203,7 +203,7 @@ li {
   height: 88px;
 }
 .waiting {
-  display: flex;
+  /*display: flex;*/
   padding-top: 7px;
   padding-bottom: 7px;
   margin-top: 50px;

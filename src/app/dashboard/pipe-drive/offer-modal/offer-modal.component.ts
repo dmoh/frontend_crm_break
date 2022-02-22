@@ -69,12 +69,8 @@ export class OfferModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data && this.data.offer) {
-      console.warn('offerSelected', this.data.offer);
       this.offer = Object.assign(new Offer(), this.data.offer);
     }
-    /*this.buyerService
-      .getAreaCodeCountry('ter')
-      .subscribe((res) => console.warn('res', res));*/
     this.initForm();
     this.calculateYield();
     this.findProperty();

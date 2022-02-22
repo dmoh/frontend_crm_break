@@ -32,81 +32,10 @@ export class PipeDriveComponent implements OnInit {
   collaboratorCtrl = new FormControl();
   links = ['First', 'Second', 'Third'];
   activeLink = this.links[0];
-  /*offers: Offer[] = [
-    {
-      offerName: 'Villa',
-      name: "Marc",
-      lastName: "Julien",
-      amount: 600000
-    },
-
-      {
-        offerName: 'Hôtel',
-        name: "Lopez",
-        lastName: "Jennifer",
-        amount: 800000
-    },
-    {
-      offerName: 'Commerce',
-      name: "Courtois",
-      lastName: "Mathieu",
-      amount: 50000
-    },
-    {
-      offerName: 'Immeuble paris',
-      name: "Sacko",
-      lastName: "Mohamed",
-      amount: 50000
-      },
-  ];
-  lists: any = [{
-    label: 'Prospect identifé',
-   offers: [
-      {
-        offerName: 'Villa',
-        name: "Marc",
-        lastName: "Julien",
-        amount: 600000
-      },
-    ],
-  },
-    {
-      label: 'Contact effectué',
-      offers: [
-        {
-          offerName: 'Hôtel',
-          name: "Lopez",
-          lastName: "Jennifer",
-          amount: 800000
-        }
-      ],
-    },
-    {
-      label: 'proposition effectuéé',
-      offers: [
-        {
-          offerName: 'Commerce',
-          name: "Courtois",
-          lastName: "Mathieu",
-          amount: 50000
-        },
-      ],
-    },
-    {
-      label: 'Négociations',
-      offers: [
-        {
-        offerName: 'Immeuble paris',
-        name: "Sacko",
-        lastName: "Mohamed",
-        amount: 50000
-        },
-      ],
-    }
-  ];*/
   basket: any[];
   showListCollaborator = false;
   offreAttente: any[] = [];
+  archivedOffers: Offer[] = [];
   crmConstants = crmConstants;
   columns: any[] = [
     {
@@ -176,12 +105,10 @@ export class PipeDriveComponent implements OnInit {
     this.offerService
       .getOfferList()
       .subscribe((res) => {
-        console.warn(res);
         if (res.showListCollaborator) {
           this.userService
             .getMemberList()
             .subscribe((resp) => {
-              console.warn('res', resp);
               this.collaborators = resp.users;
             });
           this.showListCollaborator = true;
@@ -198,6 +125,7 @@ export class PipeDriveComponent implements OnInit {
       elem.offre = this.offersSaved.filter((offer) => +offer.status === +elem.id);
     });
     this.offersOnWaiting = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ON_WAITING.value === +offer.status);
+    this.archivedOffers = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ARCHIVED.value === +offer.status);
   }
 
   drop(event: CdkDragDrop<string[]>, columnId?: number) {
@@ -211,8 +139,6 @@ export class PipeDriveComponent implements OnInit {
       }, 500);
 
     }
-
-
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -225,11 +151,7 @@ export class PipeDriveComponent implements OnInit {
       );
 
     }
-    console.log("event", event);
 
-  }
-  dropCard($event) {
-    console.log('event',$event)
   }
 
   private updateAll(columnId) {
@@ -257,6 +179,16 @@ export class PipeDriveComponent implements OnInit {
         }
       } else {
         this.offersOnWaiting = [this.offerDropped];
+      }
+    }
+    if (columnId === crmConstants.CODE_OFFER_STATUS_ARCHIVED.value) {
+      if (this.archivedOffers.length > 0) {
+        const index = this.archivedOffers.findIndex((elem) => +elem.id && +this.offerDropped.id);
+        if (index === -1) {
+          this.archivedOffers = [...this.archivedOffers,  this.offerDropped];
+        }
+      } else {
+        this.archivedOffers = [this.offerDropped];
       }
     }
   }
@@ -323,5 +255,9 @@ export class PipeDriveComponent implements OnInit {
         }
       })
     ;
+  }
+
+  dropArchivedOffer(event: any) {
+   console.warn('event', event);
   }
 }

@@ -39,4 +39,13 @@ export class ProspectService extends GlobalHttpService {
     )
   }
 
+  searchProspect(prospect: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/prospect/search`, {
+        prospect: prospect
+      }, {
+        headers: this.headers
+      }
+    )
+  }
+
 }

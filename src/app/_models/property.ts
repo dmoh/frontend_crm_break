@@ -22,4 +22,5 @@ export class Property {
   isSociety = null;
   phoneNumber = null;
   email = null;
+  ownerIsBuyer = false;
 }

@@ -15,4 +15,5 @@ export class Offer {
   commission = null;
   sendMailBuyers = false;
   sale = new Sale();
+  collaborator = null;
 }
