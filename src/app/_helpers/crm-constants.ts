@@ -55,8 +55,11 @@ export const crmConstants = {
   CUSTOMER_TYPE_PRIVATE: 1,
   CUSTOMER_TYPE_INSTITUTIONAL: 2,
 
+  URL_API: 'http://localhost:8000',
+  URL_API_MEDIAS: 'http://localhost:8000/uploads/medias',
 
   CODE_COLOR_EVENT_DEFAULT: '#0056b3',
   NB_PER_PAGE: 100
 }
+
 

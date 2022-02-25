@@ -1,0 +1,500 @@
+<mat-dialog-content>
+  <section class="w-100 overflow-hidden">
+    <div style="justify-content: space-between" class="d-flex">
+      <h5>Ajout/Edition d'une propriété</h5>
+      <div style="margin: .5rem">
+        <button *ngIf="!isOnOfferModal" (click)="dialogRef.close(false)" mat-raised-button color="warn">
+          Fermer
+        </button>
+      </div>
+    </div>
+    <div style="padding: .5rem;border-radius: 5px;border: 1px solid #e4e4e4;">
+      <form [formGroup]="ownerForm">
+        <div class="container-fluid">
+          <h6>Propriétaire du bien</h6>
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-select placeholder="Propriétaire du bien"
+                            formControlName="customerType">
+                  <mat-option [value]="crmConstants.CUSTOMER_TYPE_PRIVATE">
+                    Particulier
+                  </mat-option>
+                  <mat-option [value]="crmConstants.CUSTOMER_TYPE_INSTITUTIONAL">
+                    Société
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Nom du propriétaire</mat-label>
+                <input matInput formControlName="name"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Tèl</mat-label>
+                <input matInput type="text" formControlName="phoneNumber"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form [formGroup]="propertyAddressForm">
+        <div class="container-fluid">
+          <h6>Adresse du bien</h6>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Rue, Avenue...</mat-label>
+                <input type="text" matInput
+                       formControlName="street"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Code Postale</mat-label>
+                <input type="text" matInput
+                       formControlName="zipcode"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Ville</mat-label>
+                <input type="text" matInput
+                       formControlName="city"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Canton</mat-label>
+                <input type="text" matInput
+                       formControlName="canton"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Pays</mat-label>
+                <input type="text" matInput
+                       formControlName="country"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form [formGroup]="propertyForm">
+        <div class="container-fluid">
+          <h6>Info. du bien</h6>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-select placeholder="Régime de l'immeuble"
+                            [value]="1"
+                            formControlName="propertyRegime">
+                  <mat-option [value]="1">Société (Share Deal)</mat-option>
+                  <mat-option [value]="2">Nom (Asset Deal)</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-select placeholder="Typologie immeuble"
+                            formControlName="typeProperty">
+                  <mat-option [value]="null">Aucune</mat-option>
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.LODGING.value">Logements</mat-option>
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.BUREAU.value">Bureaux</mat-option>
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.SHOP.value"
+                  >Commerces/Centres commerciaux
+                  </mat-option
+                  >
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.INDUSTRIAL_LOGISTICS_ARTISANAL.value"
+                  >Industriel/Logistique/Artisanal
+                  </mat-option
+                  >
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.HOTEL.value">Hôtel/ApartHotel</mat-option>
+                  <mat-option [value]="crmConstants.TYPE_PROPERTY.HOSPITAL.value"
+                  >Clinique/EMS/Hôpital
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Prix de vente</mat-label>
+                <input type="text"
+                       matInput
+                       [autocomplete]="'off'"
+                       formControlName="sellingPrice"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Commentaire(s)/Observation(s)</mat-label>
+                <textarea
+                  matInput
+                  style="width: 100%"
+                  formControlName="comment">
+              </textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--<div class="row">
+            <div class="col-md-12">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li *ngFor="let media of medias">
+                  <div>
+                    <a *ngIf="media.isDocument" href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle formControlName="hasRentalStatus">Etat locatif détaillé</mat-slide-toggle>
+                  <div>
+                    <input
+                      #rentalStatus
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasRentalStatus"
+                      type="file"
+                      (change)="onSelect($event, 'rentalStatus')"
+                    >
+                    <span *ngIf="filesRentalStatus.length > 0 && rentalStatus.value != null || rentalStatus.value.length > 3  " style="cursor: pointer;">
+                    <mat-icon style="color: red" (click)="onRemove($event,'rentalStatus')">highlight_off</mat-icon>
+                  </span>
+                  </div>
+                </div>
+                <div *ngIf="filesRentalStatus && filesRentalStatus.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesRentalStatus">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesRentalStatus')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle
+                    style="display: block"
+                    formControlName="hasDetailedManagementAccount">Comptes de gestion
+                    détaillés
+                  </mat-slide-toggle>
+                  <div>
+                    <input
+                      #detailedManagementAccount
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasDetailedManagementAccount || !propertyForm.value.hasDetailedManagementAccount"
+                      type="file"
+                      (change)="onSelect($event, 'detailedManagementAccount')"
+                    >
+                    <span *ngIf="filesDetailedManagementAccount.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red"
+                            (click)="onRemove($event,'detailedManagementAccount')">highlight_off</mat-icon>
+                </span>
+                  </div>
+                </div>
+                <div *ngIf="filesDetailedManagementAccount && filesDetailedManagementAccount.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesDetailedManagementAccount">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle style="display: block" formControlName="hasExtractLandRegister">Extrait registre
+                    foncier
+                  </mat-slide-toggle>
+                  <div>
+                    <input
+                      #extractLandRegister
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasExtractLandRegister || !propertyForm.value.hasExtractLandRegister"
+                      type="file"
+                      (change)="onSelect($event, 'extractLandRegister')"
+                    >
+                    <span *ngIf="filesExtractLandRegister.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red" (click)="onRemove($event,'extractLandRegister')">highlight_off</mat-icon>
+                </span>
+                  </div>
+                </div>
+                <div *ngIf="filesExtractLandRegister && filesExtractLandRegister.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesExtractLandRegister">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle style="display: block" formControlName="hasBuildingInsurance">Assurance bâtiment
+                  </mat-slide-toggle>
+                  <div>
+                    <input
+                      #buildingInsurance
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasBuildingInsurance || !propertyForm.value.hasBuildingInsurance"
+                      type="file"
+                      (change)="onSelect($event, 'buildingInsurance')"
+                    >
+                    <span *ngIf="filesBuildingInsurance.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red" (click)="onRemove($event,'buildingInsurance')">highlight_off</mat-icon>
+                </span>
+                  </div>
+                </div>
+                <div *ngIf="filesBuildingInsurance && filesBuildingInsurance.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingInsurance">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle style="display: block" formControlName="hasBuildingPlans">Plans et coupes de
+                    l'immeuble
+                  </mat-slide-toggle>
+                  <div>
+                    <input
+                      #buildingPlans
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasBuildingPlans || !propertyForm.value.hasBuildingPlans"
+                      type="file"
+                      (change)="onSelect($event, 'buildingPlans')"
+                    >
+                    <span *ngIf="filesBuildingPlans.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red" (click)="onRemove($event,'buildingPlans')">highlight_off</mat-icon>
+                </span>
+                  </div>
+                </div>
+                <div *ngIf="filesBuildingPlans && filesBuildingPlans.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingPlans">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                  <mat-slide-toggle style="display: block" formControlName="hasListOfWorks">Liste des travaux effectués
+                  </mat-slide-toggle>
+                  <div>
+                    <input
+                      #listOfWorks
+                      style="margin-left: .5rem"
+                      [disabled]="!property.hasListOfWorks || !propertyForm.value.hasListOfWorks"
+                      type="file"
+                      (change)="onSelect($event, 'listOfWorks')"
+                    >
+                    <span *ngIf="filesListOfWorks.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red" (click)="onRemove($event,'listOfWorks')">highlight_off</mat-icon>
+                </span>
+                  </div>
+                </div>
+                <div *ngIf="filesListOfWorks && filesListOfWorks.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesListOfWorks">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="file-container">
+                <div class="d-flex container-file">
+                <mat-slide-toggle style="display: block" formControlName="hasPhotos">Photos
+                </mat-slide-toggle>
+                <div>
+                  <input
+                    #photos
+                    style="margin-left: .5rem"
+                    [disabled]="!property.hasPhotos || !propertyForm.value.hasPhotos"
+                    type="file"
+                    (change)="onSelect($event, 'photos')">
+                  <span *ngIf="filesPhotos.length > 0" style="cursor: pointer;">
+                  <mat-icon style="color: red" (click)="onRemove($event,'photos')">highlight_off</mat-icon>
+                </span>
+                </div>
+              </div>
+                <div *ngIf="filesPhotos && filesPhotos.length > 0">
+                  <ul style="margin-left: 0; padding-left: 0">
+                    <li style="display: flex;" class="align-items-center" *ngFor="let media of filesPhotos">
+                      <div class="d-flex">
+                        <a *ngIf="media.isDocument"
+                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           target="_blank">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                              <mat-icon color="primary">insert_drive_file</mat-icon>
+                            </div>
+                            <div>
+                              <span>{{ media.originalFilename }}</span>
+                            </div>
+                          </div>
+                        </a>
+                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                             alt="{{media.originalFilename}}">
+                      </div>
+                      <div *ngIf="+media.id > 0" style="cursor: pointer">
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div style="margin-bottom: 1rem; margin-top: 1rem " class="col-md-12">
+              <!--<button mat-raised-button color="primary"
+                      [disabled]="propertyForm.invalid || ownerForm.invalid || propertyAddressForm.invalid"
+                      (click)="onSubmit()">-->
+              <button mat-raised-button color="primary"
+                      (click)="onSubmit()">
+                Valider
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </section>
+</mat-dialog-content>
+

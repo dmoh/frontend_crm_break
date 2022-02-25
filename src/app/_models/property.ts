@@ -19,8 +19,18 @@ export class Property {
   ownerName: string = null;
   propertyUnsortedId = null;
   canton = null;
+  city = null;
+  zipcode = null;
+  street = null;
   isSociety = null;
   phoneNumber = null;
   email = null;
   ownerIsBuyer = false;
+  hasRentalStatus = null;
+  hasDetailedManagementAccount = null;
+  hasExtractLandRegister = null;
+  hasBuildingInsurance = null;
+  hasPhotos = null;
+  hasBuildingPlans = null;
+  hasListOfWorks = null;
 }

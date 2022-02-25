@@ -55,6 +55,10 @@ export class UsersService {
    }
 
 
+  userAll(): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/api/user/all`, this.headers);
+  }
+
   getHistoryList(): Observable<any> {
     return this.http.get<any>(`${this.urlApi}/api/user/history/list`, this.headers);
   }

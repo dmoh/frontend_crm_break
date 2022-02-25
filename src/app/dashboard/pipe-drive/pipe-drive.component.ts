@@ -13,6 +13,7 @@ import {FormControl} from "@angular/forms";
 import {UsersService} from "@app/_services/users.service";
 import {map} from "rxjs/operators";
 import {ClosingOfferComponent} from "@app/_modals/closing-offer/closing-offer.component";
+import {PropertyService} from "@app/_services/property.service";
 
 @Component({
   selector: 'app-pipe-drive',
@@ -93,7 +94,8 @@ export class PipeDriveComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private userService: UsersService,
-              private offerService: OfferService
+              private offerService: OfferService,
+              private propertyService: PropertyService
   ) { }
 
   ngOnInit(): void {
@@ -192,12 +194,17 @@ export class PipeDriveComponent implements OnInit {
       }
     }
   }
-
-  openDialog(offer?: Offer): void {
+  openDialog(offer?: any): void {
+    this.offerDropped = new Offer();
+    if (offer) {
+      this.offerDropped = this.offersSaved.filter((elem) => +elem.id === +offer.id)[0];
+      this.propertyService
+        .setPropertyCurrent(this.offerDropped.property);
+    }
     const dialogRef = this.dialog.open(OfferModalComponent, {
-      width: '50%',
+      width: '90%',
       data: {
-        offer: !offer ? new Offer() : offer
+        offer: this.offerDropped
       },
     });
     dialogRef.afterClosed().subscribe(offer => {
@@ -258,6 +265,6 @@ export class PipeDriveComponent implements OnInit {
   }
 
   dropArchivedOffer(event: any) {
-   console.warn('event', event);
+   this.updateAll(crmConstants.CODE_OFFER_STATUS_ARCHIVED.value);
   }
 }

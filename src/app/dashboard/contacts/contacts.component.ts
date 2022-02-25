@@ -171,7 +171,6 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.opened = !this.opened;
   }
   addFiles($event) {
-
     const files = $event.target.files;
     this.fileService.addFile(files)
   }

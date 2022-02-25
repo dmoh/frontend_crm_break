@@ -76,6 +76,11 @@
           </div>
         </div>
     </form>
+    <div style="margin: 1rem">
+      <button mat-raised-button color="primary" (click)="onAddProperty()">
+        + Ajouter
+      </button>
+    </div>
     <div style="position: relative" class="row" *ngIf="prospects && prospects.length > 0">
       <div style="position: fixed;right: 1px;bottom: 4rem;z-index: 1500 !important;">
         <button (click)="scrollTop()" mat-fab color="primary">
@@ -152,6 +157,19 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: auto">Canton</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data">
               {{ data.canton }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: auto">Action</th>
+            <td style="font-size: smaller" mat-cell *matCellDef="let data">
+              <div style="justify-content: center; align-items: center" class="d-flex">
+                <div class="edit-property">
+                  <button style="width: 35px; height: 35px" (click)="onAddProperty(data)" mat-fab color="accent">
+                    <mat-icon style="color: white;">create</mat-icon>
+                  </button>
+                </div>
+              </div>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

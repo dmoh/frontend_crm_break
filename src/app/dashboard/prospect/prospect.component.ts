@@ -13,6 +13,9 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 import {BuyerService} from "@app/_services/buyer.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {PropertyDetailComponent} from "@app/dashboard/property/property-detail/property-detail.component";
+import {Property} from "@app/_models/property";
+import {PropertyService} from "@app/_services/property.service";
 
 @Component({
   selector: 'app-prospect',
@@ -31,7 +34,9 @@ export class ProspectComponent implements OnInit, OnDestroy {
     'Observations',
     'Status',
     'Géo',
-    'Canton'];
+    'Canton',
+    'Actions'
+  ];
   dataSource : MatTableDataSource<any> = new MatTableDataSource();
   prospects: any[] = [];
   prospectBuyers: any[] = [];
@@ -57,6 +62,7 @@ export class ProspectComponent implements OnInit, OnDestroy {
     private buyerService: BuyerService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
+    private propertyService: PropertyService,
     public dialog: MatDialog
   ) {
     this.searchForm = this.fb.group({
@@ -146,7 +152,7 @@ export class ProspectComponent implements OnInit, OnDestroy {
     this.pageIndex = event.pageIndex;
     this.pageIndex = 0 ? 1 : this.pageIndex;
     if (this.isSearch) {
-      this.onSubmit();
+      this.onSubmit(true);
     } else {
       this.getProspectList(this.pageIndex + 1, false);
     }
@@ -199,8 +205,41 @@ export class ProspectComponent implements OnInit, OnDestroy {
 
   }
 
+  onAddProperty(property?: Property) {
+    let prop = new Property();
+    if (property) {
+      prop = property;
+    }
+    this.propertyService
+      .setPropertyCurrent(prop);
+    const dialogRef = this.dialog.open(PropertyDetailComponent, {
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        property: prop
+      }
+    });
 
-  onSubmit() {
+    dialogRef.afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          let msg = 'La propriété a bien été ajouté';
+          if (property && +property.id > 0) {
+            msg = `La propriété ${property.id} a été modifié`;
+          }
+          this.snackBar
+            .open(msg, 'ok', {
+              duration: 2500
+            });
+        }
+      })
+    ;
+  }
+
+
+
+
+  onSubmit(isNextPage?: boolean) {
     this.showSpinner = true;
 
     const search = Object.assign({}, this.searchForm.value);
@@ -222,9 +261,8 @@ export class ProspectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.isSearch) {
+    if (this.isSearch && isNextPage) {
       search.pageIndex = this.pageIndex;
-      console.warn('pageIndex', this.pageIndex);
     }
     this.prospectSub = this.prospectService
       .searchProspect(search)
@@ -251,5 +289,9 @@ export class ProspectComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.showCancelButton = false;
     }, 1200);
+  }
+
+  onOpenProperty(data) {
+
   }
 }

@@ -22,6 +22,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {EventModalComponent} from "@app/event-modal/event-modal.component";
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UsersService} from "@app/_services/users.service";
 
 
 @Component({
@@ -81,12 +82,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   };
 
   currentEvents: EventApi[] = [];
+  users: any[] = [];
 
   constructor(
     private taskService: TaskService,
     private eventService: EventService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UsersService
   ) { }
 
   private getEventList() {
@@ -114,21 +117,26 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         }
         ];
         this.calendarOptions.events = this.events;
-        console.warn('dff', this.events);
         this.calendarVisible = true;
       });
   }
 
   ngOnInit(): void {
+    this.userService
+      .userAll()
+      .subscribe((res) => {
+        if (res.users) {
+          this.users = res.users;
+        }
+      })
+
+
     this.tasksSubscription = this.taskService.task$.subscribe(
       (tasksRecup: Task[]) => {
         this.tasks = tasksRecup;
         console.log('taskRecup dans le calendrier', this.tasks)
       }
     );
-
-    // this.calendarOptions.events =
-    //this.taskService.emitTodo();
   }
 
   ngAfterViewInit() {
@@ -141,27 +149,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
   }
-  /*handleWorkToggle() {
-    this.workVisible = !this.workVisible;
-    console.log('work', this.workVisible)
-    //console.log('work', this.tasks)
-    let allTask ;
-      switch (allTask) {
-        case 'work':
-          //console.log('Oranges are $0.59 a pound.');
-          break;
-        case 'personal':
-          //console.log('Oranges are $0.59 a pound.');
-        case 'appointment':
-          //console.log('Mangoes and papayas are $2.79 a pound.');
-
-          break;
-        default:
-          //console.log(`Sorry, we are out of ${expr}.`);
-      }
-
-  }*/
-
   handleWeekendsToggle() {
     const { calendarOptions } = this;
     calendarOptions.weekends = !calendarOptions.weekends;
@@ -169,9 +156,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   handleDateSelect(selectInfo: DateSelectArg) {
     this.selectInfo = selectInfo;
-
-    console.warn('selectInfo', this.selectInfo);
-
     let eventNew = new Event();
     eventNew.allDay = selectInfo.allDay;
     eventNew.endAt = selectInfo.endStr;
@@ -256,17 +240,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   handleEvents(events: EventApi[]) {
     return;
-    this.currentEvents = events;
-    console.warn('handleEvent', events);
-
-    console.log('currentEvent', this.currentEvents)
   }
 
 
   handleDrop(dropEvent: any) {
     const event = dropEvent.event;
     this.calendarApi = dropEvent.view.calendarApi;
-    console.warn(event.id);
     const dialogRef = this.dialog.open(EventModalComponent, {
       data: {
         event: dropEvent.event
@@ -303,7 +282,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
               }
             });
           }
-          console.warn('cvent', event);
           this.getEventList();
           if (event.eventId && event.eventId > 0) {
             this.snackBar

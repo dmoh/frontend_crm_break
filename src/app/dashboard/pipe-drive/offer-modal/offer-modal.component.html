@@ -31,46 +31,69 @@
           </button>
         </div>
     </mat-step>
-
-    <mat-step [stepControl]="propertyForm">
-
-
-
-      <form [formGroup]="propertyForm">
-
-        <h4>Propriété à vendre</h4>
-        <!--Find property on db-->
-        <mat-form-field class="w-100" style="width: 100%" appearance="outline">
-          <mat-label>Chercher via le nom d'un propriétaire</mat-label>
-          <input type="text"
-                 placeholder="Pick one"
-                 aria-label="Propriétaire"
-                 matInput
-                 formControlName="ownerName"
-                 [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" (selectionchange)="onChange($event)" [displayWith]="displayFn">
-            <mat-option *ngIf="isLoading" class="is-loading">
-              <mat-spinner diameter="20"></mat-spinner>
-            </mat-option>
-            <ng-container *ngIf="!isLoading">
-              <mat-option
-                (click)="onChange(option)"
-                *ngFor="let option of filteredOptions"
-                [value]="option">
-                <div
-                  style="width: 100%;
+    <mat-step >
+      <!--Find property on db-->
+      <mat-form-field class="w-100" style="width: 100%" appearance="outline">
+        <mat-label>Chercher via le nom d'un propriétaire</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Propriétaire"
+               matInput
+               [formControl]="ownerNameCtrl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (selectionchange)="onChange($event)" [displayWith]="displayFn">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option
+              (click)="onChange(option)"
+              *ngFor="let option of filteredOptions"
+              [value]="option">
+              <div
+                style="width: 100%;
                   overflow: hidden">
+                  <span style="font-size: small">
+                    id:
+                    <b>{{ option.id }}</b>
+                  </span>
                   <span style="color: #666; font-size: small; padding-right: .3rem; font-style: italic">
                     {{ option.street }}, {{ option.city }}
                   </span>
-                  <span>
+                <span>
                     {{ option.owners }}
                   </span>
-                </div>
-              </mat-option>
-            </ng-container>
-          </mat-autocomplete>
-        </mat-form-field>
+              </div>
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+      <app-property-detail
+        [isOnOfferModal]="true"
+        (showNextButton)="onChangeStateButtonNext($event)"
+        [property]="offer.property">
+      </app-property-detail>
+      <div style="display: flex; justify-content: space-between; margin-top: 1rem" >
+        <div>
+          <button mat-raised-button matStepperPrevious>Précédent</button>
+        </div>
+        <div>
+          <button
+            [disabled]="!enableNextButton"
+            mat-raised-button
+            color="primary"
+            matStepperNext
+            (click)="getPotentialBuyers()"
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+
+      <!--<form [formGroup]="propertyForm">
+
+        <h4>Propriété à vendre</h4>
+
 
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-label>Prix de vente</mat-label>
@@ -104,10 +127,10 @@
                formControlName="comment"/>
       </mat-form-field>
 
-      <!--<mat-form-field style="width: 100%;" appearance="outline">
+      &lt;!&ndash;<mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Montant de la commission</mat-label>
         <input type="number" matInput formControlName="commission"/>
-      </mat-form-field>-->
+      </mat-form-field>&ndash;&gt;
 
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-select placeholder="Régime de l'immeuble"
@@ -117,8 +140,6 @@
           <mat-option [value]="2">Nom (Asset Deal)</mat-option>
         </mat-select>
       </mat-form-field>
-
-
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-select placeholder="Typologie immeuble"
                     formControlName="typeProperty">
@@ -160,10 +181,10 @@
               Suivant
             </button>
           </div>
-          <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
+          &lt;!&ndash;<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>&ndash;&gt;
         </div>
-      </form>
-    </mat-step>
+      </form>-->
+      <!--</mat-step>
     <mat-step [stepControl]="propertyAddressForm">
       <h4>Adresse du bien</h4>
       <form [formGroup]="propertyAddressForm">
@@ -208,26 +229,15 @@
       >
         <div>
           <button mat-raised-button matStepperPrevious>Précédent</button>
-        </div>
-        <div>
-          <button
-            [disabled]="propertyAddressForm.invalid"
-            mat-raised-button
-            color="primary"
-            matStepperNext
-            (click)="getPotentialBuyers()"
-          >
-            Suivant
-          </button>
-        </div>
-        <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>-->
-      </div>
+        </div>-->
+      <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>
+      </div>-->
     </mat-step>
 
 
     <!--
             PARMI les buyer et property unsorted rechercher les proprios
-    -->
+
     <mat-step [stepControl]="ownerForm">
       <h4>Propriétaire</h4>
       <form [formGroup]="ownerForm">
@@ -277,7 +287,7 @@
           </button>
         </div>
       </div>
-    </mat-step>
+    </mat-step>-->
     <mat-step [stepControl]="buyersForm">
       <form [formGroup]="buyersForm">
         <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
@@ -309,10 +319,17 @@
           </ng-container>
         </div>
       </form>
-      <div>
-        <button mat-raised-button color="primary" (click)="addBuyer()">
-          + Ajouter un acheteur
-        </button>
+      <div style="justify-content: space-between" class="d-flex">
+        <div>
+          <button mat-raised-button color="primary" (click)="addBuyer()">
+            + Ajouter un acheteur
+          </button>
+        </div>
+        <div>
+          <div>
+            <mat-slide-toggle [formControl]="sendMailBuyersCtrl" (toggleChange)="onSendMail()">Envoyer les mails</mat-slide-toggle>
+          </div>
+        </div>
       </div>
       <div style="margin: 1rem 0">
         <!--<mat-form-field appearance="fill">
@@ -391,9 +408,6 @@
         </table>
       </div>
       <div style="display: flex; justify-content: space-between;  margin-bottom: 20px;">
-        <div>
-          <mat-slide-toggle [formControl]="sendMailBuyersCtrl" (toggleChange)="onSendMail()">Envoyer les mails</mat-slide-toggle>
-        </div>
         <button mat-raised-button color="primary" (click)="onSubmit()">Envoyer</button>
       </div>
     </mat-step>

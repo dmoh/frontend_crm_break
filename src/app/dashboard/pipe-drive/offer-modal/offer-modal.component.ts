@@ -52,6 +52,8 @@ export class OfferModalComponent implements OnInit {
   private findOwners: boolean = true;
   @ViewChild(MatSort) public sort: MatSort;
   sendMailBuyersCtrl: FormControl = new FormControl();
+  ownerNameCtrl: FormControl = new FormControl();
+  enableNextButton = false;
 
 
 
@@ -69,11 +71,20 @@ export class OfferModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data && this.data.offer) {
-      this.offer = Object.assign(new Offer(), this.data.offer);
+      this.offer =  this.data.offer;
     }
     this.initForm();
     this.calculateYield();
     this.findProperty();
+    console.warn('offre dans prop', this.offer);
+    this.propertyService
+      .propertyCurrent
+      .subscribe((prop: Property) => {
+        this.offer.property = prop;
+        this.initForm();
+        this.calculateYield();
+        this.findProperty();
+      });
   }
 
 
@@ -241,7 +252,8 @@ export class OfferModalComponent implements OnInit {
   private mergeProperty(property: any) {
     console.warn(property.owners);
     this.property = new Property();
-    this.property.id = property.id
+
+    this.property.id = property.id;
     this.property.propertyUnsortedId = property.id;
     this.property.typeProperty = property.propertyType;
     this.property.ownerName = property.owners;
@@ -260,7 +272,8 @@ export class OfferModalComponent implements OnInit {
     );
     console.warn(property.owners);
     console.warn(this.property);
-
+    this.property = property;
+    console.warn('dsdsds', this.property);
 
     this.offer.property = Object.assign(this.offer.property, this.property);
     //setter les éléments
@@ -276,6 +289,8 @@ export class OfferModalComponent implements OnInit {
     this.setValuesForm('owner', 'name', property.owners);
     this.setValuesForm('property', 'typeProperty', property.propertyType);
     console.warn('prop', this.offer);
+    this.propertyService
+      .setPropertyCurrent(this.offer.property);
   }
 
   setValuesForm(form: string, field: string, value: any) {
@@ -299,7 +314,7 @@ export class OfferModalComponent implements OnInit {
     }
   }
   findProperty() {
-      this.propertyForm.get('ownerName')!
+      this.ownerNameCtrl
         .valueChanges
         .pipe(
           distinctUntilChanged(),
@@ -361,5 +376,9 @@ export class OfferModalComponent implements OnInit {
       initOwner.email = this.offer.property.email;
       this.offer.property.owner = Object.assign(new Owner(), initOwner);
     }
+  }
+
+  onChangeStateButtonNext(event: boolean) {
+    this.enableNextButton = event;
   }
 }

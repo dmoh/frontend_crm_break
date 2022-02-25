@@ -56,6 +56,8 @@ import { HistoryCollaboratorComponent } from './history-collaborator/history-col
 import { ArchiveComponent } from './archive/archive.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { ClosingOfferComponent } from '../_modals/closing-offer/closing-offer.component';
+import { PropertyComponent } from './property/property.component';
+import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -78,26 +80,27 @@ FullCalendarModule.registerPlugins([
     EventModalComponent,
     HistoryCollaboratorComponent,
     ArchiveComponent,
-    ClosingOfferComponent
+    ClosingOfferComponent,
+    PropertyComponent,
+    PropertyDetailComponent
   ],
-    imports: [
-        CoreModule,
-        DashboardRoutingModule,
-        FullCalendarModule,
-        NgApexchartsModule,
-        MatDialogModule,
-        SweetAlert2Module,
-        MatSortModule,
-        MatStepperModule,
-        MatChipsModule,
-        MatProgressSpinnerModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        GoogleMapsModule,
-        MatSlideToggleModule,
-        MatTabsModule,
-
-    ],
+  imports: [
+    CoreModule,
+    DashboardRoutingModule,
+    FullCalendarModule,
+    NgApexchartsModule,
+    MatDialogModule,
+    SweetAlert2Module,
+    MatSortModule,
+    MatStepperModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    GoogleMapsModule,
+    MatSlideToggleModule,
+    MatTabsModule
+  ],
   exports: [
       CoreModule,
       OverviewComponent,
@@ -119,9 +122,8 @@ FullCalendarModule.registerPlugins([
       HistoryCollaboratorComponent,
       ArchiveComponent,
       ClosingOfferComponent,
-
-      //SchedulerComponent
-      //GanttComponent,
+      PropertyComponent,
+      PropertyDetailComponent,
 
   ],
   providers: [

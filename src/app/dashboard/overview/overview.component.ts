@@ -7,15 +7,11 @@ import {Ad} from '@app/dashboard/models/ad';
 import {ReminderService} from "@app/_services/reminder.service";
 import {Reminder} from "@app/_models/reminder";
 import {MatSnackBar} from "@angular/material/snack-bar";
-//import { Chart } from 'chart.js';
-//import * as Chart from 'chart.js';
-
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
-  //encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements  OnInit {
 
@@ -36,7 +32,6 @@ export class OverviewComponent implements  OnInit {
   ) {}
 
   ngOnInit() {
-
     this.reminderService
       .getReminderList()
       .subscribe((response) => {
@@ -50,20 +45,7 @@ export class OverviewComponent implements  OnInit {
             });
           }
         }
-        console.warn(response);
-
-      })
-    /*this.dataSource.paginator = this.paginator;
-    this.dashboardService.getAds().subscribe(
-      (ads: Ad[]) => {
-        this.ads = ads;
-        ads.splice(3, 28)
-        console.log(ads)
-      }, (error) => {
-        console.log(error);
-      });*/
-
-
+      });
     }
 
   onArchiveReminder(reminder: Reminder) {

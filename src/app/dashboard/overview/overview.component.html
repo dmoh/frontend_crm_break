@@ -22,7 +22,7 @@ background-color: #F5F5F5 ; padding: 3rem">
     </div>
     <div *ngFor="let reminder of reminders" class="col-3">
       <div style="width: 100%" class="cards">
-        <mat-card style="border-radius: 5px; border-left: 3px solid #ff3c3c; overflow: auto">
+        <mat-card style="border-radius: 5px; border-left: 3px solid #3f51b5; overflow: auto">
           <mat-card-header style="align-items: baseline; justify-content: space-between; margin: 0 !important;" class="d-flex card-header-style">
             <mat-card-title style="font-size: small">{{ reminder.subject }}</mat-card-title>
             <div style="align-items: baseline">
@@ -33,8 +33,8 @@ background-color: #F5F5F5 ; padding: 3rem">
           </mat-card-header>
           <mat-card-content style="text-align: left;">
             <p style="font-size: small; font-weight: bold; color:#c9c9c9;">{{ reminder.message }}</p>
-            <div>
-              <button mat-raised-button color="primary" (click)="onArchiveReminder(reminder)">
+            <div style="width: 100%">
+              <button style="float: right" mat-raised-button color="primary" (click)="onArchiveReminder(reminder)">
                 OK
               </button>
             </div>
