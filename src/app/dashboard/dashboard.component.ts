@@ -48,10 +48,10 @@ export class DashboardComponent implements OnInit {
       this.buyerService
         .getRoleUserCurrent()
         .subscribe((res) => {
+          this.username = res.username;
           if (res.role) {
             if (/ROLE_SUPER_ADMIN/.test(res.role)) {
               this.admin = true;
-              this.username = res.username;
             }
           }
         })
