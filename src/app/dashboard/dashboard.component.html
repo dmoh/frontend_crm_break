@@ -5,7 +5,7 @@
         </span>
         <span style="">B R E C</span>
         <span class="example-spacer"></span>
-        <form class="example-form" style="margin-right: 25px;">
+        <!--<form class="example-form" style="margin-right: 25px;">
             <mat-form-field style="font-size: small; margin-top: .25rem; ">
               <input class="search"
                        type="search"
@@ -24,12 +24,10 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-
-
-        </form>
+        </form>-->
         <!--<mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>-->
         <div class="icons">
-          <span class="material-icons-outlined">
+          <!--<span class="material-icons-outlined">
           language
           </span>
           <span class="material-icons-outlined">
@@ -37,8 +35,8 @@
           </span>
           <span matBadge="5" matBadgeColor="accent" class="material-icons-outlined">
             notifications
-            </span>
-            <span class="material-icons-outlined" (click)="logout()">
+          </span>-->
+          <span class="material-icons-outlined" (click)="logout()">
             logout
           </span>
           </div>
@@ -65,7 +63,7 @@
       <!--<div class="list" *ngIf="admin">-->
         <div class="list">
 
-        <div class="role-user">{{autService.loggedUserRole | uppercase}}</div>
+        <div class="role-user">{{ username | uppercase}}</div>
         <mat-nav-list style="text-align: center">
           <a mat-list-item [routerLink]="'/dashboard/overview'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
@@ -160,7 +158,7 @@
               </div>
             </div>
           </a>
-          <a mat-list-item [routerLink]="'/dashboard/task'" routerLinkActive="active">
+          <a mat-list-item *ngIf="admin" [routerLink]="'/dashboard/task'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -175,7 +173,7 @@
           </a>
 
 
-          <a mat-list-item [routerLink]="'/dashboard/gant'" routerLinkActive="active">
+          <a mat-list-item *ngIf="admin" [routerLink]="'/dashboard/gant'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -191,7 +189,7 @@
 
 
 
-          <a mat-list-item [routerLink]="'/dashboard/billing'" routerLinkActive="active">
+          <a mat-list-item *ngIf="admin" [routerLink]="'/dashboard/billing'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -204,7 +202,7 @@
               </div>
             </div>
           </a>
-          <a mat-list-item [routerLink]="'/dashboard/members'" routerLinkActive="active">
+          <a mat-list-item *ngIf="admin" [routerLink]="'/dashboard/members'" routerLinkActive="active">
             <div style="display: flex;width: 100%;justify-content: space-between;">
               <div class="">
                 <span class="material-icons-outlined">
@@ -237,9 +235,8 @@
                   groups
                   </span>
               </div>
-              <div class="" style="text-align: center; align-self: center">Archive</div>
+              <div class="" style="text-align: center; align-self: center">Archives</div>
               <div style="align-self: center;">
-
               </div>
             </div>
           </a>

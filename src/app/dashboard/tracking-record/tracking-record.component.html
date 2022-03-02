@@ -3,7 +3,20 @@
     <div class="row">
       <div *ngFor="let sale of sales" class="col-md-3">
         <div class="card">
+          <div *ngIf="sale.offer.property.medias && sale.offer.property.medias.length > 0">
+            <div
+              *ngFor="let media of sale.offer.property.medias"
+              style="background: url('assets/images/brec-bg.jpg') no-repeat top left;background-size: cover;height: 200px"
+              [ngStyle]=
+                "{
+                'background-image': media.typeMedia == 'photos' ?
+                 environment.baseApiUrl + '/uploads/medias/' + media.filename : 'assets/images/brec-bg.jpg'
+                }"
+              class="card-header">
+            </div>
+          </div>
           <div
+            *ngIf="!sale.offer.property.medias || sale.offer.property.medias.length == 0"
             style="background: url('assets/images/brec-bg.jpg') no-repeat top left;background-size: cover;height: 200px"
             class="card-header">
           </div>

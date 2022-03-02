@@ -81,6 +81,9 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       .drawer
       .subscribe((res) =>{
         this.opened = res;
+        if (!res) {
+          this.getBuyerList();
+        }
       });
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');

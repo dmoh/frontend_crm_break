@@ -6,6 +6,7 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {DashboardService} from "./dashboard.service";
+import {BuyerService} from "@app/_services/buyer.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,9 +22,11 @@ export class DashboardComponent implements OnInit {
   users: any[] = [];
   admin: boolean;
   secretaire: Boolean;
+  username:string;
 
     constructor(private dashboardService: DashboardService,
                 private authenticationService: AuthenticationService,
+                private buyerService: BuyerService, //todo modifier  imperativemnt
                 public autService: AutServiceService) { }
 
     ngOnInit(): void {
@@ -42,6 +45,16 @@ export class DashboardComponent implements OnInit {
       if (this.autService.loggedUserRole === 'secretaire') {
         this.secretaire = true;
       }
+      this.buyerService
+        .getRoleUserCurrent()
+        .subscribe((res) => {
+          if (res.role) {
+            if (/ROLE_SUPER_ADMIN/.test(res.role)) {
+              this.admin = true;
+              this.username = res.username;
+            }
+          }
+        })
     }
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();

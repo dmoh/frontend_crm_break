@@ -57,6 +57,8 @@ export class ContactFormComponent implements OnInit {
         });
 
       this.buyerService.buyerCurrent.subscribe((buyer) => {
+        this.agentsBuyer = new FormArray([]);
+
         this.buyer = buyer;
         this.initForm(this.buyer);
       });
@@ -129,7 +131,7 @@ export class ContactFormComponent implements OnInit {
         if (res.ok) {
           this.snackBar.open('Mise à jour avec succés', 'ok', {
             duration: 4500
-          })
+          });
           buyerCurrent = res.buyer;
           this.buyer = res.buyer;
           this.buyerService

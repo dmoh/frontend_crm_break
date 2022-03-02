@@ -11,7 +11,6 @@ export class GlobalHttpService {
   constructor(protected http: HttpClient,  private authenticate: AuthenticationService) {
     this.headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
     if (this.authenticate.tokenUserCurrent) {
-      console.warn('je passe bien là');
       this.headers.append(`Authorization`,  `
       Bearer ${this.authenticate.tokenUserCurrent}`) ;
     }
