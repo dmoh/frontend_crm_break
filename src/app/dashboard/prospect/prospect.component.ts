@@ -294,4 +294,17 @@ export class ProspectComponent implements OnInit, OnDestroy {
   onOpenProperty(data) {
 
   }
+
+  onShowProperty(prop) {
+    this.propertyService
+      .setPropertyCurrent(prop);
+    const dialogRef = this.dialog.open(PropertyDetailComponent, {
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        property:prop,
+        showOnly: true
+      }
+    });
+  }
 }

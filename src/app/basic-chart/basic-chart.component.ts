@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from "@angular/core";
+import {Component, ViewChild, OnInit, Input} from "@angular/core";
 
 import {
   ChartComponent,
@@ -35,13 +35,19 @@ export type ChartOptions = {
 export class BasicChartComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-
+  @Input() turnover = [];
+  @Input() dates = [];
+  @Input() ca = null;
   constructor() {
+
+   }
+
+  ngOnInit(): void {
     this.chartOptions = {
       series: [
         {
-          name: "STOCK ABC",
-          data: series.monthDataSeries1.prices
+          name: "CA",
+          data:  this.turnover // series.monthDataSeries1.prices
         }
       ],
       chart: {
@@ -59,14 +65,14 @@ export class BasicChartComponent implements OnInit {
       },
 
       title: {
-        text: "Evolution du Chiffre d'affaires",
+        text: "Chiffre d'affaires de la semaine " + this.ca + "CHF",
         align: "center"
       },
       subtitle: {
-        text: "CA Movements",
+        text: "",
         align: "center"
       },
-      labels: series.monthDataSeries1.dates,
+      labels: this.dates, // series.monthDataSeries1.dates,
       xaxis: {
         type: "datetime"
       },
@@ -77,9 +83,6 @@ export class BasicChartComponent implements OnInit {
         horizontalAlign: "left"
       }
     };
-   }
-
-  ngOnInit(): void {
   }
 
 }

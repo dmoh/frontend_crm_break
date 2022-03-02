@@ -32,4 +32,18 @@ export class ReminderService extends GlobalHttpService{
     )
   }
 
+  getAllStats(collaboratorId?: number) {
+    return this.http
+      .post<any>(`${environment.baseApiUrl}/stats/list`,
+        {
+          collaboratorId: !collaboratorId ? null : collaboratorId
+        },
+        {headers: this.headers}
+      );
+  }
+
+  statsByCollaboratorId(collaboratorId: number) {
+    return this.http
+      .post<any>(`${environment.baseApiUrl}/stats/list`,  {headers: this.headers});
+  }
 }

@@ -4,29 +4,20 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/index';
 import {Ad} from './models/ad';
 import {Contact} from './models/contact';
+import {GlobalHttpService} from "@app/_services/global-http.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class DashboardService extends GlobalHttpService{
 
   urlBase: string = environment.baseApiUrl;
-  httpOptions: {headers: HttpHeaders} = {
-      headers: new HttpHeaders(
-          {
-              'Content-Type': 'application/json',
-              Accept: '*/*'
-          }
-      )
-  };
-  constructor(private http: HttpClient) {
 
-  }
 
 
     getUsers(): Observable<any[]> {
         return this.http
-            .get<any[]>(`${this.urlBase}/user/list`, this.httpOptions);
+            .get<any[]>(`${this.urlBase}/user/list`);
     }
 
     updateAd( fd: FormData): Observable<any> {
@@ -41,23 +32,27 @@ export class DashboardService {
 
     getAds(): Observable<any[]> {
         return this.http
-            .get<any[]>(`${this.urlBase}/ad/list`, this.httpOptions);
+            .get<any[]>(`${this.urlBase}/ad/list`);
     }
 
 
     getCategories(): Observable<any[]> {
         return this.http
-            .get<any[]>(`${this.urlBase}/category/list`, this.httpOptions);
+            .get<any[]>(`${this.urlBase}/category/list`);
     }
 
 
     getContactList(): Observable<Contact[]> {
       return this.http
-        .get<Contact[]>(`${this.urlBase}/contact/list`, this.httpOptions);
+        .get<Contact[]>(`${this.urlBase}/contact/list`);
     }
 
     getAdsContacts() {
       return this.http
-        .get<Contact[]>(`${this.urlBase}/ad/contact`, this.httpOptions);
+        .get<Contact[]>(`${this.urlBase}/ad/contact`);
     }
+
+
+
+
 }

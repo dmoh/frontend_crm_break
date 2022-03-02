@@ -17,6 +17,7 @@ export class TrackingRecordComponent implements OnInit {
       .subscribe((res) => {
         if (res.sales) {
           this.sales = res.sales;
+
         }
       });
   }

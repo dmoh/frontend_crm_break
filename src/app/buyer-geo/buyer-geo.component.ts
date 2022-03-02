@@ -18,6 +18,7 @@ export class BuyerGeoComponent implements OnInit {
   apiLoaded: Observable<boolean>;
   markers = [];
   prospects = [];
+  prospectsSale = [];
   @ViewChild(GoogleMap, {static: false}) map: GoogleMap;
   @ViewChild(MapInfoWindow, {static: false}) infoMap: MapInfoWindow
   zoom = 17;
@@ -67,10 +68,16 @@ export class BuyerGeoComponent implements OnInit {
     this.prospectService.findProspectByLocation(this.info)
       .subscribe((res) => {
         if (res.prospects) {
-          this.prospects = res.prospects;
+          console.warn(res.prospects);
+          this.prospects = res.prospects.street;
+          this.prospectsSale = res.prospects.sales;
           this.prospects.forEach((elem) => {
             const address = `${elem.street}, ${elem.city}`;
             this.codeAddress(address, elem);
+          });
+          this.prospectsSale.forEach((elem) => {
+            const address = `${elem.street}, ${elem.city}`;
+            this.codeAddress(address, elem, true);
           });
         }
       });
@@ -79,7 +86,7 @@ export class BuyerGeoComponent implements OnInit {
 
   }
 
-  addMarker(lat: string, long: string, prospect?: any) {
+  addMarker(lat: string, long: string, prospect?: any, isSale?: boolean) {
     if (this.isInitMap) {
       this.center = new google.maps.LatLng(+lat, +long);
       this.isInitMap = false;
@@ -95,7 +102,10 @@ export class BuyerGeoComponent implements OnInit {
       anchor: new google.maps.Point(15, 30),
     };
 
-    const icon = "http://localhost:4200/assets/images/shop.png"
+    let icon = prospect ? svgMarker : 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+    if (isSale) {
+      icon = "http://localhost:4200/assets/images/shop.png";
+    }
     const infoMessage = prospect ?
       `<div style="padding: 2rem; font-size: x-large; color: #007bff">
             ${prospect.owners}
@@ -116,8 +126,7 @@ export class BuyerGeoComponent implements OnInit {
       title: `Proprio: ${prospect ? prospect.owners : this.info.owners}`,
       options: {
         animation: google.maps.Animation.BOUNCE,
-        icon:
-            prospect ? svgMarker : 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+        icon: icon
       },
     });
 
@@ -132,7 +141,7 @@ export class BuyerGeoComponent implements OnInit {
     if (this.zoom > this.options.minZoom) this.zoom--
   }
 
-  codeAddress(address, prospect?: any) {
+  codeAddress(address, prospect?: any, isSale?: boolean) {
     this.geocoder.geocode({address: address}, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {
         const latitude = results[0].geometry.location.lat();

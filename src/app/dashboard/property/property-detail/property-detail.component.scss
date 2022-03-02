@@ -1,9 +1,14 @@
-.container-file {
+.container-file, .container-file-view {
   justify-content: space-between;
   padding: 1rem;
   border: 1px solid #f6f6f6;
   margin-bottom: .5rem;
   align-items: center;
+}
+
+.container-file-view {
+  justify-content: start;
+  align-items: start;
 }
 
 .file-container {

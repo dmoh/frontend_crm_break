@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Property} from "@app/_models/property";
 import {FileService} from "@app/_services/file.service";
 import {Address} from "@app/_models/address";
 import {PropertyService} from "@app/_services/property.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Owner} from "@app/_models/owner";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -41,15 +41,19 @@ export class PropertyDetailComponent implements OnInit {
   @ViewChild('buildingPlans') buildingPlans;
   @ViewChild('listOfWorks') listOfWorks;
   @ViewChild('photos') photos;
+  showOnly = false;
 
   constructor(
     private fileService: FileService,
     private propertyService: PropertyService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<any>
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
+    if (this.data.showOnly) {
+      this.showOnly = this.data.showOnly;
+    }
     this.initForm();
   }
 
@@ -167,6 +171,7 @@ export class PropertyDetailComponent implements OnInit {
           this.property.owner.customerType = property.customerType;
         }
         this.initForm();
+        this.calculateYield();
       });
   }
 
@@ -271,6 +276,7 @@ export class PropertyDetailComponent implements OnInit {
     }
 
     this.property = Object.assign(this.property, this.propertyForm.value);
+    this.calculateYield(true);
     this.property.address = Object.assign(this.property.address, this.propertyAddressForm.value);
     this.property.owner = Object.assign(this.property.owner, this.ownerForm.value);
     console.warn('proper detail', this.property);
@@ -289,7 +295,6 @@ export class PropertyDetailComponent implements OnInit {
             this.dialogRef.close(true);
           }
         }
-
       });
 
   }
@@ -305,5 +310,50 @@ export class PropertyDetailComponent implements OnInit {
           });
         }
       });
+  }
+
+
+  private calculateYield(isSubmitted = false) {
+    this.propertyForm
+      .get('yield')
+      .disable();
+    this.propertyForm.get('sellingPrice')
+      .valueChanges
+      .subscribe((sellingPrice) => {
+        this.propertyForm.get('rentalStatus')
+          .valueChanges
+          .subscribe((rentalStatus) => {
+            if (+sellingPrice > 0 && +rentalStatus > 0) {
+              const yieldCalculate = Math.round((+rentalStatus / +sellingPrice) * 100);
+              this.propertyForm.get('yield')
+                .patchValue(yieldCalculate);
+            }
+          })
+      });
+    this.propertyForm.get('rentalStatus')
+      .valueChanges
+      .subscribe((sellingPrice) => {
+        this.propertyForm.get('sellingPrice')
+          .valueChanges
+          .subscribe((rentalStatus) => {
+            if (+sellingPrice > 0 && +rentalStatus > 0) {
+              const yieldCalculate = Math.round((+rentalStatus / +sellingPrice) * 100);
+              this.propertyForm.get('yield')
+                .patchValue(yieldCalculate);
+            }
+          })
+      });
+    if (isSubmitted) {
+      const sellingPrice = this.propertyForm.get('sellingPrice')
+        .value;
+      const rentalStatus = this.propertyForm.get('rentalStatus')
+        .value;
+
+      if (sellingPrice && rentalStatus && +sellingPrice > 0 && +rentalStatus > 0) {
+        if (+sellingPrice > 0 && +rentalStatus > 0) {
+          this.property.yield = Math.round((+rentalStatus / +sellingPrice) * 100);
+        }
+      }
+    }
   }
 }

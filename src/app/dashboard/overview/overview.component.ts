@@ -7,6 +7,8 @@ import {Ad} from '@app/dashboard/models/ad';
 import {ReminderService} from "@app/_services/reminder.service";
 import {Reminder} from "@app/_models/reminder";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UsersService} from "@app/_services/users.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-overview',
@@ -24,11 +26,19 @@ export class OverviewComponent implements  OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   reminders: Reminder[] = [];
   showSpinnerReminder = true;
+  showSpinnerStats = true;
+  stats: any;
+  statsChart: any;
+  turnover: number;
+  collaborators;
+  showListCollaborator = false;
+  collaboratorCtrl = new FormControl();
 
   constructor(
     private dashboardService: DashboardService,
     private reminderService: ReminderService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
@@ -46,6 +56,11 @@ export class OverviewComponent implements  OnInit {
           }
         }
       });
+    this.reminderService
+      .getAllStats()
+      .subscribe((res) => {
+        this.initStats(res);
+      } );
     }
 
   onArchiveReminder(reminder: Reminder) {
@@ -62,6 +77,52 @@ export class OverviewComponent implements  OnInit {
         })
       });
   }
+  onGetStatsByCollaboratorId() {
+    const collabs = this.collaboratorCtrl.value;
+    if (collabs && +collabs > 0) {
+      this.showSpinnerStats = true;
+      this.reminderService
+        .getAllStats(collabs)
+        .subscribe((res) =>  {
+          setTimeout(() => {
+            this.initStats(res);
+          }, 2500);
+        })
+      ;
+    }
+  }
+  private initStats(res: any) {
+    if (res.stats) {
+      this.stats = res.stats;
+    } else {
+      this.stats = OverviewComponent.statsInit();
+    }
+    if (res.turnover) {
+      this.userService
+        .getMemberList()
+        .subscribe((resp) => {
+          this.collaborators = resp.users;
+          this.showListCollaborator = true;
+        });
+      this.turnover = res.turnover;
+    }
+    if (res.statsChart) {
+      this.statsChart = res.statsChart;
+    }
+    this.showSpinnerStats = false;
+  }
+
+
+  private static statsInit() {
+    return {
+      nbCall: 0,
+      nbOfferMade: 0,
+      nbVisit: 0,
+      nbOfferClosing: 0
+    };
+  }
 }
+
+
 
 

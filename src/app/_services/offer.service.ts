@@ -46,5 +46,9 @@ export class OfferService extends GlobalHttpService{
   }
 
 
+  getOfferArchiveList(): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/offer/archive/list`)
+  }
+
 
 }

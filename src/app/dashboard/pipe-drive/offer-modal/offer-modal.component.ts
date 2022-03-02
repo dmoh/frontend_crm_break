@@ -16,6 +16,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {Owner} from "@app/_models/owner";
+import {Address} from "@app/_models/address";
 
 @Component({
   selector: 'app-offer-modal',
@@ -81,7 +82,7 @@ export class OfferModalComponent implements OnInit {
       .propertyCurrent
       .subscribe((prop: Property) => {
         this.offer.property = prop;
-        this.initForm();
+        // this.initForm();
         this.calculateYield();
         this.findProperty();
       });
@@ -114,6 +115,7 @@ export class OfferModalComponent implements OnInit {
     });
 
     this.sendMailBuyersCtrl.patchValue(this.offer.sendMailBuyers);
+/*
 
     this.propertyForm = this.formBuilder.group({
       labelTypeProperty: [this.offer.property.labelTypeProperty],
@@ -128,6 +130,21 @@ export class OfferModalComponent implements OnInit {
     });
 
 
+    if (!this.offer.property.address) {
+      this.offer.property.address = new Address();
+      if(this.offer.property.street) {
+        this.offer.property.address.street = this.offer.property.street;
+      }
+      if(this.offer.property.city) {
+        this.offer.property.address.city = this.offer.property.city;
+      }
+      if(this.offer.property.zipcode) {
+        this.offer.property.address.zipcode = this.offer.property.zipcode;
+      }
+      if(this.offer.property.canton) {
+        this.offer.property.address.canton = this.offer.property.canton;
+      }
+    }
     this.propertyAddressForm = this.formBuilder.group({
       street: [this.offer.property.address.street],
       city: [this.offer.property.address.city],
@@ -135,18 +152,19 @@ export class OfferModalComponent implements OnInit {
       canton: [this.offer.property.address.canton],
       country: [this.offer.property.address.country]
     });
+*/
 
     this.initOwnerForm();
-    this.ownerForm = this.formBuilder.group({
+    /*this.ownerForm = this.formBuilder.group({
       name: new FormControl(this.offer.property.owner.name, [Validators.required]),
       email: new FormControl(this.offer.property.owner.email, [Validators.required]),
       phoneNumber: new FormControl(this.offer.property.owner.phoneNumber),
       comment: new FormControl(this.offer.property.owner.comment),
       customerType: new FormControl(this.offer.property.owner.customerType), // todo type society/particular
-      /* budgetMin: new FormControl(''), // todo type society/particular
-       budgetMax: new FormControl('') */// todo type society/particular
-    });
-
+      budgetMin: new FormControl(''), // todo type society/particular
+       budgetMax: new FormControl('') // todo type society/particular
+    });*/
+/*
     this.propertyForm
       .get('typeProperty')
       .valueChanges
@@ -159,11 +177,15 @@ export class OfferModalComponent implements OnInit {
           this.property.labelTypeProperty = Helper.getLabelTypePropertyByValue(val);
         }
 
-      });
+      });*/
   }
 
   onSubmit(): void {
-    this.assignOffer();
+    // this.assignOffer();
+    console.warn('offer before merge', this.offer);
+    this.offer = Object.assign(this.offer, this.offerForm.value);
+    this.offer.property.sellingPrice = this.offer.sellingPropositionPrice;
+    console.warn('offer after merge', this.offer);
     console.warn('buyers', this.buyersForm.value);
     const newBuyers = this.buyersForm.value;
     if (newBuyers.length > 0) {
@@ -174,7 +196,7 @@ export class OfferModalComponent implements OnInit {
     }
     this.offer.potentialBuyers = this.buyers;
     console.warn('offer final', this.offer);
-    this.offer.property.yield = this.propertyForm.get('yield').value;
+    // this.offer.property.yield = this.propertyForm.get('yield').value;
     console.warn('offer final 2', this.offer);
     this.offerService
       .updateOffer(this.offer)
@@ -205,17 +227,19 @@ export class OfferModalComponent implements OnInit {
 
   private assignOffer(): void {
     this.offer = Object.assign(this.offer, this.offerForm.value);
-    this.offer.property = Object.assign(this.offer.property, this.propertyForm.value);
+    // this.offer.property = this.property;
+
+    /*this.offer.property = Object.assign(this.offer.property, this.propertyForm.value);
     this.offer.property.address = Object.assign(this.offer.property.address, this.propertyAddressForm.value);
     if (!this.offer.property.owner) {
       this.initOwnerForm();
     }
-    this.offer.property.owner = Object.assign(this.offer.property.owner, this.ownerForm.value);
+    this.offer.property.owner = Object.assign(this.offer.property.owner, this.ownerForm.value);*/
     this.offer.property.sellingPrice = this.offer.sellingPropositionPrice;
   }
 
   private calculateYield() {
-    this.propertyForm
+    /*this.propertyForm
       .get('yield')
       .disable();
     this.propertyForm.get('sellingPrice')
@@ -230,7 +254,7 @@ export class OfferModalComponent implements OnInit {
                 .patchValue(yieldCalculate);
             }
           })
-      });
+      });*/
   }
 
 
@@ -272,7 +296,7 @@ export class OfferModalComponent implements OnInit {
     );
     console.warn(property.owners);
     console.warn(this.property);
-    this.property = property;
+    //this.property = property;
     console.warn('dsdsds', this.property);
 
     this.offer.property = Object.assign(this.offer.property, this.property);
@@ -281,13 +305,13 @@ export class OfferModalComponent implements OnInit {
     this.offer.property.yield = this.property.yield;
     console.warn(this.offer);
 
-    this.setValuesForm('address', 'street', property.street);
+    /*this.setValuesForm('address', 'street', property.street);
     this.setValuesForm('address', 'city', property.city);
     this.setValuesForm('address', 'canton', property.canton);
     this.setValuesForm('address', 'zipcode', property.zipcode);
     this.setValuesForm('address', 'country', property.country);
     this.setValuesForm('owner', 'name', property.owners);
-    this.setValuesForm('property', 'typeProperty', property.propertyType);
+    this.setValuesForm('property', 'typeProperty', property.propertyType);*/
     console.warn('prop', this.offer);
     this.propertyService
       .setPropertyCurrent(this.offer.property);
@@ -340,7 +364,7 @@ export class OfferModalComponent implements OnInit {
   onChange(option) {
     this.findOwners = false;
     this.mergeProperty(option);
-    setTimeout(_ => this.findOwners = true, 2500);
+    setTimeout(_ => this.findOwners = true, 500);
   }
   openEmail(buyer: Buyer):void {
     const dialogRef = this.dialog.open(TemplateMailComponent, { // todo globaliser modal

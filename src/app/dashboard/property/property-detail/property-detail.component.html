@@ -8,7 +8,332 @@
         </button>
       </div>
     </div>
-    <div style="padding: .5rem;border-radius: 5px;border: 1px solid #e4e4e4;">
+    <div *ngIf="property && showOnly" style="padding: 1rem; margin: 1rem;border-top: 1px solid #ccc" class="container-fluid">
+      <h6>Propriétaire du bien</h6>
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <div>
+              <span style="display: block">Nom</span> <b><em>{{ property.owner.name }}</em></b>
+              <span style="display: block">Email</span> <b><em>{{ property.owner.email }}</em></b>
+              <span style="display: block">Tèl</span> <b><em>{{ property.owner.phoneNumber }}</em></b>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <div>
+              <span style="display: block">Rue, avenue </span> <b><em>{{ property.address.street }}</em></b>
+              <span style="display: block">Ville</span> <b><em>{{ property.address.city }}</em></b>
+              <span style="display: block">Code postale</span> <b><em>{{ property.address.zipcode }}</em></b>
+              <span style="display: block">Canton</span> <b><em>{{ property.address.canton }}</em></b>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <div>
+              <span style="display: block">Type de propriété </span> <b><em>{{ property.labelTypeProperty }}</em></b>
+              <span style="display: block">Régime de l'immeuble </span>
+              <b>
+                <em *ngIf="property.propertyRegime && property.propertyRegime == 1">Société (Share Deal)</em>
+                <em *ngIf="property.propertyRegime && property.propertyRegime == 2">Nom (Asset Deal)</em>
+                <em *ngIf="!property.propertyRegime">--</em>
+              </b>
+              <span style="display: block">Commentaire</span> <b><em>{{ property.comment}}</em></b>
+              <span style="display: block">Prix</span> <b><em>{{ property.sellingPrice }}</em></b>
+              <span style="display: block">État locatif (montant)</span> <b><em>{{ property.rentalStatus }}</em></b>
+              <span style="display: block">Rendement</span> <b *ngIf="property.yield"><em>{{ property.yield }}%</em></b>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h6>Informations complémentaires</h6>
+          <div>
+            <div>
+
+              <div class="d-flex">
+                <b><em>Comptes de gestion
+                  détaillés</em></b>
+              </div>
+              <div class="d-flex">
+
+              </div>
+              <div class="d-flex">
+
+                <b><em>Assurance bâtiment</em></b>
+              </div>
+              <div class="d-flex">
+                <b><em>Plans et coupes de
+                  l'immeuble</em></b>
+              </div>
+              <div class="d-flex">
+
+                <b><em>Liste des travaux effectués</em></b>
+              </div>
+              <div class="d-flex">
+
+                <b><em>Photos</em></b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasRentalStatus">
+                <mat-icon style="color: green">done</mat-icon>
+              </span>
+              <span *ngIf="!property.hasRentalStatus">
+                <mat-icon style="color: red">cancel</mat-icon>
+              </span>
+              Etat locatif détaillé
+            </div>
+            <div *ngIf="filesRentalStatus && filesRentalStatus.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesRentalStatus">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesRentalStatus')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasDetailedManagementAccount">
+                <mat-icon style="color: green">done</mat-icon>
+              </span>
+              <span *ngIf="!property.hasDetailedManagementAccount">
+                  <mat-icon style="color: red">cancel</mat-icon>
+                </span>Comptes de gestion
+                détaillés
+            </div>
+            <div *ngIf="filesDetailedManagementAccount && filesDetailedManagementAccount.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesDetailedManagementAccount">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasExtractLandRegister">
+                  <mat-icon style="color: green">done</mat-icon>
+                </span>
+              <span *ngIf="!property.hasExtractLandRegister">
+                  <mat-icon style="color: red">cancel</mat-icon>
+                </span>Extrait registre
+            </div>
+            <div *ngIf="filesExtractLandRegister && filesExtractLandRegister.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesExtractLandRegister">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasBuildingInsurance">
+                  <mat-icon style="color: green">done</mat-icon>
+                </span>
+              <span *ngIf="!property.hasBuildingInsurance">
+                  <mat-icon style="color: red">cancel</mat-icon>
+                </span>Assurance bâtiment
+            </div>
+            <div *ngIf="filesBuildingInsurance && filesBuildingInsurance.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingInsurance">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesBuildingInsurance')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasBuildingPlans">
+                  <mat-icon style="color: green">done</mat-icon>
+                </span>
+              <span *ngIf="!property.hasBuildingPlans">
+                  <mat-icon style="color: red">cancel</mat-icon>
+                </span>Plans et coupes de l'immeuble
+            </div>
+            <div *ngIf="filesBuildingPlans && filesBuildingPlans.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingPlans">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasListOfWorks">
+                <mat-icon style="color: green">done</mat-icon>
+              </span>
+              <span *ngIf="!property.hasListOfWorks">
+                <mat-icon style="color: red">cancel</mat-icon>
+              </span>Liste des travaux effectués
+            </div>
+            <div *ngIf="filesListOfWorks && filesListOfWorks.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesListOfWorks">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="file-container">
+            <div class="d-flex container-file-view">
+              <span *ngIf="property.hasPhotos">
+                  <mat-icon style="color: green">done</mat-icon>
+                </span>
+              <span *ngIf="!property.hasPhotos">
+                  <mat-icon style="color: red">cancel</mat-icon>
+                </span>Photos
+            </div>
+            <div *ngIf="filesPhotos && filesPhotos.length > 0">
+              <ul style="margin-left: 0; padding-left: 0">
+                <li style="display: flex;" class="align-items-center" *ngFor="let media of filesPhotos">
+                  <div class="d-flex">
+                    <a *ngIf="media.isDocument"
+                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       target="_blank">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <div>
+                          <mat-icon color="primary">insert_drive_file</mat-icon>
+                        </div>
+                        <div>
+                          <span>{{ media.originalFilename }}</span>
+                        </div>
+                      </div>
+                    </a>
+                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                         alt="{{media.originalFilename}}">
+                  </div>
+                  <div *ngIf="+media.id > 0" style="cursor: pointer">
+                    <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!showOnly" style="padding: .5rem;border-radius: 5px;border: 1px solid #e4e4e4;">
       <form [formGroup]="ownerForm">
         <div class="container-fluid">
           <h6>Propriétaire du bien</h6>
@@ -95,17 +420,16 @@
         <div class="container-fluid">
           <h6>Info. du bien</h6>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-select placeholder="Régime de l'immeuble"
-                            [value]="1"
                             formControlName="propertyRegime">
                   <mat-option [value]="1">Société (Share Deal)</mat-option>
                   <mat-option [value]="2">Nom (Asset Deal)</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-select placeholder="Typologie immeuble"
                             formControlName="typeProperty">
@@ -127,6 +451,8 @@
                 </mat-select>
               </mat-form-field>
             </div>
+          </div>
+          <div class="row">
             <div class="col-md-4">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-label>Prix de vente</mat-label>
@@ -134,6 +460,25 @@
                        matInput
                        [autocomplete]="'off'"
                        formControlName="sellingPrice"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Montant état locatif</mat-label>
+                <input type="text"
+                       matInput
+                       [autocomplete]="'off'"
+                       formControlName="rentalStatus"/>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field style="width: 100%" appearance="outline">
+                <mat-label>Rendement (%)</mat-label>
+                <input type="text"
+                       matInput
+                       [disabled]="true"
+                       [autocomplete]="'off'"
+                       formControlName="yield"/>
               </mat-form-field>
             </div>
           </div>
@@ -344,7 +689,7 @@
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
-                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesPhotos')">highlight_off</mat-icon>
+                        <mat-icon style="color: red" (click)="onRemoveMedia(media.id, 'filesBuildingInsurance')">highlight_off</mat-icon>
                       </div>
                     </li>
                   </ul>
@@ -352,7 +697,8 @@
               </div>
               <div class="file-container">
                 <div class="d-flex container-file">
-                  <mat-slide-toggle style="display: block" formControlName="hasBuildingPlans">Plans et coupes de
+                  <mat-slide-toggle style="display: block" formControlName="hasBuildingPlans">
+                    Plans et coupes de
                     l'immeuble
                   </mat-slide-toggle>
                   <div>

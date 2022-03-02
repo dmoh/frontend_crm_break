@@ -164,9 +164,14 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: auto">Action</th>
             <td style="font-size: smaller" mat-cell *matCellDef="let data">
               <div style="justify-content: center; align-items: center" class="d-flex">
-                <div class="edit-property">
+                <div style="margin: .5rem" class="edit-property">
                   <button style="width: 35px; height: 35px" (click)="onAddProperty(data)" mat-fab color="accent">
                     <mat-icon style="color: white;">create</mat-icon>
+                  </button>
+                </div>
+                <div class="edit-property">
+                  <button style="width: 35px; height: 35px" (click)="onShowProperty(data)" mat-fab color="primary">
+                    <mat-icon style="color: white;">visibility</mat-icon>
                   </button>
                 </div>
               </div>
