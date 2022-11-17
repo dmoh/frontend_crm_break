@@ -192,4 +192,14 @@ export class ContactFormComponent implements OnInit {
   }
 
 
+  onRemoveBuyer() {
+    this.buyerService
+      .removeBuyer(this.buyer.id)
+      .subscribe((res) => {
+        if (res.ok) {
+          this.buyerService
+            .setStateDrawer(false);
+        }
+      })
+  }
 }

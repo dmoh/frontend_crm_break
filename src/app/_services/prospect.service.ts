@@ -29,7 +29,6 @@ export class ProspectService extends GlobalHttpService {
     )
   }
 
-
   findProspectByLocation(prospect: any): Observable<any> {
     return this.http.post<any>(`${environment.baseApiUrl}/prospect/find/location`, {
         prospect: prospect

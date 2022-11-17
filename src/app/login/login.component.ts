@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login({username: user.username, password: user.password})
       .subscribe((response) => {
         if(response.token)  {
-          this.router.navigate(['/dashboard/ads']);
+          this.router.navigate(['/dashboard/overview']);
         } else {
         }
       }, error => {

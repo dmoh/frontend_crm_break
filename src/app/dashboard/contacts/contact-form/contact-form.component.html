@@ -2,7 +2,11 @@
     <div class="container" >
       <div style="display: flex; justify-content: space-between;padding-top: 12px; border-radius: 8px;">
         <h5 > Edition/Ajout d'un acheteur </h5>
-
+        <div style="padding: .5rem">
+          <button
+            (click)="onRemoveBuyer()"
+           mat-raised-button color="warn"> Supprimer</button>
+        </div>
       </div>
 
       <!--<div class="contain-foto" style="display: flex;justify-content: center; margin-top: 30px;">
@@ -30,7 +34,10 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Numéro</mat-label>
-          <input type="text" matInput formControlName="phoneNumber" />
+          <input type="text"
+                 placeholder="+(00) 000 00 00"
+                 matInput
+                 formControlName="phoneNumber" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -41,13 +48,19 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Budget Min</mat-label>
-          <input type='number'  formControlName="budgetMin" matInput/>
+          <input
+            type="text"
+            mask="separator"
+            thousandSeparator="."
+            formControlName="budgetMin" matInput/>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline">
           <mat-label>Budget Max</mat-label>
-          <input type='number'  formControlName="budgetMax" matInput/>
+          <input type="text"
+                 mask="separator" thousandSeparator="."
+                 formControlName="budgetMax" matInput/>
         </mat-form-field>
 
         <mat-form-field *ngIf="cantons && cantons.length > 0" appearance="outline">

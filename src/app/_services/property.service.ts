@@ -19,6 +19,12 @@ export class PropertyService extends GlobalHttpService{
     ) : of(false);
   }
 
+  getPotentialBuyerByName(buyerName: string, find: boolean): Observable<any> {
+    return find ? this.http.post<any>(`${environment.baseApiUrl}/buyer/name`, {
+        buyerName: buyerName
+      }
+    ) : of(false);
+  }
 
   setPropertyCurrent(property: Property) {
     this.propertySubject.next(property);

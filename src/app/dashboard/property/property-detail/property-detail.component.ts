@@ -8,6 +8,7 @@ import {PropertyService} from "@app/_services/property.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Owner} from "@app/_models/owner";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {type} from "os";
 
 @Component({
   selector: 'app-property-detail',
@@ -243,58 +244,104 @@ export class PropertyDetailComponent implements OnInit {
     const fd = new FormData();
 
     if (this.filesRentalStatus.length > 0) {
-      // @ts-ignore
-      fd.append('filesRentalStatus[]', this.filesRentalStatus[0][0]);
+      let files = [];
+      console.warn(this.filesRentalStatus);
+
+      files = [...this.filesRentalStatus];
+      console.warn( [files,files[0]]);
+      if(files[0].length > 0) {
+        console.warn('im here');
+        files[0].forEach((file) => {
+          console.warn('file intere', file);
+          fd.append('filesRentalStatus[]', file);
+        });
+      }
+
+
     }
     if (this.filesDetailedManagementAccount.length > 0) {
-      // @ts-ignore
-      fd.append('filesDetailedManagementAccount[]', this.filesDetailedManagementAccount[0][0]);
+      let files = [];
+      files = [...this.filesDetailedManagementAccount];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesDetailedManagementAccount[]', file);
+        });
+      }
     }
 
     if (this.filesExtractLandRegister.length > 0) {
-      // @ts-ignore
-      fd.append('filesExtractLandRegister[]', this.filesExtractLandRegister[0][0]);
+      let files = [];
+      files = [...this.filesExtractLandRegister];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesExtractLandRegister[]', file);
+        });
+      }
     }
     if (this.filesBuildingInsurance.length > 0) {
-
-      // @ts-ignore
-      fd.append('filesBuildingInsurance[]', this.filesBuildingInsurance[0][0]);
+      let files = [];
+      files = [...this.filesBuildingInsurance];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesBuildingInsurance[]', file);
+        });
+      }
     }
 
     if (this.filesBuildingPlans.length > 0) {
-      // @ts-ignore
-      fd.append('filesBuildingPlans[]', this.filesBuildingPlans[0][0]);
+      let files = [];
+      files = [...this.filesBuildingPlans];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesBuildingPlans[]', file);
+        });
+      }
     }
     if (this.filesListOfWorks.length > 0) {
-      // @ts-ignore
-      fd.append('filesListOfWorks[]', this.filesListOfWorks[0][0]);
+      let files = [];
+      files = [...this.filesListOfWorks];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesListOfWorks[]', file);
+        });
+      }
     }
 
     if (this.filesPhotos.length > 0){
-      // @ts-ignore
-      fd.append('filesPhotos[]', this.filesPhotos[0][0]);
+      let files = [];
+      files = [...this.filesPhotos];
+      if(files[0].length > 0) {
+        files[0].forEach((file) => {
+          fd.append('filesPhotos[]', file);
+        });
+      }
     }
 
     this.property = Object.assign(this.property, this.propertyForm.value);
     this.calculateYield(true);
     this.property.address = Object.assign(this.property.address, this.propertyAddressForm.value);
     this.property.owner = Object.assign(this.property.owner, this.ownerForm.value);
-    console.warn('proper detail', this.property);
     fd.append('property', JSON.stringify(this.property));
 
     this.propertyService
       .updateToProperty(fd)
       .subscribe((res) => {
+        let msg = '';
         if (res.ok) {
           this.property = res.property;
           this.propertyService
             .setPropertyCurrent(this.property);
           if (this.isOnOfferModal) {
+            msg = "Propriété mise à jour, bouton 'Suivant' actif";
             this.showNextButton.next(true);
           } else {
+            msg = "Propriété mise à jour";
             this.dialogRef.close(true);
           }
         }
+        this.snackBar.open(msg, 'ok', {
+          duration: 3000
+        })
       });
 
   }
@@ -324,9 +371,9 @@ export class PropertyDetailComponent implements OnInit {
           .valueChanges
           .subscribe((rentalStatus) => {
             if (+sellingPrice > 0 && +rentalStatus > 0) {
-              const yieldCalculate = Math.round((+rentalStatus / +sellingPrice) * 100);
+              const yieldCalculate = ((+rentalStatus / +sellingPrice) * 100);
               this.propertyForm.get('yield')
-                .patchValue(yieldCalculate);
+                .patchValue(yieldCalculate.toFixed(2));
             }
           })
       });
@@ -351,7 +398,8 @@ export class PropertyDetailComponent implements OnInit {
 
       if (sellingPrice && rentalStatus && +sellingPrice > 0 && +rentalStatus > 0) {
         if (+sellingPrice > 0 && +rentalStatus > 0) {
-          this.property.yield = Math.round((+rentalStatus / +sellingPrice) * 100);
+          const yieldCal = ((+rentalStatus / +sellingPrice) * 100);
+          this.property.yield = yieldCal.toFixed(2);
         }
       }
     }

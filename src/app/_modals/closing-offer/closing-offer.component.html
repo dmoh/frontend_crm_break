@@ -4,21 +4,67 @@
     <form [formGroup]="saleForm">
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-label>Prix de vente final</mat-label>
-        <input type="text" matInput
+        <input type="text"
+               matInput
+               mask="separator"
+               thousandSeparator="."
                formControlName="sellingPrice"/>
       </mat-form-field>
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-label>Commission</mat-label>
-        <input type="text" matInput
+        <input type="text"
+               matInput
+               mask="separator"
+               thousandSeparator="."
                formControlName="commission"/>
       </mat-form-field>
       <mat-form-field style="width: 100%" appearance="outline">
         <mat-label>Vendu le</mat-label>
-        <input matInput formControlName="soldAt" [matDatepicker]="picker">
+        <input matInput
+               formControlName="soldAt" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="onSubmit()">
+
+      <h6>Acheteur Final</h6>
+      <mat-form-field class="w-100" style="width: 100%" appearance="outline">
+        <mat-label>Chercher via le nom d'un acheteur</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Acheteur"
+               matInput
+               [formControl]="buyerNameCtrl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (selectionchange)="onChange($event)" [displayWith]="displayFn">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option
+              (click)="onChange(option)"
+              *ngFor="let option of filteredOptions"
+              [value]="option">
+              <div
+                style="width: 100%;
+                  overflow: hidden">
+                  <span style="font-size: small">
+                    id:
+                    <b>{{ option.id }}</b>
+                  </span>
+                <span style="color: #666; font-size: small; padding-right: .3rem; font-style: italic">
+                    {{ option.name }}
+                </span>
+                <span *ngIf="option.phoneNumber && option.phoneNumber.length > 4">
+                    <em>Tèl</em>: {{ option.phoneNumber }}
+                </span>
+              </div>
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+
+
+      <button mat-raised-button color="primary" [disabled]="saleForm.invalid" (click)="onSubmit()">
         Valider
       </button>
       <button style="float: right"  mat-raised-button color="warn" (click)="dialogRef.close(false)">
@@ -33,7 +79,7 @@
   title="Validez-vous la vente ?"
   icon="question"
   [showCancelButton]="true"
-  [focusCancel]="true"
+  [focusCancel]="false"
 >
   <!--(confirm)="onAddEvent(selectInfo, $event)">-->
 </swal>

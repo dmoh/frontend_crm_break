@@ -46,4 +46,15 @@ export class ReminderService extends GlobalHttpService{
     return this.http
       .post<any>(`${environment.baseApiUrl}/stats/list`,  {headers: this.headers});
   }
+
+
+  updateReminder(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseApiUrl}/reminder/update`, {
+        reminders: data
+      }, {
+        headers: this.headers
+      }
+    )
+  }
 }
+

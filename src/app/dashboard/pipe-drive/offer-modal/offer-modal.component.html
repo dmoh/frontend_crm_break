@@ -1,10 +1,19 @@
 <div mat-dialog-content style="font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <div style="justify-content: end" class="w-100 d-flex">
+    <button mat-raised-button (click)="onCloseModal()" color="warn">Fermer</button>
+  </div>
   <mat-horizontal-stepper
     style="background: #fff; padding: 1rem"
     [linear]="true"
     #stepper
   >
     <mat-step [stepControl]="offerForm">
+      <ng-template matStepLabel>Offre</ng-template>
+      <div *ngIf="offer && offer.id && +offer.id > 0">
+        <button (click)="onRemoveOffer(offer.id)" mat-raised-button color="warn">
+          Supprimer cette offre
+        </button>
+      </div>
       <form [formGroup]="offerForm">
       <h4>Information relative à cette offre</h4>
       <mat-form-field style="width: 100%" appearance="outline">
@@ -17,6 +26,8 @@
           <mat-label>Prix de vente</mat-label>
           <input type="text"
                  matInput
+                 mask="separator"
+                 thousandSeparator="."
                  formControlName="sellingPropositionPrice"/>
         </mat-form-field>
       </form>
@@ -31,7 +42,8 @@
           </button>
         </div>
     </mat-step>
-    <mat-step >
+    <mat-step [completed]="offer.property.id > 0">
+      <ng-template matStepLabel>La propriété à vendre</ng-template>
       <!--Find property on db-->
       <mat-form-field class="w-100" style="width: 100%" appearance="outline">
         <mat-label>Chercher via le nom d'un propriétaire</mat-label>
@@ -233,8 +245,6 @@
       <!--<div><button mat-raised-button color="primary" matStepperNext>Suivant</button></div>
       </div>-->
     </mat-step>
-
-
     <!--
             PARMI les buyer et property unsorted rechercher les proprios
 
@@ -288,7 +298,9 @@
         </div>
       </div>
     </mat-step>-->
-    <mat-step [stepControl]="buyersForm">
+    <mat-step (click)="getPotentialBuyers()"
+              [stepControl]="buyersForm">
+      <ng-template matStepLabel>Acheteur(s)/Valider</ng-template>
       <form [formGroup]="buyersForm">
         <div *ngFor="let potentialBuyer of buyersForm.controls; index as i">
           <ng-container style="margin-bottom: .5rem" [formGroupName]="i">
@@ -340,6 +352,42 @@
             matInput
           />
         </mat-form-field>-->
+
+        <mat-form-field class="w-100" style="width: 100%" appearance="outline">
+          <mat-label>Chercher via le nom d'un acheteur</mat-label>
+          <input type="text"
+                 placeholder="Pick one"
+                 aria-label="Acheteur"
+                 matInput
+                 [formControl]="buyerNameCtrl"
+                 [matAutocomplete]="autoB">
+          <mat-autocomplete #autoB="matAutocomplete" (selectionchange)="onChangeB($event)" [displayWith]="displayFnB">
+            <mat-option *ngIf="isLoadingB" class="is-loading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoadingB">
+              <mat-option
+                (click)="onChangeB(option)"
+                *ngFor="let option of filteredOptionsB"
+                [value]="option">
+                <div
+                  style="width: 100%;
+                  overflow: hidden">
+                  <span style="font-size: small">
+                    id:
+                    <b>{{ option.id }}</b>
+                  </span>
+                  <span style="color: #666; font-size: small; padding-right: .3rem; font-style: italic">
+                    {{ option.name }}
+                </span>
+                  <span *ngIf="option.phoneNumber && option.phoneNumber.length > 4">
+                    <em>Tèl</em>: {{ option.phoneNumber }}
+                </span>
+                </div>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
 
         <table
           matSort
@@ -398,6 +446,16 @@
                 </mat-icon>
               </button>
 
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="removeBuyer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Sup. de la liste
+            </th>
+            <td mat-cell *matCellDef="let buyer">
+              <button mat-raised-button color="warn" (click)="onRemoveBuyer(buyer.id)">
+                <mat-icon  style="color: white">cancel</mat-icon>
+              </button>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

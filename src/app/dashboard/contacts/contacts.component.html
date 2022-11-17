@@ -163,10 +163,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <mat-form-field style="width: 100%" appearance="outline">
                   <mat-label>Budget</mat-label>
                   <input
+                    mask="separator"
+                    thousandSeparator="."
                     formControlName="budget"
                     matInput
                     [autocomplete]="'off'"
@@ -174,7 +176,7 @@
                     type="text"/>
                 </mat-form-field>
               </div>
-              <div class="col-md-4">
+              <!--<div class="col-md-4">
                 <div>
                   <mat-form-field style="width: 100%" appearance="outline">
                     <mat-label>Secteur(s) préférentiel(s)</mat-label>
@@ -186,8 +188,8 @@
                       type="text"/>
                   </mat-form-field>
                 </div>
-              </div>
-              <div class="col-md-4">
+              </div>-->
+              <div class="col-md-6">
                 <mat-form-field style="width: 100%" appearance="outline">
                   <mat-select placeholder="Typologie immeuble"
                               formControlName="typeProperty">
@@ -257,15 +259,21 @@
 
     <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
       <mat-divider></mat-divider>
-      <mat-list  *ngFor="let buyer of buyers | filter: research let index = index">
-        <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
-            <div style="display: flex;gap: 15px;">
-              <mat-icon>person_outline</mat-icon>
-              <p>{{buyer.name}}</p>
-            </div>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </mat-list>
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-6">
+            <mat-list>
+              <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
+                <div style="display: flex;gap: 15px;">
+                  <mat-icon>person_outline</mat-icon>
+                  <p>{{buyer.name}}</p>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-list>
+          </div>
+        </div>
+      </div>
     </div>
     </mat-drawer-content>
     </mat-drawer-container>

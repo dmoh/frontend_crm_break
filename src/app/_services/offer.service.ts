@@ -50,5 +50,9 @@ export class OfferService extends GlobalHttpService{
     return this.http.get<any>(`${environment.baseApiUrl}/offer/archive/list`)
   }
 
+  removeOffer(offerId: number): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/offer/${offerId}/remove`)
+  }
+
 
 }

@@ -58,6 +58,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import { ClosingOfferComponent } from '../_modals/closing-offer/closing-offer.component';
 import { PropertyComponent } from './property/property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
+import { NgxMaskModule } from "ngx-mask";
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -99,7 +100,8 @@ FullCalendarModule.registerPlugins([
     MatNativeDateModule,
     GoogleMapsModule,
     MatSlideToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxMaskModule.forRoot()
   ],
   exports: [
       CoreModule,

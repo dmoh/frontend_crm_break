@@ -6,4 +6,5 @@ export class Sale {
   soldAt = null;
   rentalStatus = 0;
   offer = null;
+  buyerId = null;
 }

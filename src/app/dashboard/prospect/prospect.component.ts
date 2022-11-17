@@ -172,7 +172,6 @@ export class ProspectComponent implements OnInit, OnDestroy {
   }
 
   onChangeBuyerState(event: MatCheckboxChange, prospect: any) {
-    console.warn('changement etat', [event, prospect]);
     let message = '';
     if (event.checked) {
       message +=  `le propriétaire du bien ${prospect.id} est devenu acheteur`;

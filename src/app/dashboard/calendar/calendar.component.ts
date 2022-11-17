@@ -52,7 +52,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     },
     initialView: 'timeGridWeek',
     // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-    events: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    events: [], // alternatively, use the `events` setting to fetch from a feed
     // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
@@ -96,7 +96,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.eventService
       .getEventList()
       .subscribe((response) => {
-        this.events = response.events.map((ev) => ({
+        if (response.events && response.events.length > 0) {
+          this.events = response.events.map((ev) => ({
             id: createEventId(),
             title: ev.title,
             start: Helper.formatTimestampToDateTimeStr(ev.start),
@@ -106,17 +107,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
             extendedProps: {
               eventId: ev.id
             }
-        }));
-        this.events = [...this.events, {
-          id: createEventId(),
-          title: this.events[0].title,
-          start: this.events[0].start,
-          end: this.events[0].end,
-          allDay: false,
-          color: 'green'
+          }));
+          this.calendarOptions.events = this.events;
         }
-        ];
-        this.calendarOptions.events = this.events;
         this.calendarVisible = true;
       });
   }

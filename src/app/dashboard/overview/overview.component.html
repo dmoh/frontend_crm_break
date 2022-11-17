@@ -53,8 +53,20 @@ background-color: #F5F5F5 ; padding: 3rem">
       </div>
     </div>
   </div>
-  <div *ngIf="!showSpinnerReminder && reminders && reminders.length == 0" class="row">
-    <h6>Aucun rappel</h6>
+  <hr>
+  <div style="justify-content: space-between" class="d-flex">
+    <h5>Rappel(s)</h5>
+    <div>
+      <button (click)="onAddReminder()" mat-raised-button color="primary">
+      + Ajouter
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="!showSpinnerReminder && reminders && reminders.length == 0"  class="col-md-12">
+      <h6>Aucun rappel</h6>
+    </div>
+
   </div>
   <div  style="
     padding: .5rem;
@@ -149,7 +161,8 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
             </mat-card>
           </div>
         </div>
-        <div *ngIf="turnover && statsChart && statsChart.turnover" style="display: flex; margin-top: 50px; justify-content: center;">
+        <div *ngIf="turnover && statsChart && statsChart.turnover"
+             style="display: flex; margin-top: 50px; justify-content: center;">
           <mat-card style="width: 100%;">
             <app-basic-chart
               [ca]="turnover"

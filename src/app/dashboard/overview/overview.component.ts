@@ -9,6 +9,8 @@ import {Reminder} from "@app/_models/reminder";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UsersService} from "@app/_services/users.service";
 import {FormControl} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {ContainerModalComponent} from "@app/dashboard/container-modal/container-modal.component";
 
 @Component({
   selector: 'app-overview',
@@ -38,7 +40,8 @@ export class OverviewComponent implements  OnInit {
     private dashboardService: DashboardService,
     private reminderService: ReminderService,
     private snackBar: MatSnackBar,
-    private userService: UsersService
+    private userService: UsersService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -120,6 +123,21 @@ export class OverviewComponent implements  OnInit {
       nbVisit: 0,
       nbOfferClosing: 0
     };
+  }
+
+  onAddReminder() {
+      const dialogRef = this.dialog.open(ContainerModalComponent, {
+        data: {
+          showReminderOnly: true
+        }
+      });
+
+      dialogRef.afterClosed()
+        .subscribe((res) => {
+          if (res) {
+            this.ngOnInit();
+          }
+        });
   }
 }
 

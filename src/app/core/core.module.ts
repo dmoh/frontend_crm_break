@@ -36,9 +36,10 @@ import { FilterPipe } from '@app/dashboard/filter.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 //import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { UploadFileComponent } from '../upload-file/upload-file.component';
 
 @NgModule({
-  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe
+  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe, UploadFileComponent
   ],
   imports: [
 
@@ -108,7 +109,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     [NgxMaterialTimepickerModule],
       //CdkTableModule,
 
-      FilterPipe
+      FilterPipe,
+      UploadFileComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MatDialog, ]

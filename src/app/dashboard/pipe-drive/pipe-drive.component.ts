@@ -156,7 +156,7 @@ export class PipeDriveComponent implements OnInit {
 
   }
 
-  private updateAll(columnId) {
+  private updateAll(columnId: number, reloadList?: boolean) {
     this.handleOfferOnWaiting(columnId);
     // mettra à jour le status offre et property si property il y a
     this.offerService
@@ -171,6 +171,9 @@ export class PipeDriveComponent implements OnInit {
           this.sortOffer();
         }
       });
+    if (reloadList) {
+      this.getOfferList();
+    }
   }
   handleOfferOnWaiting(columnId: number) {
     if (columnId === crmConstants.CODE_OFFER_STATUS_ON_WAITING.value) {
@@ -206,6 +209,7 @@ export class PipeDriveComponent implements OnInit {
       data: {
         offer: this.offerDropped
       },
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(offer => {
       if (offer) {
@@ -254,7 +258,7 @@ export class PipeDriveComponent implements OnInit {
             .updateOffer(res)
             .subscribe((response) => {
               if (response.ok) {
-                this.updateAll(columnId);
+                this.updateAll(columnId, true);
               }
             })
         } else {
@@ -266,5 +270,9 @@ export class PipeDriveComponent implements OnInit {
 
   dropArchivedOffer(event: any) {
    this.updateAll(crmConstants.CODE_OFFER_STATUS_ARCHIVED.value);
+  }
+
+  onCloseModal() {
+
   }
 }

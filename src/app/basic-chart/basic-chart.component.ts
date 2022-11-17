@@ -46,7 +46,7 @@ export class BasicChartComponent implements OnInit {
     this.chartOptions = {
       series: [
         {
-          name: "CA",
+          name: "C.A en CHF",
           data:  this.turnover // series.monthDataSeries1.prices
         }
       ],
@@ -65,7 +65,7 @@ export class BasicChartComponent implements OnInit {
       },
 
       title: {
-        text: "Chiffre d'affaires de la semaine " + this.ca + "CHF",
+        text: "Chiffre d'affaires 2021 - 2022 " + this.ca + "CHF",
         align: "center"
       },
       subtitle: {

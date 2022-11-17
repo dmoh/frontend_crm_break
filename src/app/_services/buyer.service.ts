@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {GlobalHttpService} from "@app/_services/global-http.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {environment} from "@environments/environment";
 import {Buyer} from "@app/_models/buyer";
 
@@ -86,8 +86,15 @@ export class BuyerService extends GlobalHttpService {
     )
   }
 
+  removeBuyer( buyerId: number): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/buyer/${buyerId}/remove`
+    )
+  }
+
   getRoleUserCurrent() {
     return this.http
       .get<any>(`${environment.baseApiUrl}/user/role`, {headers: this.headers});
   }
+
+
 }

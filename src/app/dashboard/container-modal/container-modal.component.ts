@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProspectService} from "@app/_services/prospect.service";
 import {CommentProspect} from "@app/_models/comment-prospect";
+import {ReminderService} from "@app/_services/reminder.service";
 
 @Component({
   selector: 'app-container-modal',
@@ -17,28 +18,42 @@ export class ContainerModalComponent implements OnInit {
   observationControl = new FormControl();
   remindersForm = new FormArray([]);
   showSaveBtn = false;
+  showReminderOnly = false;
 
   constructor(
     private prospectService: ProspectService,
+    private reminderService: ReminderService,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-
-              ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    if (this.data && this.data.statusSelected) {
-      this.statusSelected =  this.data.statusSelected;
+    if (this.data?.showReminderOnly) {
+      this.showReminderOnly = this.data?.showReminderOnly;
     }
+    if(!this.showReminderOnly) {
+      if (this.data && this.data.statusSelected) {
+        this.statusSelected =  this.data.statusSelected;
+      }
 
-    if (this.data && this.data.property) {
-      this.property =  this.data.property;
+      if (this.data && this.data.property) {
+        this.property =  this.data.property;
+      }
     }
   }
 
   onSave() {
-    console.warn('idsdsd');
-    const obs = this.observationControl.value;
     let reminders = this.remindersForm.value;
+    if (this.showReminderOnly) {
+      this.reminderService
+        .updateReminder(reminders)
+        .subscribe((res) => {
+          if (res.ok) {
+            this.dialogRef.close(true);
+          }
+        });
+      return;
+    }
+    const obs = this.observationControl.value;
     let commentProspect = null;
     if (obs && obs.trim().length > 1) {
       // save new comment for this property

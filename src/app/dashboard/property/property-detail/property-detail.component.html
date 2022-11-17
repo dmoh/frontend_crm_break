@@ -43,8 +43,13 @@
                 <em *ngIf="!property.propertyRegime">--</em>
               </b>
               <span style="display: block">Commentaire</span> <b><em>{{ property.comment}}</em></b>
-              <span style="display: block">Prix</span> <b><em>{{ property.sellingPrice }}</em></b>
-              <span style="display: block">État locatif (montant)</span> <b><em>{{ property.rentalStatus }}</em></b>
+              <span style="display: block">Prix</span>
+              <b>
+                <em>{{ property.sellingPrice | mask: 'separator':'.'}}CHF</em>
+              </b>
+              <span style="display: block">État locatif (montant)</span>
+              <b>
+                <em>{{ property.rentalStatus | mask: 'separator':'.'}}CHF</em></b>
               <span style="display: block">Rendement</span> <b *ngIf="property.yield"><em>{{ property.yield }}%</em></b>
             </div>
           </div>
@@ -366,7 +371,10 @@
             <div class="col-md-3">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-label>Tèl</mat-label>
-                <input matInput type="text" formControlName="phoneNumber"/>
+                <input matInput
+                       type="text"
+                       placeholder="+(00) 00 000 00 00"
+                       formControlName="phoneNumber"/>
               </mat-form-field>
             </div>
           </div>
@@ -458,6 +466,8 @@
                 <mat-label>Prix de vente</mat-label>
                 <input type="text"
                        matInput
+                       mask="separator"
+                       thousandSeparator="."
                        [autocomplete]="'off'"
                        formControlName="sellingPrice"/>
               </mat-form-field>
@@ -467,6 +477,8 @@
                 <mat-label>Montant état locatif</mat-label>
                 <input type="text"
                        matInput
+                       mask="separator"
+                       thousandSeparator="."
                        [autocomplete]="'off'"
                        formControlName="rentalStatus"/>
               </mat-form-field>
@@ -529,6 +541,7 @@
                       [disabled]="!property.hasRentalStatus"
                       type="file"
                       (change)="onSelect($event, 'rentalStatus')"
+                      multiple
                     >
                     <span *ngIf="filesRentalStatus.length > 0 && rentalStatus.value != null || rentalStatus.value.length > 3  " style="cursor: pointer;">
                     <mat-icon style="color: red" (click)="onRemove($event,'rentalStatus')">highlight_off</mat-icon>
@@ -575,6 +588,7 @@
                       [disabled]="!property.hasDetailedManagementAccount || !propertyForm.value.hasDetailedManagementAccount"
                       type="file"
                       (change)="onSelect($event, 'detailedManagementAccount')"
+                      multiple
                     >
                     <span *ngIf="filesDetailedManagementAccount.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red"
@@ -620,6 +634,7 @@
                       [disabled]="!property.hasExtractLandRegister || !propertyForm.value.hasExtractLandRegister"
                       type="file"
                       (change)="onSelect($event, 'extractLandRegister')"
+                      multiple
                     >
                     <span *ngIf="filesExtractLandRegister.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red" (click)="onRemove($event,'extractLandRegister')">highlight_off</mat-icon>
@@ -663,6 +678,7 @@
                       [disabled]="!property.hasBuildingInsurance || !propertyForm.value.hasBuildingInsurance"
                       type="file"
                       (change)="onSelect($event, 'buildingInsurance')"
+                      multiple
                     >
                     <span *ngIf="filesBuildingInsurance.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red" (click)="onRemove($event,'buildingInsurance')">highlight_off</mat-icon>
@@ -708,6 +724,7 @@
                       [disabled]="!property.hasBuildingPlans || !propertyForm.value.hasBuildingPlans"
                       type="file"
                       (change)="onSelect($event, 'buildingPlans')"
+                      multiple
                     >
                     <span *ngIf="filesBuildingPlans.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red" (click)="onRemove($event,'buildingPlans')">highlight_off</mat-icon>
@@ -751,6 +768,7 @@
                       [disabled]="!property.hasListOfWorks || !propertyForm.value.hasListOfWorks"
                       type="file"
                       (change)="onSelect($event, 'listOfWorks')"
+                      multiple
                     >
                     <span *ngIf="filesListOfWorks.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red" (click)="onRemove($event,'listOfWorks')">highlight_off</mat-icon>
@@ -793,7 +811,9 @@
                     style="margin-left: .5rem"
                     [disabled]="!property.hasPhotos || !propertyForm.value.hasPhotos"
                     type="file"
-                    (change)="onSelect($event, 'photos')">
+                    (change)="onSelect($event, 'photos')"
+                    multiple
+                  >
                   <span *ngIf="filesPhotos.length > 0" style="cursor: pointer;">
                   <mat-icon style="color: red" (click)="onRemove($event,'photos')">highlight_off</mat-icon>
                 </span>
