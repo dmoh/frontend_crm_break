@@ -43,7 +43,7 @@
     "dhtmlx-scheduler": "^5.3.11",
     "fullcalendar": "^5.10.1",
     "jwt-decode": "^3.1.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ng-apexcharts": "^1.5.12",
     "ng2-charts": "^2.4.3",
     "ngx-mask": "^9.1.4",
