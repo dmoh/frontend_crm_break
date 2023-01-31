@@ -1,9 +1,17 @@
 <div class="card">
-  <div class="card-heading">
-    <h2 class="text-center">Offres</h2>
+  <div class="card-heading d-flex" style="justify-content: space-between; align-items: center; padding-bottom: 0 !important; margin-bottom:  0 !important;">
+    <div>
+      <h2 class="text-center">Offres</h2>
+    </div>
+    <div>
+      <button mat-mini-fab color="primary"
+              aria-label="Ajouter une offre"
+              (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
   </div>
-
-  <mat-form-field style="padding: 1rem" *ngIf=" showListCollaborator && collaborators && collaborators.length > 0"
+  <mat-form-field style="padding: 1rem;padding-bottom: 0" *ngIf=" showListCollaborator && collaborators && collaborators.length > 0"
                   appearance="outline">
     <mat-label>Choix du collaborateur</mat-label>
     <mat-select (selectionChange)="onGetOfferByCollaboratorId()" placeholder="Collaborateur"
@@ -18,172 +26,234 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div class="container-fluid" style="min-height: 100vh" cdkDropListGroup>
-  <div class="cols" style="display: flex;justify-content: center;gap: 5px; flex-direction: row;">
-    <div style="width: 280px;" *ngFor="let col of columns" class="colum"
-         cdkDropList
-         [cdkDropListData]="col.offre"
-         (cdkDropListDropped)="drop($event, col.id)" over="false"
-    >
-      <div style="margin-bottom: .5rem; width: 100%; height: 90px; display: flex;  justify-content: center; align-items: center" cdkDropList [class.cdk-drop-list-dragging]="false"
-           class="{{col.colorBox}}">
-        <li style="text-align: center;padding-top: 15px; font-size: large">{{col.titre}}</li>
-      </div>
-      <mat-card
-        [cdkDragDisabled]="+col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value"
-        cdkDrag
-        (dblclick)="openDialog(item)"
-        (cdkDragDropped)="dropOffer(item)"
-        *ngFor="let item of col.offre"
-        [ngStyle]="{
-          'background-color': +col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value ? '#eaeaea' : 'white'}"
-        style="margin-bottom: 6px;cursor:grab; width: 100%; padding: 15px !important;">
-        <div style="display: flex;gap: 5px;align-items: baseline; justify-content: space-between">
-          <div>
-            <div></div>
-            <li class="offer">
-              <h6>{{item.title}}</h6>
+<div class="container-fluid" style="min-height: 150vh; padding-right: 0 !important; padding-left: 0 !important" cdkDropListGroup>
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="cols" style="display: flex;justify-content: center;gap: 2px; flex-direction: row;">
+        <div style="width: 280px; background: #ededed" *ngFor="let col of columns; let first = first;let last = last" class="colum"
+             cdkDropList
+             [cdkDropListData]="col.offre"
+             (cdkDropListDropped)="drop($event, col.id)" over="false"
+        >
+          <header style="
+      margin-bottom: .5rem;
+      /*border: 0.01rem solid #4c4c4c;*/
+      border-radius: 4px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70px !important;
+      "
+                  cdkDropList
+                  [class.cdk-drop-list-dragging]="false"
+                  class="sticky-top breadcrumbs__item__all__{{col.colorBox}}"
+          >
+            <div *ngIf="col.dataOffer.amountTotal > 0" class="position-absolute" style="bottom: -1px">
+                <span class="d-flex" style="font-size: xx-small; text-align: center">
+                  <mat-icon style="font-size: .5rem;width: auto !important;height: auto;margin-top: 3px;margin-right: 2px;">balance</mat-icon>
+                  <span>{{ col.dataOffer.amountTotal |  mask: 'separator':'.' }}CHF</span>
+                  <span  class="d-flex"><mat-icon style="font-size: .5rem;width: auto !important;height: auto;margin-top: -1px;/* padding-top: 4px; */font-size: .2rem;align-self: center;margin-left: 3px;margin-right: 3px;align-self: center;">circle</mat-icon> {{ col.offre.length }} <span style="margin-left: .2rem;"> offre{{ col.offre.length > 1 ? 's' : '' }}</span></span>
+                </span>
+            </div>
+            <div *ngIf="first" style="position: absolute;top: 0;left: -10px;height: 100%;width: 95%;background: linear-gradient(to right, #ef9a9a, #ffcdd2, #ffe5e8);border-left: 1px solid #666;border-top: 1px solid #666;border-bottom: 1px solid #666;z-index: -1;"></div>
+            <div *ngIf="last"
+                 style="
+             position: absolute;
+             top: 0;
+             right: -10px;
+             height: 100%;
+             width: 95%;
+             background: linear-gradient(to right, #d198da, #e1bee7,#f3e5f5);
+             border-right: 1px solid #666;border-top: 1px solid #666;border-bottom: 1px solid #666;z-index: -1;"></div>
+            <li
+              style="text-align: center;/* padding-top: 15px; */padding: 0 0;font-size: .75rem; font-weight: 500;font-family: 'Roboto', sans-serif;"
+
+            >
+              <div style="position:relative;" class="w-100 h-100">
+                <span>{{col.titre}}</span>
+              </div>
             </li>
-            <li style="padding-bottom: .5rem">
-              <span>
-                Prix <b><em>{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF
-                </em></b>
-              </span>
-              <span *ngIf="item.property && item.property.rentalStatus" style="display: block">
-                État locatif <b><em>{{item.property.rentalStatus | mask: 'separator':'.'}}CHF
-                </em></b>
-              </span>
-              <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
-              <div>
-                <span style="padding-bottom: .3rem"></span>
-                <div class="d-flex">
-                  <div *ngIf="item.property && item.property" style="align-items: self-start" class="d-flex">
+          </header>
+          <div *ngIf="showSpinner" class="d-flex justify-content-center align-items-center">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          <ng-container *ngIf="!showSpinner">
+            <mat-card
+              matTooltip="Double clique pour modifier cette offre"
+              [matTooltipHideDelay]="0"
+              [cdkDragDisabled]="+col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value"
+              cdkDrag
+              (dblclick)="openDialog(item)"
+              (cdkDragDropped)="dropOffer(item)"
+              *ngFor="let item of col.offre; let i = index"
+              [ngStyle]="{
+          'background-color': +col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value ? '#eaeaea' : 'white'}"
+              style="cursor: grab;width: 95%;padding: 12px !important;background-color: white;margin: .2rem;margin: 0 auto;margin-bottom: .45rem;">
+              <div style="display: flex;gap: 5px; align-items: baseline; justify-content: space-between; position: relative">
+                <div style="position: absolute; right: 0; top: 0">
+                  <mat-icon
+                    [ngStyle]="{'color': col.color, 'font-size': '1.1rem'}"
+                    style="font-size: 1.1rem;text-align: center;vertical-align: middle;"
+                  >circle</mat-icon>
+                </div>
+                <div>
+                  <li class="offer">
+                    <h6 style="font-size: .88rem">{{item.title}}</h6>
+                  </li>
+                  <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
+                  <li style="padding-bottom: .5rem">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                      <div>
+                        <span style="font-size: xx-small">Offre (CHF) </span>
+                      </div>
+                      <div>
+                        <b><em>{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF
+                        </em></b>
+                      </div>
+                    </div>
+                    <div *ngIf="item.property && item.property.rentalStatus" class="d-flex w-100 justify-content-between align-items-center">
+                      <div>
+                        <span style="font-size: xx-small">État locatif </span>
+                      </div>
+                      <div>
+                        <b><em>{{item.property.rentalStatus | mask: 'separator':'.'}}CHF
+                        </em></b>
+                      </div>
+                    </div>
+                    <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
+                    <div>
+                      <span style="padding-bottom: .3rem"></span>
+                      <div class="d-flex w-100 justify-content-between align-items-center">
+                        <div class="d-flex">
+                          <div *ngIf="item.property && item.property" style="align-items: self-start" class="d-flex">
                     <span>
                       <mat-icon style="font-size: small">adjust</mat-icon>
                     </span>
-                    <span>
+                            <span>
                       {{ item.property.id }}
                     </span>
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <div *ngIf="item.property && item.property" style="align-items: self-start" class="d-flex">
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="d-flex">
+                          <div *ngIf="item.property && item.property" style="align-items: self-start" class="d-flex">
                     <span>
                       <mat-icon style="font-size: small">person_pin_circle</mat-icon>
                     </span>
-                    <span [innerHTML]="item.property.owners">
+                            <span [innerHTML]="item.property.owners">
                     </span>
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <div *ngIf="item.property && item.property.address" style="align-items: center" class="d-flex">
+                          </div>
+                        </div>
+                        <div class="d-flex">
+                          <div *ngIf="item.property && item.property.address" style="align-items: center" class="d-flex">
                     <span>
                       <mat-icon style="font-size: small">location_on</mat-icon>
                     </span>
-                    <span>
+                            <span>
                       {{ item.property.address.street }}, {{ item.property.address.city  }} <b>{{ item.property.address.canton | titlecase }}</b>
                     </span>
-                  </div>
-                </div>
-                <div *ngIf="item.potentialBuyers" class="">
-                  <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
-                  <span style="display: block; font-size: x-small; font-weight: bold">
+                          </div>
+                        </div>
+                        <div *ngIf="item.potentialBuyers" class="">
+                          <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
+                          <span style="display: block; font-size: x-small; font-weight: bold">
                     Acheteur{{ +col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value ? ' final' : '(s) potentiel(s)'  }}
                   </span>
-                  <div *ngIf="item.sale && item.sale.lastBuyer && +item.sale.lastBuyer.id > 0">
+                          <div *ngIf="item.sale && item.sale.lastBuyer && +item.sale.lastBuyer.id > 0">
                     <span>
                       <mat-icon style="font-size: small">contact_mail</mat-icon>
                     </span>
-                    <span>
+                            <span>
                       ref: {{ item.sale.lastBuyer.id }}, <b>{{ item.sale.lastBuyer.name | titlecase }}</b>
                     </span>
-                  </div>
-                  <div *ngIf="+col.id !== +crmConstants.CODE_OFFER_STATUS_CLOSING.value">
-                    <div  *ngFor="let potentialBuyer of item.potentialBuyers" style="" class="d-flex">
+                          </div>
+                          <div *ngIf="+col.id !== +crmConstants.CODE_OFFER_STATUS_CLOSING.value">
+                            <div  *ngFor="let potentialBuyer of item.potentialBuyers" style="" class="d-flex">
                     <span>
                       <mat-icon style="font-size: small">contact_mail</mat-icon>
                     </span>
-                      <span>
+                              <span>
                       ref: {{ potentialBuyer.id }}, <b>{{ potentialBuyer.name | titlecase }}</b>
                     </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </li>
+                  <li *ngIf="item.collaborator">
+                    <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
+                    <div style="float: right">
+                      <img style="width: 20px;height: 20px;" src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" />
+                      {{ item.collaborator }}
+                    </div>
+                  </li>
                 </div>
               </div>
-            </li>
-            <li *ngIf="item.collaborator">
-              <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
-              <div style="float: right">
-                <img style="width: 20px;height: 20px;" src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" />
-                {{ item.collaborator }}
-              </div>
-            </li>
-          </div>
-          <div class="{{col.color}}"></div>
+            </mat-card>
+          </ng-container>
+          <ng-container *ngIf="showEmptyOfferMessage">
+            <h6>Aucune offre</h6>
+          </ng-container>
         </div>
-      </mat-card>
-    </div>
-    <div>
-      <button mat-mini-fab color="primary" style="margin-top: 20px; margin-left: 5px;"
-              aria-label="Example icon button with a plus one icon"
-              (click)="openDialog()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div style="justify-content: space-around; margin-bottom: 3rem" class="d-flex">
-    <div style="margin-right: 2rem" class="waiting">
-      <h6 class="text-center">En attente</h6>
-      <div style="padding: .5rem"
-           cdkDropList
-           [cdkDropListData]="offreAttente"
-           (cdkDropListDropped)="drop($event, crmConstants.CODE_OFFER_STATUS_ON_WAITING.value)"
-      >
-        <mat-card
-          style="margin-bottom: .5rem; cursor: pointer"
-          (cdkDragDropped)="dropOffer(item)"
-          (dblclick)="openDialog(item)"
-          cdkDrag *ngFor="let item of offersOnWaiting">
-          <li class="offer">{{item.title}} </li>
-          <!--
-                    <li>{{item.selling}} {{item.description.contactLastName}}</li>
-          -->
-          <li><img style="width: 15px;height: 15px;"
-                   src="data:image/png;base64,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"
-          />
-            <span *ngIf="item.collaborator" style="/*display: block*/">{{ item.collaborator }}</span>
-            <span style="display: block">{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF</span>
-          </li>
-          <li> <!--<img style="width: 20px;height: 20px;"
-                                               src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"-->
-          </li>
-        </mat-card>
       </div>
-    </div>
-    <div class="gray" [class.cdk-drop-list-dragging]="false"
-         cdkDropList
-         [cdkDropListData]="archivedOffers"
-         (cdkDropListDropped)="dropArchivedOffer($event)">
-      <h6 class="text-center">Archiver</h6>
-      <div style="padding: .5rem">
-        <mat-card
-          style="margin-bottom: .5rem; cursor: pointer"
-          (cdkDragDropped)="dropOffer(item)"
-          (dblclick)="openDialog(item)"
-          cdkDrag *ngFor="let item of archivedOffers">
-          <li class="offer">{{item.title}} </li>
-          <li><img style="width: 15px;height: 15px;"
-                   src="data:image/png;base64,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"
-          />
-            <span *ngIf="item.collaborator" style="/*display: block*/">{{ item.collaborator }}</span>
-            <span style="display: block">{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF</span>
-          </li>
-          <li> <!--<img style="width: 20px;height: 20px;"
+      <div style="justify-content: space-around; margin-bottom: 3rem" class="d-flex">
+        <div style="margin-right: 2rem" class="waiting">
+          <h6 class="text-center">En attente</h6>
+          <div style="padding: .5rem"
+               cdkDropList
+               [cdkDropListData]="offreAttente"
+               (cdkDropListDropped)="drop($event, crmConstants.CODE_OFFER_STATUS_ON_WAITING.value)"
+          >
+            <mat-card
+              style="margin-bottom: .5rem; cursor: pointer"
+              (cdkDragDropped)="dropOffer(item)"
+              (dblclick)="openDialog(item)"
+              cdkDrag *ngFor="let item of offersOnWaiting">
+              <li class="offer">{{item.title}} </li>
+              <!--
+                        <li>{{item.selling}} {{item.description.contactLastName}}</li>
+              -->
+              <li><img style="width: 15px;height: 15px;"
+                       src="data:image/png;base64,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"
+              />
+                <span *ngIf="item.collaborator" style="/*display: block*/">{{ item.collaborator }}</span>
+                <span style="display: block">{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF</span>
+              </li>
+              <li> <!--<img style="width: 20px;height: 20px;"
                                                src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"-->
-          </li>
-        </mat-card>
-      </div>
+              </li>
+            </mat-card>
+          </div>
+        </div>
+        <div class="gray" [class.cdk-drop-list-dragging]="false"
+             cdkDropList
+             [cdkDropListData]="archivedOffers"
+             (cdkDropListDropped)="dropArchivedOffer($event)">
+          <h6 class="text-center">Archiver</h6>
+          <div style="padding: .5rem">
+            <mat-card
+              style="margin-bottom: .5rem; cursor: pointer"
+              (cdkDragDropped)="dropOffer(item)"
+              (dblclick)="openDialog(item)"
+              cdkDrag *ngFor="let item of archivedOffers">
+              <li class="offer">{{item.title}} </li>
+              <li><img style="width: 15px;height: 15px;"
+                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAYFBMVEVmZmb///9hYWFfX19jY2NbW1v29vb7+/uRkZFnZ2fo6OhxcXHHx8ff399tbW28vLx8fHzw8PCIiIiampqmpqZ+fn7Z2dmsrKzPz8/i4uK0tLSVlZWkpKTCwsK4uLiKiopHMxvJAAAM8klEQVR4nOVdibKqOBDFpNkXWVT0uvD/f/kgAb0qICEniu+eqqmamTeDHNLpLd0da2UYbhbEu+hSFtU2DcMksZIkDNNtVZSXaBcHmWv6BSyTDw+i8pinIdmcMyKybqj/iXFuU5jmxzIKTL6EIYZZHG3SHmaP6JimmyjOzLyKAYZusPbSpOY2wuyJKeNJ6q0DAzKLZpjtT6nNR9dteD25nZ726KWEMsyiKiGltXteS0qqCEoSx9A5F/68xXtcStsvzg7svUAMnYPnM6bNrgNjvncAkYQwdNc54ei1JClfQ/QOgGF8qlULmF+DWvGc4gUwjI8JN0BPgidHbY6aDOPcRovnPZida3LUYhh7vgnxvAf5nhZHDYaxx82uXwfGdTjOZhhsrPfwExytzWzvfC7DtUH90geerN/KMA6N2IcxEA/nieochu4J4JzN4EinOS7ADIaR9V4BvYFb0RsYOoVW8KAHYoWyt6rKcB9+agEleLg3ytD5+cgO/A2iH7VlVGIYbD+7gBJ8q2QbVRhG4fts/BhYqKJwFBj+vN0GDoH4jwGGmbcECe3Avcm5nKkMnXQZEtqBpVP1zUSGu2RZBGuKyQ7JcJcsZQveQBMpTmJ4+bgV7APRBcVwvSQd8xt8SkQ1geHP0rbgDWyC1XjJ0C2XuoINePkyoHrJcNEEG4q6DH+WTbCm+EpQXzBcL3cPdmAv1M04w8vSV7ABHzcaowx3SzSDz6BR0z/GcImeTB/GvZsRhs6XEGwojrjhwwyzhUUTY2DpcDA1zND7HoI1RU+d4eIN4T2GzeIQw+i7CNYUh3I3AwyD8Fu0TAcKBzJw/Qyd7TdtQgm27Veo/Qy/bBNKDGzFXob7bxNRCepN+PcxdL5uE0pQ2CenfQyLb5TRBryYxjD6Pi3TgfWYjGeGrvWdMtqArOekxjPDk0EZJQlzP8BPrxnGZn6fGLdtnm4rr9qmzd8aOkmmp3KGJ4ZG9Cjx8HjZ3fz/bHc5minnoPAVQxPZX0bb83N0k5238JJNqydL/MAwwEe93C+Hgres9OEflJIH//SB4Qb9i2Sd7n7Rde+0XXCCa26+GWMYg3/NsqtbCiXYr8vC87yiXO9vrHeVjf7Re2VzzxAc1xN1SXf3sNkmJBtMGOeUbDeH7o9KsPl4iPfvGMZYGaWkc4X3FXvQnMRZdf1T8Obn8SBD7BJSV2oXbXuNH7Ft62TFWBN1v4i/GcY+8nc6gk5hD70/2W0RF5iiHw8wzJE/Q760EbvRQmLGpCbKoOXUlPczjJFKrctDr1+oESJpobH5dTvuZXhE7kJbbrEJp4/tCWCE/L7s2McwTpA/IWPRSQfk7VF1gfzASdzDEBk1kaznWU+TPCmoTgqU019R1JWhi5QSLkzdZPMqDdgeaY1t94khMqiQBmn6orRLjjTHtxCjY+ggTYW/U9xYctvugPaYcueB4QFIkKrmiYGK2NvCFa+QL3F4YIiUEGmNlIyPVO9Ii3x13VqGDlJAwsabUXQBhaOVIZ0337ljeAYuISuVl7BbxBL5Guc7hkhzK0ojlIVCfHJk8UfrdLQMM2RUkTRPVE6cy3Q10q9qXX/JEOkUktjiG2WGIr3iARexdY0lQ6SaFsd46uZVGjDkwaU0WpJhhhQOez9P7IVQ7ZG+Y5JdGUJPRIWpVTL3EsLoIx2P9sRUMDwhAxdRMTBjLcTaByHwTdipY+gi4xZZE3FW30/8vALXgFDqtgxniNTYY7N5GkNoqAz5saXgNwyhpzFLYihCKAtshFopnfHRxOtgK5WEabbQ301qmhlFY6JsC6pppDxZ4BRUbYWCeXGQiLkC8LvEgiG4SM9uHO9M3f6wZv/usAdRjVxYM1zIF09dz4r0ZFQJPoJunN2aIXYbtnZWORyTwQ7U92g2omAIPoRtnjqjUUO2TYC/tkUNQ6i9F0/N5jiYwp3N0Efetc238NXAMn2wVXtZ2qKTKQK1qrHwrVvkueqeqfBKXajvIR5b1gyhR04CLFCOgWX8G+Bf5biyXOi5qIAs1j0rZYSFZONLkyl3LbDPJh4rg2sFkyhrtTJ8uVLtt1kmqvLZRTFzIKPxC74IrI4DLCO1iGInri5T5dQWXwS/C62mVtECe4ISbTY2n/bOLIdnpa+wd5aZ5hgSuUpnEkUmD8IiIwWnPLLMtIm2FYJT+t/avjMDVZEN+MVCHob8AqvEMXOWv/qAPBcE3crQe5RWYajqWib3V86L1gbeVkXBvZnuNQoLmdC/g912yl9GZtMy1nYplyb0XQOqLEUPWQG8kPUQQTVQJUtWJetMXXM9LLS1UlPPvrWwuLut/VSdSMze7tqSEJNNOqkFTW494DbqMD6l/DYomojz9DpBNzY6Ai40yrA2Gtc2nSz+ybtEWpL/3GbMR2ZbxkMLm757BN0PyXUcJ6v/+vVv4nyw+hSDxIJWzfaA+d7wALnA8023kZnmVy9iUuyH5gE4+yIxvISWZVZKmeUN0utIeman9SYmGTLbux9Y4bT78J70zjM5MTsxqEuZd7hxC6JNdfupsNpEwY3nweD8BnPWgrP9tcRzd8r9ppnk+odNW4mfn64r7O6ZKZsYGvJpiF1HVMUlPXs08r+xqexsiVsaakhMzfillJw7ASxG29O4X3SifDZi+Wu/1ERswfLWBMavlUitjtp1DCYmPZRQxxYG4kPmOa3kTZonyZJWoh0DCqeOD/ExPt/IF96nkyvZU9nk5cLbH5sYH56nkSV4K/eioDqIXeRXAZ/WijwNOtfWhvau4sha7kmK6GCfR+h8aduPoz41upvwDD4osnfgnDerhJKZM0WrzSo62KQbxdhzi3a6SDBrLDaTU4Kgk1Wacwvo2ZNsJclmTihiW7GK0MaSNIOeH8oJhu7sEUxsK9QNUL0354fArU0yz61h1GQvvYvzs5ozYOA5vi9czLPWzXLCnz3A5FSc48MMolyATO9xPNMUg4fHRcB6Glm25WoKPTs2kg5rDxL1NKiaKFnUpD2CSXaWoGbfErKuTXZSaX98WbQA6jRr69ow3q4sMQHUi8AeZF1rEyGqRhY/O4CMAYnpgBhXq60vhdQIy9qENUJr2WJDQ+oW2hphiN8m+kEwW1qWbyL6g7o6b8gJMxMepf5zBIR3C1jDrlYfUXoshRQUocssAUBMr/0WAJsvRgyghkfL0c6AAQTXnhlA31PYuKSwdIFoTDhoZ+NvfU/69ePg9kgRhenPQLj1run3H8qdA4s05QQd7V39q/9Qu4dU9ljAsgWyO0xbAf7qIdXuAxZ9MsDuIjFeRndb/+4D1u7lth2ErN8g5MvRfanfvdy6/fj+CmNWO8jZK7ov9bsfX9O8yogH2NYgZ0fpOd/3MxU0WzmkJwnsWZJ6Xk9zPczF0Is4ZcMLnKFeKPYw20RvPo3UWsA6bSlhWhr+cT6NZqs/2TWQ5w2seaDeKz3OGILOiVoAnudELff6uHl4nvWFndf2efTMazM6qfzt6Ju5h25a/yx65yYaaET8GPpnX2Lnl34WA/NLsTNoP4mhGbTgOcIfxOAc4e+6pmsYw7Og0fO8P4WRed7/xyKOzWTHz9X/CMbm6uPvRng/xu9GMNXJ+Ua8ut/i+0OMV3eUGLpn5n14fc+MqbuC3oUJdwV9dxQ15b6nP3Bn1/9/79ofuDvvD9x/+P/fYfkH7iH9A3fJ/v/3Af+BO52/biuq38v9ZfH+nLvVZ3X2fAptR5EiQ1iZmnnIQjh1huB7tMyhux9MnSH0ugmDoDGC4wyRHUjmwC+jHMYZwvoeDII9JmbUGC7fLA4bwokM8QNcsWhv3tNh6C6aIi+f0xaqDCde8fcZsFciOo3hcrPET9nfuQxXF5MXvs8G0biZUGG4SO9m3JNRZVhTXNpmZBMJTmW4chYWabB0fMKWOsNVpjjowiy4NxwuzWXYuDdL2Yz00pGZx3AVzRoGgQcLh3IyugxnTCwxgW4KigmGK+fn45aR6GeqjpnDcLXaGx02+ho87E3dAxmunMLQYLUpIFaoLeAchrXCsT61jNxSUTHzGa7c00d2I9HpZagEYihG/76bI92GEr+DYR1RJe8VVZ5MiZSQDFfBxuxk1Tswa6NkAyEMm6GI/D0cGffmCaguw4ajb347kq/DT5OhGFZtdh3Z/bjs9zOsOR4N6hyeHDX5ARg2E+VtI7aDuH3S5gdhWLsA65zQwsooX88x8E+AMKy91YPnj9xjoUyP+d5B2QPtB4hhDedc+DbAnSOy/eIMordCMqyRRVVCWqFH/X8nVTQ5BzMFUIY1sv0ptfmspaRataSnPZTeCs+whhusvTThSmtJjCeptw4guuUeBhg2yOJok5LNm0nsY0ypmc7ObUo3UYxevBaGGEoEUXnM07CHaccsTPNjGc32qqfAKMMGbhbEu+hSFtU2DcPEt/wkDNNtVZSXaBcHmQG5vMc/gtWSrKLP7z8AAAAASUVORK5CYII"
+              />
+                <span *ngIf="item.collaborator" style="/*display: block*/">{{ item.collaborator }}</span>
+                <span style="display: block">{{item.sellingPropositionPrice | mask: 'separator':'.'}}CHF</span>
+              </li>
+              <li> <!--<img style="width: 20px;height: 20px;"
+                                               src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"-->
+              </li>
+            </mat-card>
+          </div>
 
+        </div>
+      </div>
     </div>
   </div>
   <!--<div class="footer">

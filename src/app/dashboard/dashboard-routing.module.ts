@@ -21,13 +21,17 @@ import {ProspectComponent} from "@app/dashboard/prospect/prospect.component";
 import {TrackingRecordComponent} from "@app/dashboard/tracking-record/tracking-record.component";
 import {HistoryCollaboratorComponent} from "@app/dashboard/history-collaborator/history-collaborator.component";
 import {ArchiveComponent} from "@app/dashboard/archive/archive.component";
+import {AuthGuardService} from "@app/_helpers/auth-guard.service";
 //import { TaskComponent } from '@app/tasks/task.component';
 //import { SchedulerComponent } from '@app/scheduler/scheduler.component';
 
 
 
 const routes: Routes = [{
-    path: '', component: DashboardComponent,
+  path: '',
+  canActivate: [AuthGuardService],
+  canLoad:[AuthGuardService],
+  component: DashboardComponent,
     children: [
         {
             path: 'overview',
@@ -108,7 +112,7 @@ const routes: Routes = [{
         component: ProspectComponent,
       },
     ]
-  },
+  }
 ];
 
 @NgModule({

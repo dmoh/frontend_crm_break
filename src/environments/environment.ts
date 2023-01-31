@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   baseApiUrl: 'http://localhost:8080/api',
   apiUrl: 'http://localhost:8080',
-  frontendUrl: 'http://localhost:4205'
+  frontendUrl: 'http://localhost:4200'
 };
 
 /*

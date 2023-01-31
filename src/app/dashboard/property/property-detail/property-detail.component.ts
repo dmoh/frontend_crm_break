@@ -8,7 +8,6 @@ import {PropertyService} from "@app/_services/property.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Owner} from "@app/_models/owner";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {type} from "os";
 
 @Component({
   selector: 'app-property-detail',
@@ -75,7 +74,8 @@ export class PropertyDetailComponent implements OnInit {
       hasBuildingInsurance: [this.property.hasBuildingInsurance],
       hasPhotos: [this.property.hasPhotos],
       hasBuildingPlans: [this.property.hasBuildingPlans],
-      hasListOfWorks: [this.property.hasListOfWorks]
+      hasListOfWorks: [this.property.hasListOfWorks],
+      hasBuildingLease: [this.property.hasBuildingLease]
     });
     this.propertyAddressForm = this.fb.group({
       street: [this.property.address.street],

@@ -5,6 +5,8 @@ import {User} from '@app/_models/user';
 import {AuthenticationService} from '@app/_services/authentication.service';
 import {first} from 'rxjs/operators';
 import { AutServiceService } from '@app/_services/aut-service.service';
+import {MatDialog} from "@angular/material/dialog";
+import {PasswordForgotComponent} from "@app/_modals/password-forgot/password-forgot.component";
 
 @Component({
   selector: 'app-login',
@@ -13,10 +15,8 @@ import { AutServiceService } from '@app/_services/aut-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm:FormGroup = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
-  });
+  loginForm:FormGroup;
+  showSpinner = false;
 
   //loginForm: FormGroup;
   loading = false;
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private fb: FormBuilder,
-              private autService: AutServiceService
+              private autService: AutServiceService,
+              private dialog: MatDialog
   ) {
     // redirect to home if already logged in
     /*f (this.loginForm.value) {
@@ -43,6 +44,10 @@ export class LoginComponent implements OnInit {
   }*/
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
     //this.user = this.loginForm.value;
     //this.initForm()
 
@@ -58,6 +63,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.error = true;
     }*/
+    this.showSpinner = true;
 
 
     let user = new User();
@@ -68,8 +74,9 @@ export class LoginComponent implements OnInit {
       .subscribe((response) => {
         if(response.token)  {
           this.router.navigate(['/dashboard/overview']);
-        } else {
         }
+
+        this.showSpinner = false
       }, error => {
         this.error = error.message
       });
@@ -84,6 +91,7 @@ export class LoginComponent implements OnInit {
       //this.router.navigate(['/'])
     }alert('erreur')
   }*/
+
 
   onSubmit(): void {
    /*this.submitted = true;
@@ -108,5 +116,11 @@ export class LoginComponent implements OnInit {
           this.error = error;
           this.loading = false;
         });*/
+  }
+
+  onOpenModal() {
+    this.dialog.open(PasswordForgotComponent, {
+      autoFocus: false
+    })
   }
 }

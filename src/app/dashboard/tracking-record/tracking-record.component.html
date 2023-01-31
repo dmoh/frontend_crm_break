@@ -1,50 +1,74 @@
 <section style="width: 100%; overflow: hidden">
   <div class="container-fluid">
-    <div class="row">
+    <div *ngIf="showSpinner" class="row">
+      <div class="spinner-container" style="min-height: 100vh; display: flex; justify-content: center; align-items: center; width: 100%" *ngIf="showSpinner">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </div>
+    </div>
+    <div *ngIf="!showSpinner" class="row">
       <div *ngFor="let sale of sales" class="col-md-3">
-        <div class="card">
-          <div *ngIf="sale.offer.property.medias && sale.offer.property.medias.length > 0">
-            <div
-              *ngFor="let media of sale.offer.property.medias"
-              style="background: url('assets/images/brec-bg.jpg') no-repeat top left;background-size: cover;height: 200px"
-              [ngStyle]=
-                "{
-                'background-image': media.typeMedia == 'photos' ?
-                 environment.baseApiUrl + '/uploads/medias/' + media.filename : 'assets/images/brec-bg.jpg'
+        <ng-container *ngIf="sale && sale.offer && sale.offer.property">
+          <div class="card">
+            <div class="position-relative" *ngIf="sale.offer.property.medias && sale.offer.property.medias.length > 0">
+              <div
+                *ngFor="let media of sale.offer.property.medias"
+                [ngStyle]=
+                  "{
+                'background': media.typeMedia === 'photos' ?
+                 'url(' + media.filename + ') no-repeat top left' : 'assets/images/brec-bg.jpg',
+                 'background-size': 'contain',
+                 'background-position': 'center center',
+                 'height': '200px',
+                 'width': '100%'
                 }"
+                class="card-header">
+                <div class="position-absolute cursor-pointer" (click)="onShowMedia(media.filename)" style="cursor: pointer; left: 5px; top: 5px">
+                  <mat-icon>visibility</mat-icon>
+                </div>
+<!--
+                <img width="100" [src]="media.typeMedia === 'photos' ? 'https://api.crmbrec.ch/uploads/medias/' + media.filename : 'assets/images/brec-bg.jpg'" alt="">
+-->
+              </div>
+            </div>
+            <div
+              *ngIf="!sale.offer.property.medias || sale.offer.property.medias.length == 0"
+              style="background: url('assets/images/brec-bg.jpg') no-repeat top left;background-size: cover;height: 200px"
               class="card-header">
             </div>
-          </div>
-          <div
-            *ngIf="!sale.offer.property.medias || sale.offer.property.medias.length == 0"
-            style="background: url('assets/images/brec-bg.jpg') no-repeat top left;background-size: cover;height: 200px"
-            class="card-header">
-          </div>
-          <div class="card-body">
-            <div style="display: flex; justify-content: space-between">
-              <div>
+            <div class="card-body" style="position: relative">
+              <div style="position: absolute; top: -21px; right: 0" >
+                <app-upload-file
+                  (newImg)="onChangePhoto($event)"
+                  [propertyId]="sale.offer.property.id"></app-upload-file>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <div>
                 <span style="font-size: 1rem; font-weight: bold">
                   {{ sale.offer.title }}
                 </span>
+                </div>
+                <div>
+                  <em style="color: #666666; font-size: x-small">{{ sale.soldAt.substr(0,10) }}</em>
+                </div>
               </div>
-              <div>
-                <em style="color: #666666; font-size: x-small">{{ sale.soldAt }}</em>
-              </div>
+              <ul style="margin-left: 0; padding-left: 0; font-size: small">
+                <li style="width: 100%; text-align:center;font-size: small;color: #787878;display: flex;align-items: center;">
+                  <span style="font-size: xx-small"><mat-icon style="font-size: 0.9rem; padding-top: 0.3rem;">location_on</mat-icon> </span>
+                  <em style="font-weight: lighter; font-size: .6rem">
+                    {{ sale.offer.property.address.street }}, {{ sale.offer.property.address.city }}
+                  </em>
+                </li>
+                <li><span>Vente  </span><b>{{ sale.sellingPrice  | mask: 'separator':'.' }}CHF</b></li>
+                <li><span>Commission  </span><b>{{ sale.commission  | mask: 'separator':'.'}}CHF</b></li>
+                <li *ngIf="sale.byCollaborator"><span>Collaborateur  </span><b>{{ sale.byCollaborator.email.split('@')[0] | uppercase }}</b></li>
+              </ul>
             </div>
-            <ul style="margin-left: 0; padding-left: 0; font-size: small">
-              <li><span>Vente  </span><b>{{ sale.sellingPrice  | mask: 'separator':'.' }}CHF</b></li>
-              <li><span>Commission  </span><b>{{ sale.commission  | mask: 'separator':'.'}}CHF</b></li>
-              <li *ngIf="sale.byCollaborator"><span>Collaborateur  </span><b>{{ sale.byCollaborator.email.split('@')[0] | uppercase }}</b></li>
-              <li style="width: 100%; text-align:center;font-size: small;color: #787878;display: flex;align-items: center;">
-                <span style="font-size: x-small"><mat-icon>location_on</mat-icon> </span>
-                <em style="font-weight: lighter;">
-                  {{ sale.offer.property.address.street }}, {{ sale.offer.property.address.city }}
-                </em>
-              </li>
-            </ul>
           </div>
-        </div>
+        </ng-container>
       </div>
+        <div *ngIf="!sales || sales.length === 0" class="col-md-12">
+          <h3 class="text-center">Aucune vente pour le moment</h3>
+        </div>
     </div>
   </div>
 </section>

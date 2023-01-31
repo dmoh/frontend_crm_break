@@ -1,0 +1,16 @@
+<div class="toast-notification"
+     [ngStyle]="{'border-left': '6px solid #4070f4'}"
+     [ngClass]="{'active-notification': showActive}">
+  <div class="toast-content" >
+    <mat-icon style="color: #2959dc">check_circle</mat-icon>
+
+    <div class="message">
+      <span class="text text-1">Success</span>
+      <span class="text text-2">Your changes has been saved</span>
+    </div>
+  </div>
+  <mat-icon style="color: #666666; cursor:pointer;" (click)="onRemoveToast()">cancel</mat-icon>
+
+  <div class="progress-notification"></div>
+</div>
+

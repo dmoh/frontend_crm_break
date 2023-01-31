@@ -1,11 +1,14 @@
 <div style="padding: 7px;">
-    <div class="container" >
-      <div style="display: flex; justify-content: space-between;padding-top: 12px; border-radius: 8px;">
-        <h5 > Edition/Ajout d'un acheteur </h5>
-        <div style="padding: .5rem">
-          <button
-            (click)="onRemoveBuyer()"
-           mat-raised-button color="warn"> Supprimer</button>
+    <div class="container" style="margin-bottom: -3rem">
+      <div style="display: flex; justify-content: space-between; border-radius: 8px; align-items: center">
+        <div>
+          <h5>Edition/Ajout d'un acheteur </h5>
+        </div>
+        <div>
+          <span style="cursor:pointer;"
+            (click)="onCancel()">
+            <mat-icon>clear</mat-icon>
+          </span>
         </div>
       </div>
 
@@ -103,6 +106,9 @@
             <mat-option [value]="2">Nom (Asset Deal)</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-checkbox ngDefaultControl
+                      formControlName="buildingLease"
+        >Droit de superficie</mat-checkbox>
         <mat-form-field appearance="outline">
           <mat-label>Observations</mat-label>
           <textarea formControlName="comment" matInput></textarea>
@@ -140,7 +146,7 @@
         <h5 style="margin-top: 1rem;">Représentant(s)</h5>
         <ul style="margin-left: 0; padding-left: 0">
           <li *ngFor="let agent of buyer.agentsBuyer">
-            <div style="width: 100%; margin-top: 1rem; display: flex; justify-content: space-between">
+            <div style="width: 100%;margin-top: 1rem;display: flex;padding: .5rem;justify-content: space-between;background: #fefefe;align-items: center;border-radius: 3px;box-shadow: 14px 4px 30px rgba(0,0,0,0.02);">
               <div>
                 <span style="display: block">
                   {{ agent.lastname | uppercase }} {{ agent.firstname }}
@@ -154,8 +160,7 @@
               </div>
               <div>
                 <button mat-raised-button color="warn" (click)="onRemoveAgent(agent)">
-                  <mat-icon>highlight_off</mat-icon>
-                  <span>Supprimer</span>
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </div>
@@ -165,6 +170,11 @@
       <div  style="display: flex;justify-content: space-between; margin-bottom: 20px;margin-top: 15px;">
         <div>
           <button mat-stroked-button color="primary" (click)='onSubmit()' >Save</button>
+        </div>
+        <div>
+          <button
+            (click)="onRemoveBuyer()"
+            mat-raised-button color="warn"> Supprimer</button>
         </div>
       </div>
   </div>

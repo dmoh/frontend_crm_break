@@ -33,4 +33,5 @@ export class Property {
   hasPhotos = null;
   hasBuildingPlans = null;
   hasListOfWorks = null;
+  hasBuildingLease = false;
 }

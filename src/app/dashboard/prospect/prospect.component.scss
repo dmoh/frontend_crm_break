@@ -1,22 +1,30 @@
 .mat-row:hover .mat-cell {
-  border-color: #ccc !important;
+  border-color: #ccc;
 }
 .background-status {
   background: white;
 }
 
 .background-status-open {
-  background: palegoldenrod;
+  background: palegoldenrod !important;
 }
 
 .background-status-seller {
-  background: palegreen;
+  background: palegreen !important;
 }
 
 .background-status-sold {
-  background: lawngreen;
+  background: lawngreen !important;
 }
 
 .background-status-not-for-sale {
   background: #ff8165;
 }
+
+
+.mat-row:nth-child(2n+1){
+  background-color: #fcfcfc;
+}
+/*.mat-row:not(:nth-child(4n+1)){
+  background-color:#ffffff;
+}*/

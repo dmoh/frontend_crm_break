@@ -16,6 +16,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {Owner} from "@app/_models/owner";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-offer-modal',
@@ -48,8 +49,9 @@ export class OfferModalComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
 
+  buyerToRemove = []
   dataSource = [];
-  displayedColumns: string[] = ['removeBuyer', 'fullname', 'email', 'actions'];
+  displayedColumns: string[] = ['selectForAction','removeBuyer', 'fullname', 'email', 'actions'];
 
   @ViewChild('propertyInput') propertyInput: ElementRef<HTMLInputElement>;
   @ViewChild(MatSort) public sort: MatSort;
@@ -59,6 +61,7 @@ export class OfferModalComponent implements OnInit {
   enableNextButton = false;
   private findOwners: boolean = true;
   buyerNameCtrl = new FormControl();
+  removeAllBuyers = false;
 
   constructor(
     private offerService: OfferService,
@@ -116,69 +119,9 @@ export class OfferModalComponent implements OnInit {
     });
 
     this.sendMailBuyersCtrl.patchValue(this.offer.sendMailBuyers);
-    /*
-
-        this.propertyForm = this.formBuilder.group({
-          labelTypeProperty: [this.offer.property.labelTypeProperty],
-          typeProperty: [this.offer.property.typeProperty],
-          propertyRegime: [this.offer.property.propertyRegime],
-          rentalStatus: [this.offer.property.rentalStatus],
-          yield: [this.offer.property.yield],
-          comment: [this.offer.property.comment],
-          sellingPrice: [this.offer.property.sellingPrice],
-          owner: [this.offer.property.owner],
-          ownerName: [this.offer.property.ownerName],
-        });
-
-
-        if (!this.offer.property.address) {
-          this.offer.property.address = new Address();
-          if(this.offer.property.street) {
-            this.offer.property.address.street = this.offer.property.street;
-          }
-          if(this.offer.property.city) {
-            this.offer.property.address.city = this.offer.property.city;
-          }
-          if(this.offer.property.zipcode) {
-            this.offer.property.address.zipcode = this.offer.property.zipcode;
-          }
-          if(this.offer.property.canton) {
-            this.offer.property.address.canton = this.offer.property.canton;
-          }
-        }
-        this.propertyAddressForm = this.formBuilder.group({
-          street: [this.offer.property.address.street],
-          city: [this.offer.property.address.city],
-          zipcode: [this.offer.property.address.zipcode],
-          canton: [this.offer.property.address.canton],
-          country: [this.offer.property.address.country]
-        });
-    */
 
     this.initOwnerForm();
-    /*this.ownerForm = this.formBuilder.group({
-      name: new FormControl(this.offer.property.owner.name, [Validators.required]),
-      email: new FormControl(this.offer.property.owner.email, [Validators.required]),
-      phoneNumber: new FormControl(this.offer.property.owner.phoneNumber),
-      comment: new FormControl(this.offer.property.owner.comment),
-      customerType: new FormControl(this.offer.property.owner.customerType), // todo type society/particular
-      budgetMin: new FormControl(''), // todo type society/particular
-       budgetMax: new FormControl('') // todo type society/particular
-    });*/
-    /*
-        this.propertyForm
-          .get('typeProperty')
-          .valueChanges
-          .subscribe((val) => {
-            if (this.property
-              && this.property.labelTypeProperty
-              && val
-              && +val > 0
-            ) {
-              this.property.labelTypeProperty = Helper.getLabelTypePropertyByValue(val);
-            }
 
-          });*/
   }
 
   onSubmit(): void {
@@ -295,7 +238,6 @@ export class OfferModalComponent implements OnInit {
         )
       )
       .subscribe(res => {
-        console.warn('res potential', res);
         if (res.properties) {
           this.filteredOptions = res.properties;
         }
@@ -324,11 +266,6 @@ export class OfferModalComponent implements OnInit {
       }
     });
   }
-
-  onChangeTypeProperty() {
-
-  }
-
   onSendMail() {
     this.offer.sendMailBuyers = !this.offer.sendMailBuyers;
   }
@@ -352,38 +289,14 @@ export class OfferModalComponent implements OnInit {
 
   private assignOffer(): void {
     this.offer = Object.assign(this.offer, this.offerForm.value);
-    // this.offer.property = this.property;
 
-    /*this.offer.property = Object.assign(this.offer.property, this.propertyForm.value);
-    this.offer.property.address = Object.assign(this.offer.property.address, this.propertyAddressForm.value);
-    if (!this.offer.property.owner) {
-      this.initOwnerForm();
-    }
-    this.offer.property.owner = Object.assign(this.offer.property.owner, this.ownerForm.value);*/
     this.offer.property.sellingPrice = this.offer.sellingPropositionPrice;
   }
 
   private calculateYield() {
-    /*this.propertyForm
-      .get('yield')
-      .disable();
-    this.propertyForm.get('sellingPrice')
-      .valueChanges
-      .subscribe((sellingPrice) => {
-        this.propertyForm.get('rentalStatus')
-          .valueChanges
-          .subscribe((rentalStatus) => {
-            if (+sellingPrice > 0 && +rentalStatus > 0) {
-              const yieldCalculate = Math.round((+rentalStatus / +sellingPrice) * 100);
-              this.propertyForm.get('yield')
-                .patchValue(yieldCalculate);
-            }
-          })
-      });*/
   }
 
   private mergeProperty(property: any) {
-    console.warn('owner MErge', property);
     this.property = new Property();
 
     this.property.id = property.id;
@@ -403,25 +316,12 @@ export class OfferModalComponent implements OnInit {
       this.offer.property.address,
       this.property.address
     );
-    console.warn(property.owners);
-    console.warn(this.property);
-    //this.property = property;
-    console.warn('dsdsds', this.property);
+
 
     this.offer.property = Object.assign(this.offer.property, this.property);
     //setter les éléments
     this.offer.property.ownerName = property.owners;
     this.offer.property.yield = this.property.yield;
-    console.warn(this.offer);
-
-    /*this.setValuesForm('address', 'street', property.street);
-    this.setValuesForm('address', 'city', property.city);
-    this.setValuesForm('address', 'canton', property.canton);
-    this.setValuesForm('address', 'zipcode', property.zipcode);
-    this.setValuesForm('address', 'country', property.country);
-    this.setValuesForm('owner', 'name', property.owners);
-    this.setValuesForm('property', 'typeProperty', property.propertyType);*/
-    console.warn('prop', this.offer);
     this.offer.property = property;
     this.property = property;
     this.propertyService
@@ -455,7 +355,7 @@ export class OfferModalComponent implements OnInit {
         debounceTime(1000),
         tap(() => this.isLoadingB = true),
         filter((value) => {
-          if (value && value.length > 0 && value.trim().length > 3) {
+          if (value && value.length > 0 && value.trim().length > 1) {
             return true;
           } else {
             this.isLoadingB = false;
@@ -471,7 +371,6 @@ export class OfferModalComponent implements OnInit {
         )
       )
       .subscribe(res => {
-        console.warn('res potential', res);
         // @ts-ignore
         if (res.buyers) {
           // @ts-ignore
@@ -480,7 +379,6 @@ export class OfferModalComponent implements OnInit {
       });
   }
   onChangeB(option) {
-    console.warn('option selected', option);
     this.buyers = [option, ...this.buyers];
     this.dataSource.push(option);
     this.table.renderRows();
@@ -488,9 +386,52 @@ export class OfferModalComponent implements OnInit {
     setTimeout(_ => this.findBuyer = true, 2500);
   }
 
-  onRemoveBuyer(id) {
-    this.dataSource = this.dataSource.filter(buyer => +buyer.id !== +id);
-    this.buyers = this.buyers.filter(buyer => +buyer.id !== +id);
+  onRemoveBuyer(id?: number, removeSelected = false) {
+    if (removeSelected) {
+      for (const id of this.buyerToRemove) {
+        this.dataSource = this.dataSource.filter(buyer => +buyer.id !== +id);
+        this.buyers = this.buyers.filter(buyer => +buyer.id !== +id);
+      }
+    } else {
+      this.dataSource = this.dataSource.filter(buyer => +buyer.id !== +id);
+      this.buyers = this.buyers.filter(buyer => +buyer.id !== +id);
+    }
     this.table.renderRows();
+  }
+
+  onChangeStateBuyer(event: MatCheckboxChange, buyer: Buyer, selectAll = false) {
+    if (event.checked) {
+      if (buyer && buyer.id > 0 && !this.buyerToRemove.includes(buyer.id)) {
+        this.buyerToRemove = [...this.buyerToRemove, buyer.id];
+      }
+      if (selectAll) {
+        this.dataSource.forEach(buyerElem => {
+          buyerElem.isSelectedToRemove = true;
+          if (buyerElem.id > 0 && !this.buyerToRemove.includes(buyerElem.id)) {
+            this.buyerToRemove = [...this.buyerToRemove, buyerElem.id];
+          }
+        })
+        this.buyers.forEach(buyerElem => {
+          buyerElem.isSelectedToRemove = true;
+        })
+        this.table.renderRows();
+      }
+    } else {
+      if(selectAll) {
+        this.buyerToRemove = [];
+        this.dataSource.forEach(buyerElem => {
+          buyerElem.isSelectedToRemove = false;
+        })
+        this.buyers.forEach(buyerElem => {
+          buyerElem.isSelectedToRemove = false;
+        })
+        this.table.renderRows();
+      }
+      this.removeAllBuyers = false;
+      this.table.renderRows();
+      if (this.buyerToRemove.length > 0) {
+        this.buyerToRemove = this.buyerToRemove.filter((idBuyer) => buyer.id !== idBuyer)
+      }
+    }
   }
 }

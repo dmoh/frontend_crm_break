@@ -125,9 +125,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
 
     this.tasksSubscription = this.taskService.task$.subscribe(
-      (tasksRecup: Task[]) => {
-        this.tasks = tasksRecup;
-        console.log('taskRecup dans le calendrier', this.tasks)
+      (taskRecup: Task[]) => {
+        this.tasks = taskRecup;
       }
     );
   }
@@ -137,7 +136,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   handleDateClick(event) {
-    console.warn('date ', event)
   }
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
@@ -158,7 +156,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(EventModalComponent, {
       data: {
         event: eventNew
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef.afterClosed()
@@ -169,25 +168,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           if (crmConstants.CODE_COLOR_EVENT_DEFAULT !== res.color) {
             eventNew.color = res.color;
           }
-
-          /*this.eventService
-            .getEventList()
-            .subscribe((response) => {
-              this.calendarOptions.events = response;
-            });*/
-
           this.calendarApi = selectInfo.view.calendar;
           this.updateEvent(eventNew);
         }
 
       });
     return;
-
-    //this.confirmSwal.fire();
-    /*const title = '';
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect();*/ // clear date selection
   }
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -196,7 +182,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       const dialogRef = this.dialog.open(EventModalComponent, {
         data: {
           event: clickInfo.event
-        }
+        },
+        autoFocus: false
       });
 
       dialogRef
@@ -217,7 +204,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
               })
           } else {
             let eventUpdated = res;
-            console.warn(res);
             eventUpdated.eventId = eventId;
             this.updateEvent(eventUpdated);
           }
@@ -242,7 +228,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(EventModalComponent, {
       data: {
         event: dropEvent.event
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef

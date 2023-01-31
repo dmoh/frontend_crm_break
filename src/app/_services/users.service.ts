@@ -62,4 +62,10 @@ export class UsersService {
   getHistoryList(): Observable<any> {
     return this.http.get<any>(`${this.urlApi}/api/user/history/list`, this.headers);
   }
+
+
+
+  updatePasswordMember(memberId: number): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/api/user/password/init/${memberId}`, this.headers);
+  }
 }

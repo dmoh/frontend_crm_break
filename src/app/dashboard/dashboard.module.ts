@@ -59,6 +59,8 @@ import { ClosingOfferComponent } from '../_modals/closing-offer/closing-offer.co
 import { PropertyComponent } from './property/property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { NgxMaskModule } from "ngx-mask";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -101,7 +103,9 @@ FullCalendarModule.registerPlugins([
     GoogleMapsModule,
     MatSlideToggleModule,
     MatTabsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    MatRadioModule,
+    MatTooltipModule
   ],
   exports: [
       CoreModule,

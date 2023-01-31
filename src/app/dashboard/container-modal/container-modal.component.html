@@ -23,9 +23,16 @@
             <button mat-raised-button color="primary" type="button" (click)="onSave()">Valider</button>
           </div>
         </div>
+        <hr>
       </div>
-      <hr>
-      <h6>Ajouter un rappel</h6>
+      <div style="justify-content: space-between; align-items: center" class="d-flex w-100">
+        <div>
+          <h6>Ajouter un rappel</h6>
+        </div>
+        <div>
+          <button mat-mini-fab color="warn" (click)="dialogRef.close()"><mat-icon>clear</mat-icon></button>
+        </div>
+      </div>
       <div style="margin-top: 1rem; margin-bottom: 1rem">
         <button (click)="addReminder()" mat-raised-button color="accent">
           + Ajouter
@@ -33,8 +40,12 @@
       </div>
       <form [formGroup]="remindersForm">
         <div *ngFor="let reminder of remindersForm.controls; index as i">
+          <div *ngIf="i > 0">
+            <button  mat-raised-button color="warn" style="float: right"  (click)="removeReminder(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
           <ng-container [formGroupName]="i">
-            <button mat-raised-button color="warn" style="float: right"  (click)="removeReminder(i)">Supprimer</button>
             <mat-form-field style="width: 100%" appearance="outline">
               <mat-label>Date</mat-label>
               <input matInput formControlName="remindAt" [matDatepicker]="picker">
@@ -54,8 +65,8 @@
         </div>
       </form>
       <div [ngStyle]="{'display': showSaveBtn  ? 'block' : 'none'}" class="row">
-        <div class="col-12">
-          <button mat-raised-button color="primary" (click)="onSave()">Valider</button>
+        <div class="col-12" style="margin-bottom: 1rem">
+          <button mat-raised-button color="primary"  (click)="onSave()">Valider</button>
         </div>
       </div>
     </div>

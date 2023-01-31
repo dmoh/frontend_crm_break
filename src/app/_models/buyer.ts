@@ -26,5 +26,7 @@ export class Buyer {
    propertyRegime = null;
    employeeInCharge = null;
    agentsBuyer: AgentBuyer[] = [];
+   isSelectedToRemove = false;
+    buildingLease = false; // droit de superficie
 }
 

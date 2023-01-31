@@ -42,6 +42,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ProspectComponent } from './dashboard/prospect/prospect.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1);
 
@@ -56,6 +57,7 @@ export const googleChartsConfigSubject = new ReplaySubject<GoogleChartsConfig>(1
     GanttComponent,
     TemplateMailComponent,
     ProspectComponent,
+    NotFoundComponent,
     //PipeDriveComponent,
     //OfferModalComponent,
     //DragDirective,

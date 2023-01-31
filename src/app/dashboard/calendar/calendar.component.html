@@ -11,7 +11,10 @@
         'border-radius': '3px',
         'padding': '.5rem',
         'background-color': user.calendarColor }"></span>
-        <span>{{ user.email.split('@')[0] | uppercase }}</span>
+        <span
+          *ngIf="user && user.email">
+          {{ (user.email.split('@')[0]).substring(0,2) | uppercase }}
+        </span>
       </div>
     </div>
   </div>

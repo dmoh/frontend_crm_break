@@ -83,7 +83,7 @@ export class ClosingOfferComponent implements OnInit {
         debounceTime(1000),
         tap(() => this.isLoading = true),
         filter((value) => {
-          if (value && value.length > 0 && value.trim().length > 3) {
+          if (value && value.length > 0 && value.trim().length > 1) {
             return true;
           } else {
             this.isLoading = false;

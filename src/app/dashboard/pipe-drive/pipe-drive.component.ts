@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { List } from '../models/list';
@@ -14,6 +14,7 @@ import {UsersService} from "@app/_services/users.service";
 import {map} from "rxjs/operators";
 import {ClosingOfferComponent} from "@app/_modals/closing-offer/closing-offer.component";
 import {PropertyService} from "@app/_services/property.service";
+import {Property} from "@app/_models/property";
 
 @Component({
   selector: 'app-pipe-drive',
@@ -21,7 +22,7 @@ import {PropertyService} from "@app/_services/property.service";
   styleUrls: ['./pipe-drive.component.scss'],
   providers: [MatSnackBar]
 })
-export class PipeDriveComponent implements OnInit {
+export class PipeDriveComponent implements OnInit, AfterViewInit {
   offers: Offer[] = [];
   offersOnWaiting: Offer[] = [];
   green = false;
@@ -46,15 +47,19 @@ export class PipeDriveComponent implements OnInit {
       color: 'red',
       offre:
         [],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
     {
       id:crmConstants.CODE_OFFER_STATUS_MEMORANDUM.value,
       titre: 'Mémorandum / Dossier complet',
       colorBox: 'blueBox',
       color: 'blue',
-      offre:
-        [
-        ],
+      offre: [],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
     {
       id: crmConstants.CODE_OFFER_STATUS_INDICATIVE.value,
@@ -63,6 +68,9 @@ export class PipeDriveComponent implements OnInit {
       color: 'orange',
       offre: [
       ],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
     {
       id: crmConstants.CODE_OFFER_STATUS_VISIT_PROPERTY.value,
@@ -71,6 +79,9 @@ export class PipeDriveComponent implements OnInit {
       color: 'green',
       offre: [
       ],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
     {
       id: crmConstants.CODE_OFFER_STATUS_LAST.value,
@@ -79,6 +90,9 @@ export class PipeDriveComponent implements OnInit {
       color: 'teal',
       offre: [
       ],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
     {
       id: crmConstants.CODE_OFFER_STATUS_CLOSING.value,
@@ -87,10 +101,15 @@ export class PipeDriveComponent implements OnInit {
       color: 'purple',
       offre: [
       ],
+      dataOffer:{
+        amountTotal: 0
+      }
     },
 ]
   drag = false;
   offersSaved = [];
+  showSpinner = true;
+  showEmptyOfferMessage: boolean = false;
   constructor(private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private userService: UsersService,
@@ -100,6 +119,9 @@ export class PipeDriveComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOfferList();
+  }
+
+  ngAfterViewInit() {
   }
 
 
@@ -119,18 +141,34 @@ export class PipeDriveComponent implements OnInit {
           this.offersSaved = res.offers;
           this.sortOffer();
         }
+        setTimeout(_ => {
+          this.showSpinner = false;
+          if (this.offersSaved.length === 0) {
+            this.showEmptyOfferMessage = true;
+          }
+        }, 1500)
+
       })
   }
 
   private sortOffer() {
     this.columns.forEach((elem) => {
       elem.offre = this.offersSaved.filter((offer) => +offer.status === +elem.id);
+      if (elem.offre && elem.offre.length > 0){
+        elem.dataOffer.amountTotal = elem.offre.reduce((acc: any, currentValue: any) => acc + currentValue.sellingPropositionPrice , 0)
+      }
     });
     this.offersOnWaiting = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ON_WAITING.value === +offer.status);
     this.archivedOffers = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ARCHIVED.value === +offer.status);
   }
 
   drop(event: CdkDragDrop<string[]>, columnId?: number) {
+    if (this.offerDropped && this.offerDropped.status) {
+      if (columnId === this.offerDropped.status){
+        return;
+      }
+    }
+
     if (columnId === crmConstants.CODE_OFFER_STATUS_CLOSING.value) {
         setTimeout(() => {
           this.openDialogClosing(this.offerDropped, columnId);
@@ -144,7 +182,6 @@ export class PipeDriveComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -203,6 +240,9 @@ export class PipeDriveComponent implements OnInit {
       this.offerDropped = this.offersSaved.filter((elem) => +elem.id === +offer.id)[0];
       this.propertyService
         .setPropertyCurrent(this.offerDropped.property);
+    } else {
+      this.propertyService
+        .setPropertyCurrent(new Property())
     }
     const dialogRef = this.dialog.open(OfferModalComponent, {
       width: '90%',
@@ -217,13 +257,8 @@ export class PipeDriveComponent implements OnInit {
       }
     })
   }
-
-
-
-
-
-  dropOffer(item: any) {
-    this.offerDropped = item
+  dropOffer(offer: any) {
+    this.offerDropped = offer
   }
 
   onGetOfferByCollaboratorId() {
@@ -272,7 +307,12 @@ export class PipeDriveComponent implements OnInit {
    this.updateAll(crmConstants.CODE_OFFER_STATUS_ARCHIVED.value);
   }
 
-  onCloseModal() {
+  onCloseModal() {}
 
+
+  getOfferColDiv(colId: number) {
+    let divCurrent = document.getElementById(`offer-col-${colId}`)
+    let before = divCurrent.querySelector( "::before" );
+    console.log( before );
   }
 }

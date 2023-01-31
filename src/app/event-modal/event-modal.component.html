@@ -1,13 +1,20 @@
 <mat-dialog-content>
   <section class="w-100 overflow-hidden">
     <div class="container-fluid">
-      <h5 class="text-capitalize">évènement</h5>
-      <button mat-raised-button style="float: right" (click)="onRemoveEvent()" color="accent">Supprimer</button>
-<!--
-    <h6>prévu le {{ selectInfo | json }}</h6>
--->
+      <div class="row">
+        <div style="margin-top: .5rem" class="col-md-12">
+          <div class="d-flex w-100" style="justify-content: space-between; align-items: center">
+            <div>
+              <h5 class="text-capitalize">évènement</h5>
+            </div>
+            <div>
+              <button mat-raised-button style="float: right" (click)="onRemoveEvent()" color="warn">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <span
-      style="display: block; margin-bottom: .5rem; color: #666666; font-size: small; font-style: italic; font-weight: 300">prévu le {{ dateEvent.start }} au {{ dateEvent.end }}  </span>
+      style="display: block; margin-bottom: .5rem; color: #666666; font-size: .55rem; font-style: italic; font-weight: 300">prévu le {{ dateEvent.start }} au {{ dateEvent.end }}  </span>
       <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
         <mat-form-field style="width: 100%" appearance="outline">
           <mat-label>Message</mat-label>

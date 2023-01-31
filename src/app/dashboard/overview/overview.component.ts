@@ -89,7 +89,7 @@ export class OverviewComponent implements  OnInit {
         .subscribe((res) =>  {
           setTimeout(() => {
             this.initStats(res);
-          }, 2500);
+          }, 1500);
         })
       ;
     }
@@ -129,7 +129,8 @@ export class OverviewComponent implements  OnInit {
       const dialogRef = this.dialog.open(ContainerModalComponent, {
         data: {
           showReminderOnly: true
-        }
+        },
+        autoFocus: true
       });
 
       dialogRef.afterClosed()

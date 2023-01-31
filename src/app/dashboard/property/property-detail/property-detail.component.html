@@ -102,8 +102,8 @@
               <ul style="margin-left: 0; padding-left: 0">
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesRentalStatus">
                   <div class="d-flex">
-                    <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <a *ngIf="media.isDocument && media.filename"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -114,7 +114,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument " src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -139,7 +139,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesDetailedManagementAccount">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -150,7 +150,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -174,7 +174,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesExtractLandRegister">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -185,7 +185,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -209,7 +209,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingInsurance">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -220,7 +220,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -244,7 +244,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingPlans">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -255,7 +255,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -279,7 +279,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesListOfWorks">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -290,7 +290,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -314,7 +314,7 @@
                 <li style="display: flex;" class="align-items-center" *ngFor="let media of filesPhotos">
                   <div class="d-flex">
                     <a *ngIf="media.isDocument"
-                       href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                       href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -325,7 +325,7 @@
                         </div>
                       </div>
                     </a>
-                    <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                   <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -461,7 +461,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-label>Prix de vente</mat-label>
                 <input type="text"
@@ -472,7 +472,7 @@
                        formControlName="sellingPrice"/>
               </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-label>Montant état locatif</mat-label>
                 <input type="text"
@@ -483,7 +483,7 @@
                        formControlName="rentalStatus"/>
               </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <mat-form-field style="width: 100%" appearance="outline">
                 <mat-label>Rendement (%)</mat-label>
                 <input type="text"
@@ -492,6 +492,11 @@
                        [autocomplete]="'off'"
                        formControlName="yield"/>
               </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-checkbox ngDefaultControl
+                            formControlName="hasBuildingLease"
+              >Droit de superficie</mat-checkbox>
             </div>
           </div>
           <div class="row">
@@ -511,7 +516,7 @@
               <ul style="margin-left: 0; padding-left: 0">
                 <li *ngFor="let media of medias">
                   <div>
-                    <a *ngIf="media.isDocument" href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <a *ngIf="media.isDocument" href="{{ media.filename }}"
                        target="_blank">
                       <div class="d-flex justify-content-center align-items-center">
                         <div>
@@ -522,7 +527,7 @@
                         </div>
                       </div>
                     </a>
-                    <img *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                    <img *ngIf="!media.isDocument" src="{{ media.filename }}"
                          alt="{{media.originalFilename}}">
                   </div>
                 </li>
@@ -553,7 +558,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesRentalStatus">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -564,7 +569,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -601,7 +606,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesDetailedManagementAccount">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -612,7 +617,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -646,7 +651,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesExtractLandRegister">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -657,7 +662,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -690,7 +695,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingInsurance">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -701,7 +706,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -736,7 +741,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesBuildingPlans">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -747,7 +752,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -780,7 +785,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesListOfWorks">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -791,7 +796,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">
@@ -824,7 +829,7 @@
                     <li style="display: flex;" class="align-items-center" *ngFor="let media of filesPhotos">
                       <div class="d-flex">
                         <a *ngIf="media.isDocument"
-                           href="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                           href="{{ media.filename }}"
                            target="_blank">
                           <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -835,7 +840,7 @@
                             </div>
                           </div>
                         </a>
-                        <img width="300" *ngIf="!media.isDocument" src="{{ crmConstants.URL_API_MEDIAS }}/{{ media.filename }}"
+                        <img width="300" *ngIf="!media.isDocument" src="{{ media.filename }}"
                              alt="{{media.originalFilename}}">
                       </div>
                       <div *ngIf="+media.id > 0" style="cursor: pointer">

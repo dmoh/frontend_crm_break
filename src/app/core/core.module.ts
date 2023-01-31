@@ -37,9 +37,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 //import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { PasswordForgotComponent } from '../_modals/password-forgot/password-forgot.component';
+import { ToastNotificationComponent } from '../toast-notification/toast-notification.component';
 
 @NgModule({
-  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe, UploadFileComponent
+  declarations: [AddProjectComponent, AddMemberModalComponent, DialogModalComponent, FilterPipe, UploadFileComponent, PasswordForgotComponent, ToastNotificationComponent
   ],
   imports: [
 
@@ -110,7 +112,9 @@ import { UploadFileComponent } from '../upload-file/upload-file.component';
       //CdkTableModule,
 
       FilterPipe,
-      UploadFileComponent
+      UploadFileComponent,
+      PasswordForgotComponent,
+      ToastNotificationComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [MatDialog, ]

@@ -85,8 +85,19 @@
 </div>-->
 <div class="container-fluid">
   <div class="card">
-    <div class="card-heading">
-      <h2 class="text-center">Acheteurs</h2>
+    <div class="card-heading d-flex " style="justify-content: space-between; align-items: center">
+      <div>
+        <h2>Acheteurs</h2>
+      </div>
+      <div>
+        <button
+          (click)="affiche()"
+          routerLink='new'
+          mat-mini-fab
+          [color]="'primary'"
+        ><mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -94,7 +105,7 @@
     <mat-drawer
         [(opened)]="opened"
         (openedChange)="onChangeStateDrawer($event)"
-        mode="drawerMode"
+        mode="over"
         [position]="'end'"
         [disableClose]="false">
       <router-outlet></router-outlet>
@@ -213,19 +224,35 @@
               </div>
             </div>
           </div>
-          <button mat-raised-button color="primary" (click)="onSubmit()">Ok</button>
+          <button mat-raised-button color="primary" class="mb-3" (click)="onSubmit()">Ok</button>
           <button *ngIf="showCancelButton" style="float: right" mat-raised-button color="accent" (click)="onCancelFilter()">Annuler</button>
         </form>
         </div>
         <div style="display: flex;gap: 15px;">
       <div>
-        <button
-          (click)="affiche()"
-          routerLink='new'
-          mat-mini-fab
-          [color]="'primary'"
-        ><mat-icon>add</mat-icon>
-        </button>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 mt-3 mb-3">
+              <mat-radio-group color="primary" aria-label="Select an option">
+                <mat-radio-button class="mr-2" (change)="onUpdateFilter('private')" value="private">
+                  <mat-icon>
+                    person_outline
+                  </mat-icon>
+                  <span>
+                    Privés
+                  </span>
+                </mat-radio-button>
+                <mat-radio-button class="mr-2" (change)="onUpdateFilter('all')" [checked]="showAllBuyers" value="all">Privés et Institutionnels</mat-radio-button>
+                <mat-radio-button (change)="onUpdateFilter('institutional')" value="institutional">
+                  <mat-icon>
+                    home_work
+                  </mat-icon>
+                  <span>Institutionnels</span>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="file-upload">
         <button
@@ -233,11 +260,9 @@
           [color]="'basic'"
         >
           <label id="selector-files" for="input-file-id">
-
             <mat-icon style="cursor: pointer" class="material-icons">
               attach_file
             </mat-icon>
-
           </label>
           <input
             (change)="addFiles($event)"
@@ -250,31 +275,59 @@
         </button>
       </div>
     </div>
-        <div class="files">
-          <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
-            <span> {{file.name}} </span>
-            <mat-icon (click)="removeFile(i)">clear</mat-icon>
-          </div>
-        </div>
+    <div class="files">
+      <div class="file" *ngFor="let file of fileHolders$ | async; let i = index" style="display: flex; justify-content: space-between;">
+        <span> {{file.name}} </span>
+        <mat-icon (click)="removeFile(i)">clear</mat-icon>
+      </div>
+    </div>
+    <div *ngIf="showSpinner" class="w-100 d-flex overflow-hidden">
+      <div style="width: 100%; display: flex; height: 70vh; justify-content: center; align-items: center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </div>
+    </div>
 
-    <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
-      <mat-divider></mat-divider>
-      <div class="container-fluid">
-        <div class="row">
-          <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-6">
-            <mat-list>
-              <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
-                <div style="display: flex;gap: 15px;">
-                  <mat-icon>person_outline</mat-icon>
-                  <p>{{buyer.name}}</p>
-                </div>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-            </mat-list>
+    <div *ngIf="buyers && buyers.length > 0" class="mt-2 mb-0">
+      <mat-form-field color="primary" appearance="outline">
+        <mat-label>
+          Recherche rapide
+        </mat-label>
+        <input type="text"
+               [autocomplete]="'off'"
+               matInput
+               [formControl]="searchFastCtrl" >
+      </mat-form-field>
+    </div>
+
+
+    <ng-container *ngIf="showSpinner">
+      <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!showSpinner">
+      <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
+        <mat-divider></mat-divider>
+        <div class="container-fluid">
+          <div class="row">
+              <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-4">
+                <mat-list>
+                <mat-list-item style="margin-bottom: 15px;cursor: pointer;"  (click)='afficheAutre(buyer)'>
+                  <div style="display: flex;gap: 15px;">
+                    <mat-icon>
+                      {{buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL ? 'home_work' : 'person_outline'}}
+                    </mat-icon>
+                    <p>{{buyer.name}}</p>
+                  </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                </mat-list>
+              </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
     </mat-drawer-content>
     </mat-drawer-container>
 </div>

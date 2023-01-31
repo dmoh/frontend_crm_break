@@ -59,7 +59,10 @@ export const crmConstants = {
   URL_API_MEDIAS: 'http://localhost:8000/uploads/medias',
 
   CODE_COLOR_EVENT_DEFAULT: '#0056b3',
-  NB_PER_PAGE: 100
+  NB_PER_PAGE: 100,
+
+  ROLE_COLLABORATOR : 'ROLE_USER',
+  ROLE_SUPER_ADMIN : 'ROLE_SUPER_ADMIN'
 }
 
 

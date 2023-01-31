@@ -65,7 +65,9 @@ export class AddMemberModalComponent implements OnInit {
      );
     this.userService.registerUser(newUser)
       .subscribe((response) => {
-        console.warn('response', response);
+        if (response && response.user) {
+          this.dialogRef.close(response.user);
+        }
       })
      /*this.userService.addMember(newUser);
      console.log('user', newUser)

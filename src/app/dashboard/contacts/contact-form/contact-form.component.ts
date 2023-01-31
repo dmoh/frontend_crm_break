@@ -65,7 +65,7 @@ export class ContactFormComponent implements OnInit {
 
     })
   }
-  initForm(buyer) {
+  initForm(buyer: Buyer) {
     this.buyerForm = this.formBuilder.group({
       id: [buyer.id],
       name: [buyer.name],
@@ -78,7 +78,8 @@ export class ContactFormComponent implements OnInit {
       tags: [buyer.tags],
       phoneNumber: [buyer.phoneNumber],
       customerType: [buyer.customerType],
-      propertyRegime: [buyer.propertyRegime]
+      propertyRegime: [buyer.propertyRegime],
+      buildingLease: [buyer.buildingLease]
     })
 
     if (buyer.areasDesired && buyer.areasDesired.length > 0) {
@@ -201,5 +202,11 @@ export class ContactFormComponent implements OnInit {
             .setStateDrawer(false);
         }
       })
+  }
+
+
+  onCancel() {
+    this.buyerService
+      .setStateDrawer(false);
   }
 }

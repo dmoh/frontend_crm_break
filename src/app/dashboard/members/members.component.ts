@@ -6,6 +6,7 @@ import { UsersService } from '@app/_services/users.service';
 import { Subscription } from 'rxjs';
 import { Members } from '../models/members';
 import { AddMemberModalComponent } from './add-member-modal/add-member-modal.component';
+import {crmConstants} from "@app/_helpers/crm-constants";
 
 @Component({
   selector: 'app-members',
@@ -16,6 +17,7 @@ import { AddMemberModalComponent } from './add-member-modal/add-member-modal.com
 
 export class MembersComponent implements OnInit, OnDestroy {
     memberSubscription: Subscription;
+    crmConstants = crmConstants;
     dataSource : MatTableDataSource<Members> = new MatTableDataSource();
     displayedColumns: string[] = ['id', 'firstname', 'lastname', 'email', 'roles', 'actions'];
     /*dataSource: Members[]  = [
@@ -46,8 +48,9 @@ export class MembersComponent implements OnInit, OnDestroy {
           data: !member ? new Members() : member,
       });
       dialogRef.afterClosed().subscribe(result=> {
-        if (result) {
-              this.snackBar.open( 'Utilisateur Ajouté', 'Annulé',{duration: 3000});
+        if (result && result.id && result.id > 0) {
+              this.snackBar.open( 'Utilisateur Ajouté', 'ok',{duration: 3000});
+              this.ngOnInit();
         }
       })
     }
@@ -56,5 +59,18 @@ export class MembersComponent implements OnInit, OnDestroy {
     }
   ngOnDestroy() {
     //this.memberSubscription.unsubscribe();
+  }
+
+  onInitPasswordMember(memberId: number) {
+    this.userService
+      .updatePasswordMember(memberId)
+      .subscribe((response:  any) => {
+        if (response && response.ok) {
+          this.snackBar.open('Mot de passe mit à jour avec succès', 'ok', {
+            verticalPosition: "top",
+            duration: 4500
+          })
+        }
+      })
   }
 }

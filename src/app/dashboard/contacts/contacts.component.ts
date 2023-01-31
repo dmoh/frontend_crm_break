@@ -1,16 +1,14 @@
-import {Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
 import { FileService } from '@app/_services/file.service';
-import { Observable, Subscription } from 'rxjs';
+import {Observable, Subscription, timer} from 'rxjs';
 import { FilterPipe } from '../filter.pipe';
-import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
 import {BuyerService} from "@app/_services/buyer.service";
-import {map, take} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, startWith, take} from "rxjs/operators";
 import {Buyer} from "@app/_models/buyer";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {crmConstants} from "@app/_helpers/crm-constants";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -49,6 +47,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter: FilterPipe;
   research = '';
   buyers: Buyer[] = [];
+  allBuyers: Buyer[] = [];
   searchForm: FormGroup;
   crmConstants = crmConstants;
   showCancelButton = false;
@@ -56,6 +55,11 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
   showSpinner = true;
+  privateBuyersIsChecked: boolean = false;
+  institutionalBuyersIsChecked: boolean = false;
+  searchFastCtrl = new FormControl();
+  showBuyersString = 'all';
+  showAllBuyers = true;
 
   constructor(
     private contactService: ContactService,
@@ -85,6 +89,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.getBuyerList();
         }
       });
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       console.log("index", index)
@@ -94,8 +99,6 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.contactService.contact$.subscribe(
         (value: any[]) => {
           this.contacts = value;
-          console.log(this.contacts, 'contacts');
-
           const tabLettre = this.contacts.sort((a, b) => {
 
             if (a.name.charAt(0) < b.name.charAt(0)) {
@@ -119,9 +122,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
           const tab2 = tabLettre.map((lettre) => {
              return lettre.name.charAt(0)
           })
-          console.log(tab2, 'lettres')
           this.tab3 = tab2.filter((item, index) => tab2.indexOf(item) === index)
-          console.log(this.tab3, "tabLtrié")
         }))
 
         this.contactSub.add(
@@ -131,7 +132,9 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         )
       )
-
+    timer(700).subscribe(_ => {
+      this.onSearchFast();
+    })
 
   }
 
@@ -141,19 +144,13 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private getBuyerList() {
     this.buyerService
-      .getBuyerList()/*
-      .pipe(take(1),
-        map((response: any) => {
-          console.warn('response buyers', response);
-          if (response.buyers) {
-            this.buyers = response.buyers;
-          }
-        })
-      )*/
+      .getBuyerList()
+      .pipe(take(1))
       .subscribe((response: any) => {
         if (response.ok) {
-          console.warn('resp buyer', response);
           this.buyers = response.buyers;
+          this.allBuyers = response.buyers;
+          // sort
         }
         this.showSpinner = false;
       })
@@ -228,6 +225,42 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
+  onSearchFast() {
+    this.searchFastCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe((val: string) => {
+        this.buyers = this.allBuyers;
+        if (this.institutionalBuyersIsChecked) {
+          this.buyerFilter();
+        }
+        if (this.privateBuyersIsChecked) {
+          this.buyerFilter(true)
+        }
+        if (val && (val.trim()).length > 0) {
+          this.buyers = this.buyers?.filter((buyer: Buyer) => {
+            if (buyer
+              && buyer.name
+              && ((buyer.name).toLowerCase()).includes(val.toLowerCase())
+            ) {
+              return buyer
+            }
+          } );
+        } else {
+          this.buyers = this.allBuyers;
+          if (this.institutionalBuyersIsChecked) {
+            this.buyerFilter();
+          }
+          if (this.privateBuyersIsChecked) {
+            this.buyerFilter(true)
+          }
+        }
+      })
+  }
+
 
   onChangeStateDrawer(event: any) {
     if (event) {
@@ -236,5 +269,48 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
         .setStateDrawer(true);
     }
   }
+
+  onUpdateFilter(typeChecked: string) {
+    this.showSpinner = true
+    this.buyers = this.allBuyers;
+    if (typeChecked === 'private') {
+      this.showAllBuyers = false;
+      this.privateBuyersIsChecked = true
+      this.institutionalBuyersIsChecked = false
+      this.buyerFilter(true)
+      setTimeout(_ => {
+        this.showSpinner = false;
+      }, 700)
+    } else if (typeChecked === 'institutional') {
+      this.showAllBuyers = false;
+      this.institutionalBuyersIsChecked = true
+      this.privateBuyersIsChecked = false
+      this.buyerFilter()
+      setTimeout(_ => {
+        this.showSpinner = false;
+      }, 700)
+    } else {
+      this.showAllBuyers = true
+      this.buyers = this.allBuyers;
+      setTimeout(_ => {
+        this.showSpinner = false;
+      }, 700)
+    }
+  }
+
+
+  private buyerFilter(onlyPrivateBuyers = false) {
+    if (onlyPrivateBuyers) {
+      this.buyers = this.buyers.filter((buyer: Buyer) => {
+        return buyer.customerType === crmConstants.CUSTOMER_TYPE_PRIVATE
+      })
+    } else {
+      this.buyers = this.buyers.filter((buyer: Buyer) => {
+        return buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL
+      })
+    }
+
+  }
+
 }
 

@@ -66,15 +66,15 @@ background-color: #F5F5F5 ; padding: 3rem">
     <div *ngIf="!showSpinnerReminder && reminders && reminders.length == 0"  class="col-md-12">
       <h6>Aucun rappel</h6>
     </div>
-
   </div>
+  <hr>
   <div  style="
     padding: .5rem;
     background: #f0f0f0;
     border-radius: 5px;">
     <div *ngIf="!showSpinnerStats" class="row">
       <div style="justify-content: space-between" class="col-12 d-flex align-items-center">
-        <h6 class="">Stats de la semaine</h6>
+        <h6 class="">Statistiques</h6>
         <div>
           <mat-form-field style="padding: 1rem" *ngIf=" showListCollaborator && collaborators && collaborators.length > 0"
                           appearance="outline">
@@ -100,16 +100,16 @@ background-color: #F5F5F5 ; padding: 3rem">
       >
         <mat-spinner [diameter]="20"></mat-spinner>
       </div>
-      <div  class="col-md-12">
+      <div  class="col-md-3 mb-2">
         <div *ngIf="!showSpinnerStats" class="container-card">
           <div class="cards">
             <mat-card style="border-radius: 5px;">
-              <mat-card-header>
-                <mat-card-title>Nb. Appel(s)</mat-card-title>
+              <mat-card-header style="justify-content: center">
+                <mat-card-title>Vol. d'offre</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color:RGB(59, 130, 246);">{{ stats.nbCall }}</p>
-                <p style="color: RGB(59, 130, 246); font-size: large;">Emis</p>
+                <p style="font-size: 50px; font-weight: bold; color:RGB(59, 130, 246);">{{ stats.supplyVolume && (stats.supplyVolume).length > 0 ? stats.supplyVolume : 0 }}</p>
+                <p style="color: RGB(59, 130, 246); font-size: large;">En CHF</p>
 
               </mat-card-content>
 <!--
@@ -119,14 +119,16 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
 -->
             </mat-card>
           </div>
-
+        </div>
+      </div>
+        <div class="col-md-3 mb-2">
           <div class="cards">
             <mat-card style="border-radius: 5px;">
-              <mat-card-header>
+              <mat-card-header style="justify-content: center">
                 <mat-card-title>Offre(s)</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color:#f59e0b;">{{ stats.nbOfferMade }}</p>
+                <p style="font-size: 50px; font-weight: bold; color:#f59e0b;">{{ stats && stats.nbOfferMade ? stats.nbOfferMade : 0 }}</p>
                 <p style="color:#f59e0b; font-size: large;">Ouverte(s)</p>
               </mat-card-content>
 <!--
@@ -134,33 +136,39 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
 -->
             </mat-card>
           </div>
-
+        </div>
+        <div class="col-md-3 mb-2">
           <div class="cards">
             <mat-card>
-              <mat-card-header>
-                <mat-card-title>Nb. Visite(s)</mat-card-title>
+              <mat-card-header style="justify-content: center">
+                <mat-card-title>C.A</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: RGB(239, 68, 68);">{{ stats.nbVisit }}</p>
-                <p style="color: RGB(239, 68, 68); font-size: large;">Programmé(s)</p>
+                <p style="font-size: 50px; font-weight: bold; color: RGB(239, 68, 68);"><!--{{ stats.nbVisit }}--> 0 </p>
+                <p style="color: RGB(239, 68, 68); font-size: large;">En cours</p>
               </mat-card-content>
-<!--
-              <p style="text-align: center;">From yesterday</p>
--->
+              <!--
+                            <p style="text-align: center;">From yesterday</p>
+              -->
             </mat-card>
           </div>
+        </div>
+        <div class="col-md-3 mb-2">
           <div class="cards">
             <mat-card>
-              <mat-card-header>
+              <mat-card-header style="justify-content: center">
                 <mat-card-title>Vente(s)</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: RGB(34, 197, 94);">{{ stats.nbOfferClosing }}</p>
+                <p style="font-size: 50px; font-weight: bold; color: RGB(34, 197, 94);">{{ stats && stats.nbOfferClosing ? stats.nbOfferClosing : 0 }}</p>
                 <p style="color: RGB(34, 197, 94); font-size: large;">Offre(s) close(s)</p>
               </mat-card-content>
             </mat-card>
           </div>
         </div>
+      </div>
+    <div class="row">
+      <div class="col-md-12">
         <div *ngIf="turnover && statsChart && statsChart.turnover"
              style="display: flex; margin-top: 50px; justify-content: center;">
           <mat-card style="width: 100%;">
