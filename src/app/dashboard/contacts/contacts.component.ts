@@ -77,6 +77,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       budget: [null],
       areasDesired: [null],
       typeProperty: [null],
+      hasBuildingLease: [null],
     });
   }
   ngOnInit(): void {
@@ -92,7 +93,6 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
-      console.log("index", index)
       this.contact = this.contactService.getContact(paramMap.get('index'));
     })
       this.contactSub.add(
@@ -196,11 +196,10 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       && !search.budget
       && !search.areasDesired
       && !search.typeProperty
+      && !search.hasBuildingLease
     ) {
       return;
     }
-
-
     this.buyerService
       .searchBuyersByParams(search)
       .subscribe((res) => {

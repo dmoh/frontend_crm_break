@@ -174,7 +174,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <mat-form-field style="width: 100%" appearance="outline">
                   <mat-label>Budget</mat-label>
                   <input
@@ -200,7 +200,7 @@
                   </mat-form-field>
                 </div>
               </div>-->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <mat-form-field style="width: 100%" appearance="outline">
                   <mat-select placeholder="Typologie immeuble"
                               formControlName="typeProperty">
@@ -219,8 +219,19 @@
                     <mat-option [value]="crmConstants.TYPE_PROPERTY.HOSPITAL.value"
                     >Clinique/EMS/Hôpital
                     </mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.TERRAIN.value"
+                    >Terrain
+                    </mat-option>
+                    <mat-option [value]="crmConstants.TYPE_PROPERTY.PPE.value"
+                    >Lot ppe
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-checkbox ngDefaultControl
+                              formControlName="hasBuildingLease"
+                >Droit de superficie</mat-checkbox>
               </div>
             </div>
           </div>

@@ -108,15 +108,10 @@ background-color: #F5F5F5 ; padding: 3rem">
                 <mat-card-title>Vol. d'offre</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color:RGB(59, 130, 246);">{{ stats.supplyVolume && (stats.supplyVolume).length > 0 ? stats.supplyVolume : 0 }}</p>
+                <p style="font-size: 2rem; font-weight: bold; color:RGB(59, 130, 246);">{{ stats.supplyVolume && (stats.supplyVolume).length > 0 ? stats.supplyVolume : 0 }}</p>
                 <p style="color: RGB(59, 130, 246); font-size: large;">En CHF</p>
 
               </mat-card-content>
-<!--
-              <p style="text-align: center;">Completed: 13</p>
-
-stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosing:
--->
             </mat-card>
           </div>
         </div>
@@ -128,12 +123,9 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
                 <mat-card-title>Offre(s)</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color:#f59e0b;">{{ stats && stats.nbOfferMade ? stats.nbOfferMade : 0 }}</p>
+                <p style="font-size: 2rem; font-weight: bold; color:#f59e0b;">{{ stats && stats.nbOfferMade ? stats.nbOfferMade : 0 }}</p>
                 <p style="color:#f59e0b; font-size: large;">Ouverte(s)</p>
               </mat-card-content>
-<!--
-              <p style="text-align: center;">Closed today: 13</p>
--->
             </mat-card>
           </div>
         </div>
@@ -144,7 +136,7 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
                 <mat-card-title>C.A</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: RGB(239, 68, 68);"><!--{{ stats.nbVisit }}--> 0 </p>
+                <p style="font-size: 2rem; font-weight: bold; color: RGB(239, 68, 68);"><!--{{ stats.nbVisit }}--> 0 </p>
                 <p style="color: RGB(239, 68, 68); font-size: large;">En cours</p>
               </mat-card-content>
               <!--
@@ -160,7 +152,7 @@ stats: {nbCall: 1, nbOfferMade: 0, nbEmailObtained: 0, nbVisit: 1, nbOfferClosin
                 <mat-card-title>Vente(s)</mat-card-title>
               </mat-card-header>
               <mat-card-content style="text-align: center;">
-                <p style="font-size: 50px; font-weight: bold; color: RGB(34, 197, 94);">{{ stats && stats.nbOfferClosing ? stats.nbOfferClosing : 0 }}</p>
+                <p style="font-size: 2rem; font-weight: bold; color: RGB(34, 197, 94);">{{ stats && stats.nbOfferClosing ? stats.nbOfferClosing : 0 }}</p>
                 <p style="color: RGB(34, 197, 94); font-size: large;">Offre(s) close(s)</p>
               </mat-card-content>
             </mat-card>

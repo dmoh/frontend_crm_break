@@ -51,7 +51,8 @@ export class OfferModalComponent implements OnInit {
 
   buyerToRemove = []
   dataSource = [];
-  displayedColumns: string[] = ['selectForAction','removeBuyer', 'fullname', 'email', 'actions'];
+  displayedColumns: string[] = ['selectForAction','removeBuyer', 'fullname','email', 'actions'];
+  displayedColumnsBuyers: string[] = ['selectForAction','removeBuyer', 'fullname', 'amountOfferProposed','email', 'actions'];
 
   @ViewChild('propertyInput') propertyInput: ElementRef<HTMLInputElement>;
   @ViewChild(MatSort) public sort: MatSort;
@@ -163,13 +164,8 @@ export class OfferModalComponent implements OnInit {
           if (response.buyers) {
             this.buyers = response.buyers;
           }
-           /*&& response.buyers.length > 0 ?
-            response.buyers.filter((elem) =>
-              elem.email && elem.email.length > 4
-            ) : [];*/
-          this.dataSource = [...this.buyers];
-          // this.dataSource.sort = this.sort;
 
+          this.dataSource = [...this.buyers];
           if (response.buyers && response.buyers.length === 0) {
             this.snackBar
               .open('Aucun acheteur potentiel trouvé', 'ok', {

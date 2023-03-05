@@ -79,7 +79,7 @@ export class ContactFormComponent implements OnInit {
       phoneNumber: [buyer.phoneNumber],
       customerType: [buyer.customerType],
       propertyRegime: [buyer.propertyRegime],
-      buildingLease: [buyer.buildingLease]
+      buildingLease: [buyer.hasBuildingLease]
     })
 
     if (buyer.areasDesired && buyer.areasDesired.length > 0) {

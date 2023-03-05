@@ -27,6 +27,7 @@ export class Buyer {
    employeeInCharge = null;
    agentsBuyer: AgentBuyer[] = [];
    isSelectedToRemove = false;
-    buildingLease = false; // droit de superficie
+   hasBuildingLease = false; // droit de superficie
+   amountProposedCurrentOffer = 0
 }
 

@@ -49,6 +49,14 @@ export const crmConstants = {
       label: 'Clinique/EMS/Hôpital',
       value: 6
     },
+    TERRAIN: {
+      label: 'Terrain',
+      value: 7
+    },
+    PPE: {
+      label: 'Lot ppe',
+      value: 8
+    },
   },
 
 

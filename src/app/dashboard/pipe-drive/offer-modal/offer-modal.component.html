@@ -268,7 +268,7 @@
         <button mat-raised-button color="warn" (click)="onRemoveBuyer(0, true)" [disabled]="!buyerToRemove.length">
           Sup. tous les Acheteurs sélectionnés
         </button>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Envoyer</button>
+        <button mat-raised-button color="primary" matStepperNext >Suivant</button>
       </div>
     </mat-step>
     <mat-step >
@@ -302,6 +302,20 @@
           </th>
           <td mat-cell *matCellDef="let buyer">
             {{ buyer.name | titlecase}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountOfferProposed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Offre en CHF
+          </th>
+          <td mat-cell *matCellDef="let buyer">
+            <ng-container *ngIf="buyer.amountProposedCurrentOffer && buyer.amountProposedCurrentOffer > 0 else amountNone">
+              {{ buyer.amountOfferProposed | mask: 'separator':'.'}}
+            </ng-container>
+            <ng-template #amountNone >
+              <span>--</span>
+            </ng-template>
           </td>
         </ng-container>
 
@@ -348,9 +362,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
-          *matRowDef="let row; columns: displayedColumns"
+          *matRowDef="let row; columns: displayedColumnsBuyers"
         ></tr>
       </table>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Envoyer</button>
     </mat-step>
   </mat-horizontal-stepper>
 </div>
