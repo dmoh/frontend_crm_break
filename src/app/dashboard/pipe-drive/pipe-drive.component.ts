@@ -110,6 +110,16 @@ export class PipeDriveComponent implements OnInit, AfterViewInit {
   offersSaved = [];
   showSpinner = true;
   showEmptyOfferMessage: boolean = false;
+  comparer = (a, b) => {
+    // Tri par ordre décroissant des valeurs définies
+    if (a.amountOffer !== null && a.amountOffer !== undefined && b.amountOffer !== null && b.amountOffer !== undefined) {
+      return b.amountOffer - a.amountOffer;
+    }
+    if (a.amountOffer === null || a.amountOffer === undefined) {
+      return 1;
+    }
+    return -1
+  }
   constructor(private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private userService: UsersService,
@@ -157,7 +167,11 @@ export class PipeDriveComponent implements OnInit, AfterViewInit {
       if (elem.offre && elem.offre.length > 0){
         elem.dataOffer.amountTotal = elem.offre.reduce((acc: any, currentValue: any) => acc + currentValue.sellingPropositionPrice , 0)
       }
+
+      elem.offre.potentialBuyers?.sort(this.comparer)
     });
+    this.offersSaved.forEach((offer) => offer.potentialBuyers?.sort(this.comparer))
+
     this.offersOnWaiting = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ON_WAITING.value === +offer.status);
     this.archivedOffers = this.offersSaved.filter((offer) => +crmConstants.CODE_OFFER_STATUS_ARCHIVED.value === +offer.status);
   }
@@ -270,12 +284,24 @@ export class PipeDriveComponent implements OnInit, AfterViewInit {
               +offer.status === +elem.id
               && +collabs === +offer.collaboratorId
           );
+          if (elem.offre
+            && elem.offre.potentialBuyers
+            && elem.offre.potentialBuyers.length > 0
+          ) {
+            elem.offre.potentialBuyers.sort(this.comparer)
+          }
       });
     } else {
       this.columns.forEach((elem) => {
         elem.offre = this.offersSaved.filter(
           (offer) =>
             +offer.status === +elem.id);
+        if (elem.offre
+          && elem.offre.potentialBuyers
+          && elem.offre.potentialBuyers.length > 0
+        ) {
+          elem.offre.potentialBuyers.sort(this.comparer)
+        }
       });
     }
   }

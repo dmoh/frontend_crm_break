@@ -28,6 +28,6 @@ export class Buyer {
    agentsBuyer: AgentBuyer[] = [];
    isSelectedToRemove = false;
    hasBuildingLease = false; // droit de superficie
-   amountProposedCurrentOffer = 0
+   amountOffer = 0
 }
 

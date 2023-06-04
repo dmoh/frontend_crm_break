@@ -51,7 +51,7 @@ export class OfferModalComponent implements OnInit {
 
   buyerToRemove = []
   dataSource = [];
-  displayedColumns: string[] = ['selectForAction','removeBuyer', 'fullname','email', 'actions'];
+  displayedColumns: string[] = ['selectForAction','removeBuyer', 'fullname', 'amountOfferProposed','email', 'actions'];
   displayedColumnsBuyers: string[] = ['selectForAction','removeBuyer', 'fullname', 'amountOfferProposed','email', 'actions'];
 
   @ViewChild('propertyInput') propertyInput: ElementRef<HTMLInputElement>;
@@ -63,7 +63,17 @@ export class OfferModalComponent implements OnInit {
   private findOwners: boolean = true;
   buyerNameCtrl = new FormControl();
   removeAllBuyers = false;
-
+  // Fonction de comparaison personnalisée
+  comparer = (a, b) => {
+    // Tri par ordre décroissant des valeurs définies
+    if (a.amountOffer !== null && a.amountOffer !== undefined && b.amountOffer !== null && b.amountOffer !== undefined) {
+      return b.amountOffer - a.amountOffer;
+    }
+    if (a.amountOffer === null || a.amountOffer === undefined) {
+      return 1;
+    }
+    return -1
+  }
   constructor(
     private offerService: OfferService,
     private formBuilder: FormBuilder,
@@ -101,6 +111,7 @@ export class OfferModalComponent implements OnInit {
       phoneNumber: new FormControl(''),
       comment: new FormControl(''),
       customerType: new FormControl(''), // todo type society/particular
+      amountOffer: new FormControl(0), // todo type society/particular
       /*budgetMin: new FormControl(''), // todo type society/particular
       budgetMax: new FormControl('') */// todo type society/particular
     });
@@ -163,6 +174,23 @@ export class OfferModalComponent implements OnInit {
         if (response.ok) {
           if (response.buyers) {
             this.buyers = response.buyers;
+          }
+          if (this.buyers
+            && this.buyers.length > 0
+            && this.offer.potentialBuyers
+            && this.offer.potentialBuyers.length > 0
+          ) {
+            const buyersOffer = this.offer.potentialBuyers;
+            for (const buyer of buyersOffer) {
+              const buyerIndex = this.buyers.findIndex((buyerMatch) => +buyerMatch.id === +buyer.id);
+              if (buyerIndex === -1) {
+                this.buyers = [buyer, ...this.buyers];
+              } else {
+                this.buyers[buyerIndex] = buyer
+
+              }
+            }
+            this.buyers.sort(this.comparer);
           }
 
           this.dataSource = [...this.buyers];
@@ -275,7 +303,7 @@ export class OfferModalComponent implements OnInit {
       .removeOffer(id)
       .subscribe((res) => {
         if (res.ok) {
-          this.snackBar.open('Offre supprimé avec succès', 'ok', {
+          this.snackBar.open('Offre supprimée avec succès', 'ok', {
             duration: 2500
           });
           this.dialogRef.close({offerId: id});

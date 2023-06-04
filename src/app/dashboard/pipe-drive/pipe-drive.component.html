@@ -159,24 +159,33 @@
                         <div *ngIf="item.potentialBuyers" class="">
                           <hr style="margin-top: .3rem !important;margin-bottom: .3rem !important;">
                           <span style="display: block; font-size: x-small; font-weight: bold">
-                    Acheteur{{ +col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value ? ' final' : '(s) potentiel(s)'  }}
-                  </span>
-                          <div *ngIf="item.sale && item.sale.lastBuyer && +item.sale.lastBuyer.id > 0">
-                    <span>
-                      <mat-icon style="font-size: small">contact_mail</mat-icon>
-                    </span>
+                            Acheteur{{ +col.id === +crmConstants.CODE_OFFER_STATUS_CLOSING.value ? ' final' : '(s) potentiel(s)'  }}
+                          </span>
+                                  <div *ngIf="item.sale && item.sale.lastBuyer && +item.sale.lastBuyer.id > 0">
                             <span>
-                      ref: {{ item.sale.lastBuyer.id }}, <b>{{ item.sale.lastBuyer.name | titlecase }}</b>
-                    </span>
+                              <mat-icon style="font-size: x-small">contact_mail</mat-icon>
+                            </span>
+                            <span>
+                              ref: {{ item.sale.lastBuyer.id }}, <b>{{ item.sale.lastBuyer.name | titlecase }}</b>
+                            </span>
                           </div>
                           <div *ngIf="+col.id !== +crmConstants.CODE_OFFER_STATUS_CLOSING.value">
-                            <div  *ngFor="let potentialBuyer of item.potentialBuyers" style="" class="d-flex">
-                    <span>
-                      <mat-icon style="font-size: small">contact_mail</mat-icon>
-                    </span>
-                              <span>
-                      ref: {{ potentialBuyer.id }}, <b>{{ potentialBuyer.name | titlecase }}</b>
-                    </span>
+                            <div  *ngFor="let potentialBuyer of item.potentialBuyers; let first = first; let last = last" style="" class="d-flex w-100">
+                              <div style="padding-top: .2rem; padding-bottom: .2rem; height: 50px"
+                                   [ngClass]="{'border-bottom' : !last}"
+                                   class=" w-100 d-flex justify-content-between align-items-center">
+                                <span>
+                                  <mat-icon style="font-size: x-small">contact_mail</mat-icon>
+                                </span>
+                                <span>
+                                  ref: {{ potentialBuyer.id }},
+                                  <b *ngIf="potentialBuyer.name.length <= 15">{{ potentialBuyer.name | titlecase }}</b>
+                                  <b *ngIf="potentialBuyer.name.length > 15">{{ potentialBuyer.name.substr(0,15) + '...' }}</b>
+                                </span>
+                                <span *ngIf="potentialBuyer.amountOffer" class="d-block small font-italic" style="margin-top: -0.5rem;margin-bottom: .5rem;float: right;border-bottom: .01rem solid;">{{
+                                  potentialBuyer.amountOffer | mask : 'separator':'.'
+                                  }}.-</span>
+                              </div>
                             </div>
                           </div>
                         </div>

@@ -34,14 +34,6 @@ background-color: #F5F5F5 ; padding: 3rem">
           <mat-card-content style="text-align: left;">
             <p style="font-size: small; font-weight: bold; color:#c9c9c9;">{{ reminder.message }}</p>
             <div style="width: 100%; display: flex; justify-content: space-between; align-items: center">
-              <!--<div>
-                <mat-form-field  appearance="outline">
-                  <mat-label>Date</mat-label>
-                  <input matInput formControlName="remindAt" [matDatepicker]="picker">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker></mat-datepicker>
-                </mat-form-field>
-              </div>-->
               <div>
                 <button style="float: right" mat-raised-button color="primary" (click)="onArchiveReminder(reminder)">
                   OK
