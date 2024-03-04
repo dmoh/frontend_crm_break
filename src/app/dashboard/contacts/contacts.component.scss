@@ -71,11 +71,10 @@ mat-drawer {
 .contacts {
   margin-top: 35px;
 }
-.mat-list-base ng-star-inserted{
+.mat-list-base {
 
   :hover {
     background: #E9EBEB;
-
   }
 }
 /*.wrapper-file-upload > input {
@@ -108,7 +107,14 @@ mat-drawer {
   //background-color: white;
   //border-radius: 15px;
   margin-top: 20px;
-  :hover {
-    background: #E9EBEB;
+
+  transition: all .5s ease;
+  .card-buyer {
+
+    transition: all 1s ease;
+    :hover {
+      background-color: #f5f5f5;
+      color: #1d1d1d;
+    }
   }
 }

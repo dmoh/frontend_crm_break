@@ -1,88 +1,3 @@
-<!--<section class="container-fluid">-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-heading">
-          <h2 class="text-center">Collaborateurs</h2>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-heading">
-          <ul>
-            <li *ngFor="let contact of contacts">
-              <div style="width: 100%; display: flex;margin-bottom: .9rem ">
-                <div style="width: 100%">
-                  <mat-accordion>
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{ contact.name }}
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div>
-                        <mat-selection-list #shoes>
-                          <mat-list-option>
-                            {{contact.email}}
-                          </mat-list-option>
-                        </mat-selection-list>
-                      </div>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>-
-<div class="container">
-  <mat-form-field>
-    <input matInput placeholder="Rechercher" (keyup)="updateFilter($event.target.value)" type="text"/>
-  </mat-form-field>
-
-  <table class="w-100" mat-table [dataSource]="dataSource" >
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="nom">
-      <th mat-header-cell *matHeaderCellDef> Nom </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="prenom">
-      <th mat-header-cell *matHeaderCellDef> Prénom </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.lastName}} </td>
-    </ng-container>
-    <ng-container matColumnDef="adresse">
-      <th mat-header-cell *matHeaderCellDef> Adresse </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.adress}} </td>
-    </ng-container>
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
-    </ng-container>
-    <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef> Tel </th>
-      <td mat-cell *matCellDef="let contact"> {{contact.phone_number}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-
-
-
-
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>-->
 <div class="container-fluid">
   <div class="card">
     <div class="card-heading d-flex " style="justify-content: space-between; align-items: center">
@@ -147,31 +62,17 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div>
-                  <mat-form-field style="width: 100%" appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input
-                      formControlName="email"
-                      matInput
-                      [autocomplete]="'off'"
-                      placeholder="Rechercher"
-                      type="text"/>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div>
-                  <mat-form-field style="width: 100%" appearance="outline">
-                    <mat-label>Téléphone</mat-label>
-                    <input
-                      formControlName="phoneNumber"
-                      matInput
-                      [autocomplete]="'off'"
-                      placeholder="Rechercher"
-                      type="text"/>
-                  </mat-form-field>
-                </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100" *ngIf="cantons && cantons.length > 0" appearance="outline">
+                  <mat-label>Canton préférentiels</mat-label>
+                  <mat-select placeholder="Canton"
+                              [value]="searchForm.value.areasDesired"
+                              formControlName="areasDesired" multiple>
+                    <mat-option *ngFor="let canton of cantons" [value]="canton.name">
+                      {{ canton.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
             <div class="row">
@@ -188,19 +89,6 @@
                     type="text"/>
                 </mat-form-field>
               </div>
-              <!--<div class="col-md-4">
-                <div>
-                  <mat-form-field style="width: 100%" appearance="outline">
-                    <mat-label>Secteur(s) préférentiel(s)</mat-label>
-                    <input
-                      formControlName="areasDesired"
-                      matInput
-                      [autocomplete]="'off'"
-                      placeholder="Rechercher"
-                      type="text"/>
-                  </mat-form-field>
-                </div>
-              </div>-->
               <div class="col-md-4">
                 <mat-form-field style="width: 100%" appearance="outline">
                   <mat-select placeholder="Typologie immeuble"
@@ -237,7 +125,7 @@
               </div>
             </div>
           </div>
-          <button mat-raised-button color="primary" class="mb-3" (click)="onSubmit()">Ok</button>
+          <button mat-raised-button color="primary" class="mb-3" (click)="buyerFilterParams()">Ok</button>
           <button *ngIf="showCancelButton" style="float: right" mat-raised-button color="accent"
                   (click)="onCancelFilter()">Annuler
           </button>
@@ -329,18 +217,18 @@
           <mat-divider></mat-divider>
           <div class="container-fluid">
             <div class="row">
-              <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-4">
-                <mat-list>
-                  <mat-list-item style="margin-bottom: 15px;cursor: pointer;" (click)='afficheAutre(buyer)'>
+              <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-4 card-buyer">
+                  <mat-card style="margin-bottom: 15px;cursor: pointer; height: 96px" class="mb-3 " (click)='afficheAutre(buyer)'>
                     <div style="display: flex;gap: 15px;">
                       <mat-icon>
                         {{buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL ? 'home_work' : 'person_outline'}}
                       </mat-icon>
                       <p>{{buyer.name}}</p>
                     </div>
-                  </mat-list-item>
-                  <mat-divider></mat-divider>
-                </mat-list>
+                    <div class="d-flex w-100 justify-content-end align-items-center">
+                      <strong *ngIf="buyer && buyer.budgetMin && buyer.budgetMax">{{ buyer.budgetMin | mask: 'separator':'.' }} à {{ buyer.budgetMax | mask: 'separator':'.'}}CHF</strong>
+                    </div>
+                  </mat-card>
               </div>
             </div>
           </div>

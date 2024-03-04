@@ -5,20 +5,21 @@ import { ContactService } from '@app/_services/contact.service';
 import { FileService } from '@app/_services/file.service';
 import {Observable, Subscription, timer} from 'rxjs';
 import { FilterPipe } from '../filter.pipe';
-import {BuyerService} from "@app/_services/buyer.service";
-import {debounceTime, distinctUntilChanged, startWith, take} from "rxjs/operators";
-import {Buyer} from "@app/_models/buyer";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {crmConstants} from "@app/_helpers/crm-constants";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {BuyerService} from '@app/_services/buyer.service';
+import {debounceTime, distinctUntilChanged, startWith, take} from 'rxjs/operators';
+import {Buyer} from '@app/_models/buyer';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {crmConstants} from '@app/_helpers/crm-constants';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {PropertyService} from '@app/_services/property.service';
 
 const DATA: any[] = [
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'En cours'},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
-  {commune: "Lausanne", typologie: "Habitation", adress: "35 avenue charle de gaules", proprietaire: "Litib", numero: "06 30 31 00 00", observations:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,", statut: 'Terminée'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'En cours'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'En cours'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'En cours'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'Terminée'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'Terminée'},
+  {commune: 'Lausanne', typologie: 'Habitation', adress: '35 avenue charle de gaules', proprietaire: 'Litib', numero: '06 30 31 00 00', observations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur nemo,', statut: 'Terminée'},
 
 
 ];
@@ -30,20 +31,16 @@ const DATA: any[] = [
 })
 export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations', 'Statut'];
-  //dataSource : MatTableDataSource<any> = new MatTableDataSource();
   dataSource  = DATA;
-  list: boolean = false;
-  tab: boolean = false;
+  list = false;
   newContact: boolean;
   detail: boolean;
   contacts: Contact[] = [];
   contact: Contact;
-  opened:boolean;
+  opened: boolean;
   contactSub: Subscription = new Subscription;
   nbContact;
   tab3;
-  tabLettres;
-  lettres;
   filter: FilterPipe;
   research = '';
   buyers: Buyer[] = [];
@@ -55,11 +52,11 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public fileHolders$: Observable<File[]> = this.fileService.filesHolder$.asObservable();
   showSpinner = true;
-  privateBuyersIsChecked: boolean = false;
-  institutionalBuyersIsChecked: boolean = false;
+  privateBuyersIsChecked = false;
+  institutionalBuyersIsChecked = false;
   searchFastCtrl = new FormControl();
-  showBuyersString = 'all';
   showAllBuyers = true;
+  cantons: any[] = [];
 
   constructor(
     private contactService: ContactService,
@@ -67,7 +64,8 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     private fileService: FileService,
     private buyerService: BuyerService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private propertyService: PropertyService,
   ) {
     this.searchForm = this.fb.group({
       id: [null],
@@ -81,10 +79,11 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
+    this.getCantons();
     this.getBuyerList();
     this.buyerService
       .drawer
-      .subscribe((res) =>{
+      .subscribe((res) => {
         this.opened = res;
         if (!res) {
           this.getBuyerList();
@@ -94,47 +93,47 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       this.contact = this.contactService.getContact(paramMap.get('index'));
-    })
-      this.contactSub.add(
+    });
+    this.contactSub.add(
       this.contactService.contact$.subscribe(
         (value: any[]) => {
           this.contacts = value;
           const tabLettre = this.contacts.sort((a, b) => {
 
             if (a.name.charAt(0) < b.name.charAt(0)) {
-            return -1
+            return -1;
             } else {
-              return 1
+              return 1;
             }
 
-          })
+          });
           /*for (let i=0; i < tabLettre.length; i++){
               if(tabLettre[i])
           }*/
-          console.log(tabLettre, 'noms')
+          console.log(tabLettre, 'noms');
           const tab = this.contacts.sort((a, b) => {
             if (a.name < b.name) {
-              return -1
+              return -1;
               } else {
-                return 1
+                return 1;
               }
-         })
+         });
           const tab2 = tabLettre.map((lettre) => {
-             return lettre.name.charAt(0)
-          })
-          this.tab3 = tab2.filter((item, index) => tab2.indexOf(item) === index)
-        }))
+             return lettre.name.charAt(0);
+          });
+          this.tab3 = tab2.filter((item, index) => tab2.indexOf(item) === index);
+        }));
 
-        this.contactSub.add(
+    this.contactSub.add(
           this.contactService.contact$.subscribe(
             (value: Contact[]) => {
               this.nbContact = value.length;
             }
         )
-      )
+      );
     timer(700).subscribe(_ => {
       this.onSearchFast();
-    })
+    });
 
   }
 
@@ -172,10 +171,10 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addFiles($event) {
     const files = $event.target.files;
-    this.fileService.addFile(files)
+    this.fileService.addFile(files);
   }
   removeFile(index) {
-    this.fileService.removeFile(index)
+    this.fileService.removeFile(index);
   }
   openList() {
   }
@@ -237,7 +236,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.buyerFilter();
         }
         if (this.privateBuyersIsChecked) {
-          this.buyerFilter(true)
+          this.buyerFilter(true);
         }
         if (val && (val.trim()).length > 0) {
           this.buyers = this.buyers?.filter((buyer: Buyer) => {
@@ -245,7 +244,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
               && buyer.name
               && ((buyer.name).toLowerCase()).includes(val.toLowerCase())
             ) {
-              return buyer
+              return buyer;
             }
           } );
         } else {
@@ -254,10 +253,10 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.buyerFilter();
           }
           if (this.privateBuyersIsChecked) {
-            this.buyerFilter(true)
+            this.buyerFilter(true);
           }
         }
-      })
+      });
   }
 
 
@@ -270,30 +269,30 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onUpdateFilter(typeChecked: string) {
-    this.showSpinner = true
+    this.showSpinner = true;
     this.buyers = this.allBuyers;
     if (typeChecked === 'private') {
       this.showAllBuyers = false;
-      this.privateBuyersIsChecked = true
-      this.institutionalBuyersIsChecked = false
-      this.buyerFilter(true)
+      this.privateBuyersIsChecked = true;
+      this.institutionalBuyersIsChecked = false;
+      this.buyerFilter(true);
       setTimeout(_ => {
         this.showSpinner = false;
-      }, 700)
+      }, 700);
     } else if (typeChecked === 'institutional') {
       this.showAllBuyers = false;
-      this.institutionalBuyersIsChecked = true
-      this.privateBuyersIsChecked = false
-      this.buyerFilter()
+      this.institutionalBuyersIsChecked = true;
+      this.privateBuyersIsChecked = false;
+      this.buyerFilter();
       setTimeout(_ => {
         this.showSpinner = false;
-      }, 700)
+      }, 700);
     } else {
-      this.showAllBuyers = true
+      this.showAllBuyers = true;
       this.buyers = this.allBuyers;
       setTimeout(_ => {
         this.showSpinner = false;
-      }, 700)
+      }, 700);
     }
   }
 
@@ -301,14 +300,101 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   private buyerFilter(onlyPrivateBuyers = false) {
     if (onlyPrivateBuyers) {
       this.buyers = this.buyers.filter((buyer: Buyer) => {
-        return buyer.customerType === crmConstants.CUSTOMER_TYPE_PRIVATE
-      })
+        return buyer.customerType === crmConstants.CUSTOMER_TYPE_PRIVATE;
+      });
     } else {
       this.buyers = this.buyers.filter((buyer: Buyer) => {
-        return buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL
-      })
+        return buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL;
+      });
     }
 
+  }
+
+
+  buyerFilterParams() {
+    const searchForm = this.searchForm.value;
+    this.showCancelButton = true;
+    this.showSpinner = true;
+    console.log('search', searchForm);
+
+    // @ts-ignore
+    if (!searchForm.name.length && Object.values(searchForm).every((val) => !val || (val.length && val.trim().length === 0) || val !== true )) {
+      this.buyers = [...this.allBuyers];
+      setTimeout(_ => {
+        this.showCancelButton = false;
+        this.showSpinner = false;
+        if (this.buyers.length) {
+          this.snackBar.open('Aucun acheteur trouvé !', 'ok');
+        }
+      }, 1500);
+      return;
+    }
+    console.log('search', searchForm);
+    this.buyers = this.allBuyers.filter((buyer, index) => {
+      console.log('buyer.hasBuildingLease', buyer.hasBuildingLease);
+      let isOk = false;
+      if (searchForm.id && !isNaN(searchForm.id)) {
+          if (+buyer.id === searchForm.id) {
+            isOk = true;
+          }
+      }
+
+      if (searchForm.areasDesired && searchForm.areasDesired.length && buyer.areasDesired && buyer.areasDesired.length ){
+        if (buyer.areasDesired.includes(searchForm.areasDesired)){
+          isOk = true;
+        }
+      }
+
+      if (searchForm.name && searchForm.name.trim().length && buyer.name && buyer.name.length) {
+        if (buyer.name.toLowerCase().includes(searchForm.name.toLowerCase())) {
+          isOk = true;
+        }
+      }
+
+      if (searchForm.budget && !isNaN(searchForm.budget)) {
+        console.log('buyerBudget', searchForm.budget);
+        if (
+          !isNaN(buyer.budgetMin) &&
+          !isNaN(buyer.budgetMax) &&
+          +buyer.budgetMin > 0 &&
+          +buyer.budgetMax > 0 &&
+          +searchForm.budget >= +buyer.budgetMin &&
+          +searchForm.budget <= +buyer.budgetMax
+        ) {
+          isOk = true;
+        }
+      }
+
+
+
+      if (searchForm.hasBuildingLease) {
+        console.log('searchForm.hasBuildingLease', searchForm.hasBuildingLease);
+        if (buyer.hasBuildingLease) {
+          isOk = true;
+        }
+      }
+
+
+      if (isOk) {
+        return buyer;
+      }
+    });
+
+    setTimeout(() => {
+      this.showSpinner = false;
+      if (this.buyers.length) {
+        this.snackBar.open('Filtre appliqué avec succès !', 'ok');
+      }
+    }, 1500);
+  }
+
+
+  getCantons() {
+    this.propertyService
+      .getCantonList()
+      .subscribe((response) => {
+        this.cantons = response.cantons;
+      });
   }
 
 }

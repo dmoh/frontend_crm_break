@@ -39,25 +39,12 @@ export class BuyerService extends GlobalHttpService {
     )
   }
 
-  getAreaCodeCountry(country: string): Observable<any> {
-    return this.http.get<any>(`${environment.frontendUrl}/assets/areas-code-country.json`
-    )
-  }
-
 
 
 
   updateBuyer(buyer): Observable<any> {
     return this.http.post<any>(`${environment.baseApiUrl}/buyer/update`, {
         buyer: buyer
-      }
-    )
-  }
-
-
-  changeStateBuyers(buyers: any): Observable<any> {
-    return this.http.post<any>(`${environment.baseApiUrl}/buyer/state/update`, {
-        prop: buyers
       }
     )
   }
@@ -97,4 +84,12 @@ export class BuyerService extends GlobalHttpService {
   }
 
 
+
+  updateBuyerFavorite(buyerId: Buyer, isAdd: boolean) {
+    return this.http.post<any>(`${environment.baseApiUrl}/buyer/favorite/update`, {
+        buyerId,
+        isAdd
+      }
+    )
+  }
 }
