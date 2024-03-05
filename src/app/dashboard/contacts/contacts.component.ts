@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Contact} from '@app/dashboard/models/contact';
 import { ContactService } from '@app/_services/contact.service';
@@ -29,7 +29,7 @@ const DATA: any[] = [
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss']
 })
-export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ContactsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['Commune', 'Typologie', 'Adresse', 'Propriétaire', 'Numéro', 'Observations', 'Statut'];
   dataSource  = DATA;
   list = false;
@@ -137,10 +137,6 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-  }
-
-
   private getBuyerList() {
     this.buyerService
       .getBuyerList()
@@ -176,11 +172,6 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   removeFile(index) {
     this.fileService.removeFile(index);
   }
-  openList() {
-  }
-  openTab() {
-
-  }
   ngOnDestroy() {
     this.contactSub.unsubscribe();
   }
@@ -201,6 +192,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.buyerService
       .searchBuyersByParams(search)
+      .pipe(take(1))
       .subscribe((res) => {
         if (res.buyers) {
           this.showCancelButton = true;
@@ -218,6 +210,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
   onCancelFilter() {
     this.showSpinner = true;
     this.searchForm.reset();
+    this.searchFastCtrl.reset();
     this.showCancelButton = false;
     this.ngOnInit();
   }
@@ -246,7 +239,20 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
             ) {
               return buyer;
             }
-          } );
+          });
+          if (this.buyers.length) {
+            this.showCancelButton = true;
+            setTimeout(() => {
+              this.showSpinner = false;
+              if (this.buyers.length) {
+                this.snackBar.open('Filtre appliqué avec succès ! (' +  this.buyers.length + ' résultats)', 'ok');
+              }
+            }, 200);
+          } else {
+            this.snackBar.open('Aucun élément trouvé !', 'ok');
+            this.showCancelButton = true;
+            this.searchFastCtrl.reset();
+          }
         } else {
           this.buyers = this.allBuyers;
           if (this.institutionalBuyersIsChecked) {
@@ -270,7 +276,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onUpdateFilter(typeChecked: string) {
     this.showSpinner = true;
-    this.buyers = this.allBuyers;
+    this.buyers = [...this.allBuyers];
     if (typeChecked === 'private') {
       this.showAllBuyers = false;
       this.privateBuyersIsChecked = true;
@@ -316,10 +322,8 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showCancelButton = true;
     this.showSpinner = true;
     console.log('search', searchForm);
-
-    // @ts-ignore
-    if (!searchForm.name.length && Object.values(searchForm).every((val) => !val || (val.length && val.trim().length === 0) || val !== true )) {
-      this.buyers = [...this.allBuyers];
+    this.buyers = [...this.allBuyers];
+    if (Object.values(searchForm).every((val) => !!val)) {
       setTimeout(_ => {
         this.showCancelButton = false;
         this.showSpinner = false;
@@ -329,9 +333,17 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       }, 1500);
       return;
     }
-    console.log('search', searchForm);
-    this.buyers = this.allBuyers.filter((buyer, index) => {
-      console.log('buyer.hasBuildingLease', buyer.hasBuildingLease);
+    if (this.institutionalBuyersIsChecked) {
+      this.buyerFilter();
+    }
+    else if (this.privateBuyersIsChecked) {
+      this.buyerFilter(true);
+    } else {
+      this.privateBuyersIsChecked = false;
+      this.institutionalBuyersIsChecked = false;
+      this.buyers = [...this.allBuyers];
+    }
+    this.buyers = this.buyers.filter((buyer, index) => {
       let isOk = false;
       if (searchForm.id && !isNaN(searchForm.id)) {
           if (+buyer.id === searchForm.id) {
@@ -375,6 +387,17 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
 
+      if (searchForm.typeProperty && !isNaN(searchForm.typeProperty)) {
+        console.log('buyerTypeProperte', buyer.typeProperty);
+        if (
+          buyer.typeProperty &&
+          buyer.typeProperty.includes(searchForm.typeProperty)
+        ) {
+          isOk = true;
+        }
+      }
+
+
       if (isOk) {
         return buyer;
       }
@@ -383,7 +406,7 @@ export class ContactsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.showSpinner = false;
       if (this.buyers.length) {
-        this.snackBar.open('Filtre appliqué avec succès !', 'ok');
+        this.snackBar.open('Filtre appliqué avec succès ! (' +  this.buyers.length + ' résultats)', 'ok');
       }
     }, 1500);
   }

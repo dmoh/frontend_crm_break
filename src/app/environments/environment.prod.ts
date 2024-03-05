@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.crmbrec.ch',
-  baseApiUrl: 'https://api.crmbrec.ch/api'
+  apiUrl: 'https://api.breccrm.ch',
+  baseApiUrl: 'https://api.breccrm.ch/api'
 };

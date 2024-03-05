@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://api.crmbrec.ch',
-  baseApiUrl: 'https://api.crmbrec.ch/api'
+  production: true,
+  apiUrl: 'https://api.breccrm.ch',
+  baseApiUrl: 'https://api.breccrm.ch/api'
   // apiUrl: 'http://localhost:8000'
 };
 

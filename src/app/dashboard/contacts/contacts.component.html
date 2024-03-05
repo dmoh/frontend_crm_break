@@ -36,7 +36,7 @@
         <form [formGroup]="searchForm">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div>
                   <mat-form-field style="width: 100%" appearance="outline">
                     <mat-label>Id/Réf</mat-label>
@@ -49,7 +49,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div>
                   <mat-form-field style="width: 100%" appearance="outline">
                     <mat-label>Nom</mat-label>
@@ -126,9 +126,6 @@
             </div>
           </div>
           <button mat-raised-button color="primary" class="mb-3" (click)="buyerFilterParams()">Ok</button>
-          <button *ngIf="showCancelButton" style="float: right" mat-raised-button color="accent"
-                  (click)="onCancelFilter()">Annuler
-          </button>
         </form>
       </div>
       <div style="display: flex;gap: 15px;">
@@ -137,7 +134,7 @@
             <div class="row">
               <div class="col-md-12 mt-3 mb-3">
                 <mat-radio-group color="primary" aria-label="Select an option">
-                  <mat-radio-button class="mr-2" (change)="onUpdateFilter('private')" value="private">
+                  <mat-radio-button class="mr-3" (change)="onUpdateFilter('private')" value="private">
                     <mat-icon>
                       person_outline
                     </mat-icon>
@@ -145,7 +142,7 @@
                     Privés
                   </span>
                   </mat-radio-button>
-                  <mat-radio-button class="mr-2" (change)="onUpdateFilter('all')" [checked]="showAllBuyers" value="all">
+                  <mat-radio-button class="mr-3" (change)="onUpdateFilter('all')" [checked]="showAllBuyers" value="all">
                     Privés et Institutionnels
                   </mat-radio-button>
                   <mat-radio-button (change)="onUpdateFilter('institutional')" value="institutional">
@@ -159,7 +156,7 @@
             </div>
           </div>
         </div>
-        <div class="file-upload">
+        <!--<div class="file-upload">
           <button
             mat-mini-fab
             [color]="'basic'"
@@ -178,7 +175,7 @@
               type="file"
             />
           </button>
-        </div>
+        </div>-->
       </div>
       <div class="files">
         <div class="file" *ngFor="let file of fileHolders$ | async; let i = index"
@@ -193,16 +190,22 @@
         </div>
       </div>
 
-      <div *ngIf="buyers && buyers.length > 0" class="mt-2 mb-0">
-        <mat-form-field color="primary" appearance="outline">
+      <div *ngIf="buyers && buyers.length > 0" class="mt-2 mb-0 col-4">
+        <mat-form-field class="w-100" color="primary" appearance="outline">
           <mat-label>
-            Recherche rapide
+            Recherche rapide par nom
           </mat-label>
           <input type="text"
                  [autocomplete]="'off'"
                  matInput
                  [formControl]="searchFastCtrl">
         </mat-form-field>
+      </div>
+
+      <div>
+        <button *ngIf="showCancelButton"  mat-raised-button color="accent"
+                (click)="onCancelFilter()">Annuler le filtre
+        </button>
       </div>
 
 
@@ -215,15 +218,23 @@
       <ng-container *ngIf="!showSpinner">
         <div *ngIf="buyers && buyers.length > 0" class="contacts" style="margin-top:30px;">
           <mat-divider></mat-divider>
-          <div class="container-fluid">
+          <div class="container-fluid mt-3">
+            <h3>{{ buyers.length }} Acheteurs</h3>
             <div class="row">
               <div *ngFor="let buyer of buyers | filter: research let index = index" class="col-4 card-buyer">
                   <mat-card style="margin-bottom: 15px;cursor: pointer; height: 96px" class="mb-3 " (click)='afficheAutre(buyer)'>
-                    <div style="display: flex;gap: 15px;">
-                      <mat-icon>
-                        {{buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL ? 'home_work' : 'person_outline'}}
-                      </mat-icon>
-                      <p>{{buyer.name}}</p>
+                    <div class="d-flex justify-content-between w-100 align-items-center">
+                      <div style="display: flex;gap: 15px;">
+                        <mat-icon>
+                          {{buyer.customerType === crmConstants.CUSTOMER_TYPE_INSTITUTIONAL ? 'home_work' : 'person_outline'}}
+                        </mat-icon>
+                        <p>{{buyer.name}}</p>
+                      </div>
+                      <div style="margin-top: -1rem" class="">
+                        <mat-icon>
+                          star_border
+                        </mat-icon>
+                      </div>
                     </div>
                     <div class="d-flex w-100 justify-content-end align-items-center">
                       <strong *ngIf="buyer && buyer.budgetMin && buyer.budgetMax">{{ buyer.budgetMin | mask: 'separator':'.' }} à {{ buyer.budgetMax | mask: 'separator':'.'}}CHF</strong>
